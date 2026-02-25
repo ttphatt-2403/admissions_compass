@@ -1,0 +1,325 @@
+{
+  "universities": [
+    {
+      "id": "hust",
+      "name": "ĐH Bách Khoa Hà Nội",
+      "shortName": "HUST",
+      "location": "Hà Nội",
+      "type": "Công lập",
+      "website": "https://www.hust.edu.vn",
+      "majors": [
+        {
+          "code": "CNTT",
+          "name": "Công Nghệ Thông Tin",
+          "scores": {
+            "A00": 28.5,
+            "A01": 27.0,
+            "A02": 26.5
+          },
+          "quota": 400,
+          "trend": "up"
+        },
+        {
+          "code": "DKDT",
+          "name": "Điều Khiển & Tự Động",
+          "scores": {
+            "A00": 27.5,
+            "A02": 26.0
+          },
+          "quota": 250,
+          "trend": "up"
+        },
+        {
+          "code": "KTMT",
+          "name": "Kỹ Thuật Máy Tính",
+          "scores": {
+            "A00": 27.0,
+            "A01": 26.5
+          },
+          "quota": 200,
+          "trend": "stable"
+        },
+        {
+          "code": "XD",
+          "name": "Xây Dựng",
+          "scores": {
+            "A00": 26.5,
+            "A02": 25.5
+          },
+          "quota": 300,
+          "trend": "stable"
+        },
+        {
+          "code": "DCDT",
+          "name": "Điện & Điện Tử",
+          "scores": {
+            "A00": 27.0,
+            "A02": 26.0
+          },
+          "quota": 250,
+          "trend": "down"
+        },
+        {
+          "code": "CO",
+          "name": "Cơ Khí",
+          "scores": {
+            "A00": 26.0,
+            "A02": 25.0
+          },
+          "quota": 280,
+          "trend": "stable"
+        }
+      ]
+    },
+    {
+      "id": "neu",
+      "name": "ĐH Kinh Tế Quốc Dân",
+      "shortName": "NEU",
+      "location": "Hà Nội",
+      "type": "Công lập",
+      "website": "https://www.neu.edu.vn",
+      "majors": [
+        {
+          "code": "KT",
+          "name": "Kinh Tế",
+          "scores": {
+            "A00": 27.5,
+            "D01": 26.0
+          },
+          "quota": 350,
+          "trend": "up"
+        },
+        {
+          "code": "QT",
+          "name": "Quản Trị Kinh Doanh",
+          "scores": {
+            "A00": 27.0,
+            "D01": 25.5
+          },
+          "quota": 400,
+          "trend": "up"
+        },
+        {
+          "code": "KTQT",
+          "name": "Kinh Tế Quốc Tế",
+          "scores": {
+            "A00": 27.5,
+            "D01": 26.5
+          },
+          "quota": 200,
+          "trend": "up"
+        },
+        {
+          "code": "TC",
+          "name": "Tài Chính",
+          "scores": {
+            "A00": 28.0,
+            "D01": 26.5
+          },
+          "quota": 300,
+          "trend": "up"
+        },
+        {
+          "code": "KT",
+          "name": "Kế Toán",
+          "scores": {
+            "A00": 27.0,
+            "D01": 25.0
+          },
+          "quota": 280,
+          "trend": "stable"
+        }
+      ]
+    },
+    {
+      "id": "ulis",
+      "name": "ĐH Ngoại Ngữ - ĐHN",
+      "shortName": "ULIS",
+      "location": "Hà Nội",
+      "type": "Công lập",
+      "website": "https://ulis.vnu.edu.vn",
+      "majors": [
+        {
+          "code": "TA",
+          "name": "Tiếng Anh",
+          "scores": {
+            "D01": 26.5,
+            "A01": 25.5
+          },
+          "quota": 250,
+          "trend": "stable"
+        },
+        {
+          "code": "TP",
+          "name": "Tiếng Pháp",
+          "scores": {
+            "D01": 24.0,
+            "A01": 23.5
+          },
+          "quota": 100,
+          "trend": "stable"
+        },
+        {
+          "code": "TD",
+          "name": "Tiếng Đức",
+          "scores": {
+            "D01": 23.5,
+            "A01": 23.0
+          },
+          "quota": 80,
+          "trend": "down"
+        },
+        {
+          "code": "TK",
+          "name": "Tiếng Hàn",
+          "scores": {
+            "D01": 25.0,
+            "A01": 24.0
+          },
+          "quota": 120,
+          "trend": "up"
+        },
+        {
+          "code": "TJ",
+          "name": "Tiếng Nhật",
+          "scores": {
+            "D01": 24.5,
+            "A01": 23.5
+          },
+          "quota": 100,
+          "trend": "stable"
+        }
+      ]
+    },
+    {
+      "id": "ftu",
+      "name": "ĐH Ngoại Thương",
+      "shortName": "FTU",
+      "location": "Hà Nội",
+      "type": "Công lập",
+      "website": "https://www.ftu.edu.vn",
+      "majors": [
+        {
+          "code": "QT",
+          "name": "Quản Trị Kinh Doanh",
+          "scores": {
+            "A00": 26.5,
+            "D01": 25.5
+          },
+          "quota": 300,
+          "trend": "up"
+        },
+        {
+          "code": "MK",
+          "name": "Marketing",
+          "scores": {
+            "A00": 26.0,
+            "D01": 25.0
+          },
+          "quota": 200,
+          "trend": "up"
+        },
+        {
+          "code": "TC",
+          "name": "Tài Chính - Ngân Hàng",
+          "scores": {
+            "A00": 27.0,
+            "D01": 25.5
+          },
+          "quota": 250,
+          "trend": "up"
+        },
+        {
+          "code": "DL",
+          "name": "Du Lịch",
+          "scores": {
+            "A01": 24.5,
+            "D01": 24.0
+          },
+          "quota": 150,
+          "trend": "stable"
+        },
+        {
+          "code": "KTQT",
+          "name": "Kinh Tế Quốc Tế",
+          "scores": {
+            "A00": 26.5,
+            "D01": 26.0
+          },
+          "quota": 200,
+          "trend": "up"
+        }
+      ]
+    },
+    {
+      "id": "ussh",
+      "name": "ĐH KHXH & NV - ĐHN",
+      "shortName": "USSH",
+      "location": "Hà Nội",
+      "type": "Công lập",
+      "website": "https://ussh.vnu.edu.vn",
+      "majors": [
+        {
+          "code": "VN",
+          "name": "Văn học",
+          "scores": {
+            "D01": 25.0,
+            "C00": 24.5
+          },
+          "quota": 150,
+          "trend": "stable"
+        },
+        {
+          "code": "SA",
+          "name": "Sử Học",
+          "scores": {
+            "D01": 24.0,
+            "C00": 23.5
+          },
+          "quota": 100,
+          "trend": "stable"
+        },
+        {
+          "code": "LS",
+          "name": "Lịch Sử",
+          "scores": {
+            "D01": 24.0,
+            "C00": 23.5
+          },
+          "quota": 120,
+          "trend": "stable"
+        },
+        {
+          "code": "TT",
+          "name": "Triết Học",
+          "scores": {
+            "D01": 23.5,
+            "C00": 23.0
+          },
+          "quota": 80,
+          "trend": "down"
+        },
+        {
+          "code": "XH",
+          "name": "Xã Hội Học",
+          "scores": {
+            "D01": 24.5,
+            "C00": 24.0
+          },
+          "quota": 100,
+          "trend": "stable"
+        },
+        {
+          "code": "CT",
+          "name": "Công Tác Xã Hội",
+          "scores": {
+            "D01": 23.0,
+            "C00": 22.5
+          },
+          "quota": 80,
+          "trend": "stable"
+        }
+      ]
+    }
+  ]
+}

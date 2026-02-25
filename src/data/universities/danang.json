@@ -1,0 +1,214 @@
+{
+  "universities": [
+    {
+      "id": "dahu",
+      "name": "ĐH Bách Khoa Đà Nẵng",
+      "shortName": "DaHU",
+      "location": "Đà Nẵng",
+      "type": "Công lập",
+      "website": "https://www.dut.edu.vn",
+      "majors": [
+        {
+          "code": "CNTT",
+          "name": "Công Nghệ Thông Tin",
+          "scores": {
+            "A00": 27.0,
+            "A01": 26.0
+          },
+          "quota": 250,
+          "trend": "up"
+        },
+        {
+          "code": "CO",
+          "name": "Cơ Khí",
+          "scores": {
+            "A00": 25.5,
+            "A02": 24.5
+          },
+          "quota": 200,
+          "trend": "stable"
+        },
+        {
+          "code": "DCDT",
+          "name": "Điều Khiển & Tự Động",
+          "scores": {
+            "A00": 26.5,
+            "A02": 25.5
+          },
+          "quota": 180,
+          "trend": "up"
+        },
+        {
+          "code": "XD",
+          "name": "Xây Dựng",
+          "scores": {
+            "A00": 25.0,
+            "A02": 24.0
+          },
+          "quota": 220,
+          "trend": "stable"
+        },
+        {
+          "code": "KTMT",
+          "name": "Kỹ Thuật Máy Tính",
+          "scores": {
+            "A00": 26.0,
+            "A01": 25.0
+          },
+          "quota": 150,
+          "trend": "stable"
+        }
+      ]
+    },
+    {
+      "id": "danu-foreign",
+      "name": "ĐH Ngoại Ngữ & CNTT Đà Nẵng",
+      "shortName": "DANU",
+      "location": "Đà Nẵng",
+      "type": "Công lập",
+      "website": "https://www.danu.edu.vn",
+      "majors": [
+        {
+          "code": "TA",
+          "name": "Tiếng Anh",
+          "scores": {
+            "D01": 24.5,
+            "A01": 23.5
+          },
+          "quota": 150,
+          "trend": "stable"
+        },
+        {
+          "code": "TJ",
+          "name": "Tiếng Nhật",
+          "scores": {
+            "D01": 23.0,
+            "A01": 22.0
+          },
+          "quota": 80,
+          "trend": "stable"
+        },
+        {
+          "code": "TK",
+          "name": "Tiếng Hàn",
+          "scores": {
+            "D01": 24.0,
+            "A01": 23.0
+          },
+          "quota": 100,
+          "trend": "up"
+        },
+        {
+          "code": "CNTT",
+          "name": "Công Nghệ Thông Tin",
+          "scores": {
+            "A00": 26.5,
+            "A01": 25.5
+          },
+          "quota": 200,
+          "trend": "up"
+        }
+      ]
+    },
+    {
+      "id": "dau-business",
+      "name": "ĐH Kinh Tế & Quản Lý Đà Nẵng",
+      "shortName": "DBIZ",
+      "location": "Đà Nẵng",
+      "type": "Công lập",
+      "website": "https://www.deu.edu.vn",
+      "majors": [
+        {
+          "code": "QTKD",
+          "name": "Quản Trị Kinh Doanh",
+          "scores": {
+            "A00": 25.5,
+            "D01": 24.5
+          },
+          "quota": 200,
+          "trend": "stable"
+        },
+        {
+          "code": "KT",
+          "name": "Kinh Tế",
+          "scores": {
+            "A00": 25.0,
+            "D01": 24.0
+          },
+          "quota": 180,
+          "trend": "stable"
+        },
+        {
+          "code": "MK",
+          "name": "Marketing",
+          "scores": {
+            "A00": 24.5,
+            "D01": 23.5
+          },
+          "quota": 150,
+          "trend": "up"
+        },
+        {
+          "code": "CNTT",
+          "name": "Công Nghệ Thông Tin",
+          "scores": {
+            "A00": 26.0,
+            "A01": 25.0
+          },
+          "quota": 220,
+          "trend": "up"
+        }
+      ]
+    },
+    {
+      "id": "da-industrial",
+      "name": "ĐH Kinh Tế - Kỹ Thuật Đà Nẵng",
+      "shortName": "DAIET",
+      "location": "Đà Nẵng",
+      "type": "Công lập",
+      "website": "https://www.daek.edu.vn",
+      "majors": [
+        {
+          "code": "KTDT",
+          "name": "Kỹ Thuật Điện Tử - Viễn Thông",
+          "scores": {
+            "A00": 25.5,
+            "A02": 24.5
+          },
+          "quota": 200,
+          "trend": "stable"
+        },
+        {
+          "code": "CO",
+          "name": "Cơ Điện Tử",
+          "scores": {
+            "A00": 25.0,
+            "A02": 24.0
+          },
+          "quota": 180,
+          "trend": "stable"
+        },
+        {
+          "code": "CNVL",
+          "name": "Công Nghệ Vật Liệu",
+          "scores": {
+            "A00": 24.5,
+            "B00": 23.5
+          },
+          "quota": 150,
+          "trend": "stable"
+        },
+        {
+          "code": "QTKD",
+          "name": "Quản Trị Kinh Doanh",
+          "scores": {
+            "D01": 24.0,
+            "A00": 24.5
+          },
+          "quota": 200,
+          "trend": "up"
+        }
+      ]
+    }
+  ]
+}
