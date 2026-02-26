@@ -17,6 +17,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'calculator' as TabType, label: 'Tính Điểm' },
     { id: 'studypath' as TabType, label: 'Lộ Trình' },
     { id: 'news' as TabType, label: 'Tin Tức' },
+    { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
   ];
 
   return (

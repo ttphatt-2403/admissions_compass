@@ -97,6 +97,7 @@ import { Footer } from './components/Footer';
 
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
+import Chatbot from './components/Chatbot';
 import {
   TrendingUp,
   Clock,
@@ -1190,6 +1191,7 @@ export default function App() {
         {activeTab === 'news' && <NewsSection />}
         {activeTab === 'math-roadmap' && <MathRoadmap />}
         {activeTab === 'chemistry-roadmap' && <ChemistryRoadmap />}
+        {activeTab === 'chatbot' && <Chatbot />}
         {activeTab === 'fpt-landing' && <FPTLandingPage />}
         {activeTab === 'vnu-landing' && <VNULandingPage />}
         {activeTab === 'rmit-landing' && <RMITLandingPage />}
@@ -1212,7 +1214,7 @@ export default function App() {
         {activeTab === 'languages-tourism-landing' && <LanguagesTourismLanding />}
       </main>
 
-      <Footer />
+      {activeTab !== 'chatbot' && <Footer />}
     </div>
   );
 }
