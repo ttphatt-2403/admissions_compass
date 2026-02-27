@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  BookOpen, 
-  Users, 
-  Briefcase, 
-  Globe, 
-  Code, 
-  Palette, 
-  TrendingUp, 
-  MessageCircle, 
-  ArrowRight, 
-  CheckCircle2, 
+import {
+  BookOpen,
+  Users,
+  Briefcase,
+  Globe,
+  Code,
+  Palette,
+  TrendingUp,
+  MessageCircle,
+  ArrowRight,
+  CheckCircle2,
   Star,
   MapPin,
   Phone,
@@ -54,7 +54,7 @@ const FPTLandingPage = () => {
               <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
               <span className="font-bold text-2xl text-slate-900 tracking-tight">Đại học <span className="text-orange-500">FPT</span></span>
             </div>
-            
+
             <div className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-slate-600 hover:text-orange-500 font-medium transition-colors">Trang chủ</a>
               <a href="#majors" className="text-slate-600 hover:text-orange-500 font-medium transition-colors">Ngành đào tạo</a>
@@ -62,7 +62,7 @@ const FPTLandingPage = () => {
               <a href="#contact" className="text-slate-600 hover:text-orange-500 font-medium transition-colors">Tuyển sinh</a>
             </div>
 
-            <button 
+            <button
               onClick={() => document.getElementById('register-form')?.scrollIntoView({ behavior: 'smooth' })}
               className="hidden md:flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-semibold transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 transform hover:-translate-y-0.5"
             >
@@ -70,24 +70,24 @@ const FPTLandingPage = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-             {/* Mobile menu button placeholder */}
-             <div className="md:hidden">
-                <button className="text-slate-600 hover:text-orange-500 p-2">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-             </div>
+            {/* Mobile menu button placeholder */}
+            <div className="md:hidden">
+              <button className="text-slate-600 hover:text-orange-500 p-2">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 md:pt-32 md:pb-48 overflow-hidden bg-slate-900">
+      <section className="relative pt-20 pb-32 md:pt-32 md:pb-48 overflow-visible bg-slate-900">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1710153793328-4b427d6b2444?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwY2FtcHVzJTIwYXNpYW4lMjBzdHVkZW50cyUyMHdhbGtpbmclMjBvdXRzaWRlJTIwc3Vubnl8ZW58MXx8fHwxNzcxMzM4Njg3fDA&ixlib=rb-4.1.0&q=80&w=1080" 
-            alt="University Campus" 
+          <img
+            src="https://images.unsplash.com/photo-1710153793328-4b427d6b2444?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwY2FtcHVzJTIwYXNpYW4lMjBzdHVkZW50cyUyMHdhbGtpbmclMjBvdXRzaWRlJTIwc3Vubnl8ZW58MXx8fHwxNzcxMzM4Njg3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="University Campus"
             className="w-full h-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
@@ -100,14 +100,14 @@ const FPTLandingPage = () => {
               <span>Tuyển sinh Đại học chính quy 2026</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight">
-              Chạm tới tương lai cùng <br/>
+              Chạm tới tương lai cùng <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Đại học FPT</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-300 mb-8 leading-relaxed">
               Môi trường học tập chuẩn quốc tế, cơ sở vật chất hiện đại và mạng lưới kết nối doanh nghiệp rộng lớn giúp bạn sẵn sàng cho sự nghiệp toàn cầu.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button 
+              <button
                 onClick={() => document.getElementById('register-form')?.scrollIntoView({ behavior: 'smooth' })}
                 className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold text-lg shadow-xl shadow-orange-500/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
               >
@@ -130,8 +130,8 @@ const FPTLandingPage = () => {
                 { icon: Briefcase, title: "Việc Làm Đảm Bảo", desc: "98% sinh viên có việc làm ngay sau khi tốt nghiệp." },
                 { icon: Users, title: "Kết Nối Doanh Nghiệp", desc: "Hợp tác với hơn 500 doanh nghiệp hàng đầu trong và ngoài nước." }
               ].map((item, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-start gap-4 hover:shadow-2xl transition-shadow duration-300">
-                  <div className="p-3 bg-orange-100 rounded-xl text-orange-600">
+                <div key={idx} className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-start gap-4 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex-shrink-0 p-3 bg-orange-50 rounded-xl text-orange-600">
                     <item.icon className="w-8 h-8" />
                   </div>
                   <div>
@@ -146,7 +146,7 @@ const FPTLandingPage = () => {
       </section>
 
       {/* Spacer for floating cards */}
-      <div className="h-32 hidden md:block"></div>
+      <div className="h-40 md:h-48 hidden md:block"></div>
 
       {/* Featured Majors Section */}
       <section id="majors" className="py-20 bg-slate-50">
@@ -161,27 +161,27 @@ const FPTLandingPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { 
-                title: "Công nghệ thông tin", 
-                icon: Code, 
+              {
+                title: "Công nghệ thông tin",
+                icon: Code,
                 img: "https://images.unsplash.com/photo-1569653402334-2e98fbaa80ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHN0dWRlbnQlMjBjb2RpbmclMjBzb2Z0d2FyZSUyMGVuZ2luZWVyaW5nJTIwY29tcHV0ZXIlMjBsYWJ8ZW58MXx8fHwxNzcxMzM4Njg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
                 desc: "Kỹ thuật phần mềm, An toàn thông tin, Trí tuệ nhân tạo (AI)."
               },
-              { 
-                title: "Quản trị kinh doanh", 
-                icon: TrendingUp, 
+              {
+                title: "Quản trị kinh doanh",
+                icon: TrendingUp,
                 img: "https://images.unsplash.com/photo-1741529189563-5f3eb1253eb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHN0dWRlbnRzJTIwcHJlc2VudGF0aW9uJTIwbW9kZXJuJTIwb2ZmaWNlJTIwdW5pdmVyc2l0eXxlbnwxfHx8fDE3NzEzMzg2ODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
                 desc: "Digital Marketing, Kinh doanh quốc tế, Quản trị khách sạn."
               },
-              { 
-                title: "Thiết kế đồ họa", 
-                icon: Palette, 
+              {
+                title: "Thiết kế đồ họa",
+                icon: Palette,
                 img: "https://images.unsplash.com/photo-1770003354577-82b2a2d09d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmFwaGljJTIwZGVzaWduJTIwc3R1ZGVudCUyMGNyZWF0aXZlJTIwd29ya3NwYWNlfGVufDF8fHx8MTc3MTMzODY4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
                 desc: "Thiết kế mỹ thuật số, Truyền thông đa phương tiện."
               },
-              { 
-                title: "Ngôn ngữ", 
-                icon: MessageCircle, 
+              {
+                title: "Ngôn ngữ",
+                icon: MessageCircle,
                 img: "https://images.unsplash.com/photo-1721702754494-fdd7189f946c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnRlcm5hdGlvbmFsJTIwc3R1ZGVudHMlMjB0YWxraW5nJTIwZ3JvdXAlMjB1bml2ZXJzaXR5JTIwbGlicmFyeXxlbnwxfHx8fDE3NzEzMzg2ODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
                 desc: "Ngôn ngữ Anh, Ngôn ngữ Nhật, Ngôn ngữ Hàn Quốc."
               }
@@ -189,9 +189,9 @@ const FPTLandingPage = () => {
               <div key={idx} className="group bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer">
                 <div className="h-48 overflow-hidden relative">
                   <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/10 transition-colors z-10"></div>
-                  <img 
-                    src={major.img} 
-                    alt={major.title} 
+                  <img
+                    src={major.img}
+                    alt={major.title}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-lg text-orange-500 z-20 shadow-sm">
@@ -216,33 +216,33 @@ const FPTLandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2 relative">
-               <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
-               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
-               <img 
-                 src="https://images.unsplash.com/photo-1653546496652-6bf7744992a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGFzaWFuJTIwc3R1ZGVudCUyMHBvcnRyYWl0JTIwZ3JhZHVhdGlvbiUyMGdvd258ZW58MXx8fHwxNzcxMzM4Njg3fDA&ixlib=rb-4.1.0&q=80&w=1080" 
-                 alt="Sinh viên thành công" 
-                 className="relative z-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500"
-               />
-               <div className="absolute bottom-10 -left-4 z-20 bg-white p-4 rounded-xl shadow-xl border border-slate-100 max-w-xs animate-bounce-slow hidden sm:block">
-                 <div className="flex items-center gap-3">
-                   <div className="p-2 bg-green-100 rounded-full text-green-600">
-                     <CheckCircle2 className="w-6 h-6" />
-                   </div>
-                   <div>
-                     <p className="text-sm font-bold text-slate-900">Việc làm ngay</p>
-                     <p className="text-xs text-slate-500">sau khi tốt nghiệp</p>
-                   </div>
-                 </div>
-               </div>
+              <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+              <img
+                src="https://images.unsplash.com/photo-1653546496652-6bf7744992a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGFzaWFuJTIwc3R1ZGVudCUyMHBvcnRyYWl0JTIwZ3JhZHVhdGlvbiUyMGdvd258ZW58MXx8fHwxNzcxMzM4Njg3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                alt="Sinh viên thành công"
+                className="relative z-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500"
+              />
+              <div className="absolute bottom-10 -left-4 z-20 bg-white p-4 rounded-xl shadow-xl border border-slate-100 max-w-xs animate-bounce-slow hidden sm:block">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-green-100 rounded-full text-green-600">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">Việc làm ngay</p>
+                    <p className="text-xs text-slate-500">sau khi tốt nghiệp</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            
+
             <div className="lg:w-1/2">
               <h2 className="text-orange-500 font-bold tracking-wider uppercase text-sm mb-2">Cơ hội nghề nghiệp</h2>
               <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Tự tin khởi nghiệp và làm việc toàn cầu</h3>
               <p className="text-slate-600 text-lg mb-8 leading-relaxed">
                 Tại Đại học FPT, sinh viên không chỉ học lý thuyết mà còn được rèn luyện kỹ năng thực chiến thông qua các kỳ thực tập tại doanh nghiệp (OJT) ngay từ năm thứ 3.
               </p>
-              
+
               <div className="space-y-6">
                 {[
                   { label: "Sinh viên có việc làm sau tốt nghiệp", value: "98%" },
@@ -283,74 +283,74 @@ const FPTLandingPage = () => {
       {/* Admissions & Scholarship Section */}
       <section id="scholarship" className="py-20 bg-orange-50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="text-center mb-16">
+          <div className="text-center mb-16">
             <h2 className="text-orange-500 font-bold tracking-wider uppercase text-sm mb-2">Thông tin tuyển sinh 2026</h2>
             <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Cơ hội học bổng & Phương thức xét tuyển</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-             {/* Scholarship Card */}
-             <div className="bg-white p-8 rounded-3xl shadow-lg border border-orange-100 relative overflow-hidden group hover:shadow-xl transition-all">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="relative z-10">
-                   <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white mb-6">
-                      <Star className="w-6 h-6" />
-                   </div>
-                   <h4 className="text-2xl font-bold text-slate-900 mb-4">Học bổng tài năng</h4>
-                   <p className="text-slate-600 mb-6">
-                     Hàng ngàn suất học bổng trị giá 100%, 70%, 50% học phí toàn khóa học dành cho học sinh có thành tích xuất sắc.
-                   </p>
-                   <ul className="space-y-3 mb-8">
-                      <li className="flex items-start gap-2 text-sm text-slate-700">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                        <span>Giải Nhất, Nhì, Ba kỳ thi HSG Quốc gia.</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-sm text-slate-700">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                        <span>Điểm thi THPT Quốc gia &gt; 27 điểm.</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-sm text-slate-700">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                        <span>Thành tích năng khiếu nổi bật.</span>
-                      </li>
-                   </ul>
-                   <button className="text-orange-600 font-bold text-sm hover:underline">Xem chi tiết quy chế học bổng &rarr;</button>
+            {/* Scholarship Card */}
+            <div className="bg-white p-8 rounded-3xl shadow-lg border border-orange-100 relative overflow-hidden group hover:shadow-xl transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white mb-6">
+                  <Star className="w-6 h-6" />
                 </div>
-             </div>
+                <h4 className="text-2xl font-bold text-slate-900 mb-4">Học bổng tài năng</h4>
+                <p className="text-slate-600 mb-6">
+                  Hàng ngàn suất học bổng trị giá 100%, 70%, 50% học phí toàn khóa học dành cho học sinh có thành tích xuất sắc.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2 text-sm text-slate-700">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                    <span>Giải Nhất, Nhì, Ba kỳ thi HSG Quốc gia.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-slate-700">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                    <span>Điểm thi THPT Quốc gia &gt; 27 điểm.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-slate-700">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                    <span>Thành tích năng khiếu nổi bật.</span>
+                  </li>
+                </ul>
+                <button className="text-orange-600 font-bold text-sm hover:underline">Xem chi tiết quy chế học bổng &rarr;</button>
+              </div>
+            </div>
 
-             {/* Admission Methods Card */}
-             <div className="bg-white p-8 rounded-3xl shadow-lg border border-blue-100 relative overflow-hidden group hover:shadow-xl transition-all">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="relative z-10">
-                   <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-6">
-                      <BookOpen className="w-6 h-6" />
-                   </div>
-                   <h4 className="text-2xl font-bold text-slate-900 mb-4">Phương thức xét tuyển</h4>
-                   <div className="space-y-6">
-                      <div>
-                         <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs">1</span>
-                            Xét học bạ THPT
-                         </h5>
-                         <p className="text-sm text-slate-600 pl-8">Đạt Top 40 SchoolRank (Chứng nhận xếp hạng học sinh THPT).</p>
-                      </div>
-                      <div>
-                         <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs">2</span>
-                            Điểm thi THPT Quốc gia
-                         </h5>
-                         <p className="text-sm text-slate-600 pl-8">Căn cứ theo ngưỡng chất lượng đầu vào của Đại học FPT.</p>
-                      </div>
-                      <div>
-                         <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs">3</span>
-                            Xét tuyển thẳng
-                         </h5>
-                         <p className="text-sm text-slate-600 pl-8">Dành cho thí sinh có chứng chỉ tiếng Anh quốc tế (IELTS, TOEFL...).</p>
-                      </div>
-                   </div>
+            {/* Admission Methods Card */}
+            <div className="bg-white p-8 rounded-3xl shadow-lg border border-blue-100 relative overflow-hidden group hover:shadow-xl transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-6">
+                  <BookOpen className="w-6 h-6" />
                 </div>
-             </div>
+                <h4 className="text-2xl font-bold text-slate-900 mb-4">Phương thức xét tuyển</h4>
+                <div className="space-y-6">
+                  <div>
+                    <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs">1</span>
+                      Xét học bạ THPT
+                    </h5>
+                    <p className="text-sm text-slate-600 pl-8">Đạt Top 40 SchoolRank (Chứng nhận xếp hạng học sinh THPT).</p>
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs">2</span>
+                      Điểm thi THPT Quốc gia
+                    </h5>
+                    <p className="text-sm text-slate-600 pl-8">Căn cứ theo ngưỡng chất lượng đầu vào của Đại học FPT.</p>
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs">3</span>
+                      Xét tuyển thẳng
+                    </h5>
+                    <p className="text-sm text-slate-600 pl-8">Dành cho thí sinh có chứng chỉ tiếng Anh quốc tế (IELTS, TOEFL...).</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -365,13 +365,13 @@ const FPTLandingPage = () => {
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
             <div className="md:w-5/12 bg-slate-900 p-8 md:p-12 text-white flex flex-col justify-between relative overflow-hidden">
               <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-              
+
               <div className="relative z-10">
                 <h3 className="text-2xl font-bold mb-4">Đăng ký tư vấn ngay</h3>
                 <p className="text-slate-300 mb-8 text-sm">
                   Để lại thông tin để nhận tư vấn chi tiết về lộ trình học, học bổng và cơ hội việc làm.
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-orange-500" />
@@ -391,15 +391,15 @@ const FPTLandingPage = () => {
               <div className="mt-8 relative z-10">
                 <p className="text-xs text-slate-500 uppercase tracking-wider mb-3">Kết nối với chúng tôi</p>
                 <div className="flex gap-4">
-                   <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
-                     <Facebook className="w-4 h-4" />
-                   </div>
-                   <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
-                     <Instagram className="w-4 h-4" />
-                   </div>
-                   <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
-                     <Youtube className="w-4 h-4" />
-                   </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
+                    <Facebook className="w-4 h-4" />
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
+                    <Instagram className="w-4 h-4" />
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
+                    <Youtube className="w-4 h-4" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -412,7 +412,7 @@ const FPTLandingPage = () => {
                   </div>
                   <h4 className="text-2xl font-bold text-slate-900 mb-2">Đăng ký thành công!</h4>
                   <p className="text-slate-600">Cảm ơn bạn đã quan tâm. Bộ phận tư vấn sẽ liên hệ lại trong thời gian sớm nhất.</p>
-                  <button 
+                  <button
                     onClick={() => setSubmitted(false)}
                     className="mt-6 text-orange-500 font-semibold hover:text-orange-600"
                   >
@@ -423,8 +423,8 @@ const FPTLandingPage = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Họ và tên</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       id="name"
                       name="name"
                       required
@@ -434,12 +434,12 @@ const FPTLandingPage = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">Số điện thoại</label>
-                      <input 
-                        type="tel" 
+                      <input
+                        type="tel"
                         id="phone"
                         name="phone"
                         required
@@ -451,8 +451,8 @@ const FPTLandingPage = () => {
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         id="email"
                         name="email"
                         required
@@ -466,7 +466,7 @@ const FPTLandingPage = () => {
 
                   <div>
                     <label htmlFor="major" className="block text-sm font-medium text-slate-700 mb-1">Ngành quan tâm</label>
-                    <select 
+                    <select
                       id="major"
                       name="major"
                       className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all bg-white"
@@ -482,7 +482,7 @@ const FPTLandingPage = () => {
                     </select>
                   </div>
 
-                  <button 
+                  <button
                     type="submit"
                     className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-1 mt-4"
                   >
@@ -508,11 +508,11 @@ const FPTLandingPage = () => {
                 <span className="font-bold text-xl text-white">Đại học FPT</span>
               </div>
               <p className="max-w-xs text-sm">
-                Trường Đại học FPT phân hiệu Hà Nội <br/>
+                Trường Đại học FPT phân hiệu Hà Nội <br />
                 Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
               </p>
             </div>
-            
+
             <div>
               <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Liên kết</h4>
               <ul className="space-y-2 text-sm">

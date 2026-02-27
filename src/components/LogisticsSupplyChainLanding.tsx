@@ -92,13 +92,13 @@ export function LogisticsSupplyChainLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20">
             {/* Left: Content */}
             <AnimatedSection>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-orange-500/50 text-orange-300 text-xs font-bold mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-white text-orange-300 text-xs font-bold mb-6">
                 <TrendingUp size={14} className="animate-bounce-soft" /> Ngành Ổn Định & Triển Vọng
               </div>
 
               <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6 text-white">
                 Khám Phá Logistics<br />
-                <span className="bg-gradient-to-r from-orange-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">& Supply Chain</span><br />
+                <span className="bg-gradient-to-r from-orange-400 to-red-600 bg-clip-text text-transparent">& Supply Chain</span><br />
                 Kết Nối Thế Giới!
               </h1>
 
@@ -114,7 +114,7 @@ export function LogisticsSupplyChainLanding() {
                   Bắt đầu sự nghiệp Logistics
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="px-8 py-4 border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 font-bold rounded-2xl transition-all hover:scale-105 flex items-center gap-2 group">
+                <button className="px-8 py-4 border-2 border-white text-cyan-400 hover:bg-cyan-400/10 font-bold rounded-2xl transition-all hover:scale-105 flex items-center gap-2 group">
                   <BarChart3 size={20} />
                   Xem lộ trình lương
                 </button>
@@ -139,7 +139,7 @@ export function LogisticsSupplyChainLanding() {
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-cyan-500/20 rounded-3xl blur-xl"></div>
                 <div className="relative p-8 rounded-3xl bg-slate-800/80 shadow-2xl border-2 border-orange-500/50">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-bold text-white">Hành Trình Hàng Hóa</h3>
+                    <h3 className="text-lg font-bold text-white">Hành Trình Hàng Hóa</h3>
                     <div className="w-3 h-3 bg-orange-400 rounded-full animate-pulse"></div>
                   </div>
 
@@ -148,8 +148,8 @@ export function LogisticsSupplyChainLanding() {
                     {[
                       { icon: Anchor, location: 'Cảng Sài Gòn', status: 'Khởi hành', time: '2 ngày', color: 'bg-gradient-to-r from-orange-500 to-orange-600' },
                       { icon: Ship, location: 'Tàu Biển', status: 'Vận chuyển', time: '15 ngày', color: 'bg-gradient-to-r from-cyan-400 to-cyan-500' },
-                      { icon: Truck, location: 'Cảng Đích', status: 'Nhập cảng', time: '3 ngày', color: 'bg-gradient-to-r from-emerald-400 to-emerald-500' },
-                      { icon: Package, location: 'Kho bãi', status: 'Kiểm hàng', time: '1 ngày', color: 'bg-gradient-to-r from-lime-400 to-lime-500' },
+                      { icon: Truck, location: 'Cảng Đích', status: 'Nhập cảng', time: '3 ngày', color: 'bg-gradient-to-r from-blue-500 to-blue-500' },
+                      { icon: Package, location: 'Kho bãi', status: 'Kiểm hàng', time: '1 ngày', color: 'bg-gradient-to-r from-pink-500 to-pink-500' },
                     ].map((step, i) => {
                       const Icon = step.icon;
                       return (
@@ -180,10 +180,10 @@ export function LogisticsSupplyChainLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { icon: Briefcase, number: 2900, label: 'Vị trí/tháng', suffix: '+', color: 'from-orange-500 to-orange-600' },
+              { icon: Briefcase, number: 2900, label: 'Vị trí/tháng', suffix: '+', color: 'from-orange-500 to-red-600' },
               { icon: DollarSign, number: 20, label: 'Lương khởi (triệu)', suffix: '-45M', color: 'from-cyan-400 to-cyan-500' },
-              { icon: TrendingUp, number: 32, label: 'Tăng trưởng/năm', suffix: '%', color: 'from-emerald-400 to-emerald-500' },
-              { icon: Globe, number: 120, label: 'Quốc gia hợp tác', suffix: '+', color: 'from-lime-400 to-lime-500' },
+              { icon: TrendingUp, number: 32, label: 'Tăng trưởng/năm', suffix: '%', color: 'from-blue-400 to-blue-500' },
+              { icon: Globe, number: 120, label: 'Quốc gia hợp tác', suffix: '+', color: 'from-yellow-400 to-orange-500' },
             ].map((stat, idx) => {
               const { count, ref } = useCounter(stat.number, 2000);
               const Icon = stat.icon;
@@ -211,9 +211,9 @@ export function LogisticsSupplyChainLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">
-              Tại Sao Chọn <span className="bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">Logistics & Supply Chain?</span>
+              Tại Sao Chọn <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Logistics & Supply Chain?</span>
             </h2>
-            <p className="text-lg text-cyan-100 max-w-2xl mx-auto">
+            <p className="text-lg text-white max-w-2xl mx-auto">
               Ngành này là trái tim của nền kinh tế – nơi dòng chảy hàng hóa không bao giờ ngừng
             </p>
           </AnimatedSection>
@@ -240,8 +240,8 @@ export function LogisticsSupplyChainLanding() {
               }
             ].map((card, idx) => {
               const Icon = card.icon;
-              const colors = ['from-orange-500/30 to-orange-600/30 border-orange-500/50', 'from-cyan-500/30 to-cyan-600/30 border-cyan-500/50', 'from-emerald-500/30 to-emerald-600/30 border-emerald-500/50'];
-              const iconColors = ['from-orange-500 to-orange-600', 'from-cyan-400 to-cyan-500', 'from-emerald-400 to-emerald-500'];
+              const colors = ['from-orange-500/30 to-orange-600/30 border-yellow-400', 'from-cyan-500/30 to-cyan-600/30 border-yellow-400', 'from-emerald-500/30 to-emerald-600/30 border-yellow-400'];
+              const iconColors = ['from-orange-500 to-yellow-600', 'from-cyan-400 to-cyan-500', 'from-orange-400 to-red-500'];
               return (
                 <AnimatedSection key={idx} delay={idx * 100}>
                   <div className={`group p-8 rounded-3xl bg-gradient-to-br ${colors[idx]} border-2 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-4`}>
@@ -252,7 +252,7 @@ export function LogisticsSupplyChainLanding() {
                     <p className="text-white mb-6">{card.desc}</p>
                     <ul className="space-y-2">
                       {card.items.map((item, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-cyan-100">
+                        <li key={i} className="flex items-center gap-2 text-sm text-white">
                           <CheckCircle2 size={16} className="text-lime-400 flex-shrink-0" />
                           {item}
                         </li>
@@ -272,7 +272,7 @@ export function LogisticsSupplyChainLanding() {
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">
               Từ Nền Tảng –<br />
-              <span className="bg-gradient-to-r from-orange-400 via-cyan-400 to-lime-400 bg-clip-text text-transparent">Đến Đỉnh Cao Quản Lý Chuỗi Cung Ứng</span>
+              <span className="bg-gradient-to-r from-orange-400 to-red-600 bg-clip-text text-transparent">Đến Đỉnh Cao Quản Lý Chuỗi Cung Ứng</span>
             </h2>
           </AnimatedSection>
 
@@ -280,8 +280,8 @@ export function LogisticsSupplyChainLanding() {
             {[
               { year: 'Năm 1', title: 'Nền Tảng', icon: BookOpen, color: 'from-orange-500 to-orange-600', items: ['Logistics cơ bản', '4PL, 3PL, vận tải', 'Excel & WMS'] },
               { year: 'Năm 2', title: 'Chuyên Sâu', icon: Package, color: 'from-cyan-400 to-cyan-500', items: ['Kho bãi & vận hành', 'Xuất nhập khẩu', 'SAP & Tableau'] },
-              { year: 'Năm 3', title: 'Công Nghệ', icon: Truck, color: 'from-emerald-400 to-emerald-500', items: ['AI & Big Data', 'IoT & Blockchain', 'Tối ưu chi phí'] },
-              { year: 'Năm 4', title: 'Sẵn Sàng', icon: Rocket, color: 'from-lime-400 to-lime-500', items: ['Toàn cầu hóa', 'Dự báo thị trường', 'Portfolio ready'] }
+              { year: 'Năm 3', title: 'Công Nghệ', icon: Truck, color: 'from-orange-400 to-yellow-500', items: ['AI & Big Data', 'IoT & Blockchain', 'Tối ưu chi phí'] },
+              { year: 'Năm 4', title: 'Sẵn Sàng', icon: Rocket, color: 'from-red-700 to-red-700', items: ['Toàn cầu hóa', 'Dự báo thị trường', 'Portfolio ready'] }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -294,8 +294,9 @@ export function LogisticsSupplyChainLanding() {
                     <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
                     <ul className="space-y-2">
                       {item.items.map((i, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm text-lime-100">
+                        <li key={idx} className="flex items-center text-white gap-2 text-sm text-lime-100">
                           <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
+                          <CheckCircle2 size={16} className="text-lime-400 flex-shrink-0" />
                           {i}
                         </li>
                       ))}
@@ -314,7 +315,7 @@ export function LogisticsSupplyChainLanding() {
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">
               Đầu Tư Hôm Nay –<br />
-              <span className="bg-gradient-to-r from-lime-400 to-cyan-400 bg-clip-text text-transparent">Lợi Nhuận Tương Lai</span>
+              <span className="bg-gradient-to-r from-orange-400 to-red-600 bg-clip-text text-transparent">Lợi Nhuận Tương Lai</span>
             </h2>
           </AnimatedSection>
 
@@ -330,11 +331,11 @@ export function LogisticsSupplyChainLanding() {
                 <div className="p-6 rounded-2xl bg-slate-800/80 border border-slate-700 hover:border-orange-500/50 transition-all hover:shadow-lg hover:shadow-orange-500/20">
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <h4 className="font-bold text-white">{item.role}</h4>
-                      <p className="text-sm text-cyan-300 font-semibold">{item.exp}</p>
+                      <h4 className="text-lg font-bold text-white">{item.role}</h4>
+                      <p className="text-sm text-orange-300 font-semibold">{item.exp}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-black bg-gradient-to-r from-lime-400 to-cyan-400 bg-clip-text text-transparent">
+                      <div className="text-2xl font-black bg-gradient-to-r text-white bg-clip-text text-transparent">
                         {item.salary}-{item.max}M₫
                       </div>
                     </div>
@@ -360,7 +361,7 @@ export function LogisticsSupplyChainLanding() {
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">
               Lựa Chọn Đúng Trường –<br />
-              <span className="bg-gradient-to-r from-orange-400 to-emerald-400 bg-clip-text text-transparent">Tương Lai Chắc Chắn</span>
+              <span className="bg-gradient-to-r from-yellow-400 to-red-600 bg-clip-text text-transparent">Tương Lai Chắc Chắn</span>
             </h2>
           </AnimatedSection>
 
@@ -382,7 +383,7 @@ export function LogisticsSupplyChainLanding() {
                 schools: ['APICS CPIM/CSCP', 'FIATA Diploma', 'Coursera Supply Chain']
               }
             ].map((group, idx) => {
-              const badgeColors = ['from-orange-500/30 border-orange-500/50', 'from-cyan-500/30 border-cyan-500/50', 'from-emerald-500/30 border-emerald-500/50'];
+              const badgeColors = ['from-orange-500 to-orange-600 border-orange-500', 'from-cyan-500 to-cyan-600 border-cyan-500', 'from-red-500 to-red-600 border-emerald-500'];
               const iconColors = ['text-orange-400', 'text-cyan-400', 'text-emerald-400'];
               return (
                 <AnimatedSection key={idx} delay={idx * 100}>
@@ -459,8 +460,8 @@ export function LogisticsSupplyChainLanding() {
                   <p className="text-white mb-6 leading-relaxed italic font-medium">"{item.quote}"</p>
                   <div className="border-t border-yellow-400/50 pt-4">
                     <p className="font-bold text-yellow-300 text-lg">{item.author}</p>
-                    <p className="text-sm text-cyan-200 font-semibold">{item.role}</p>
-                    <p className="text-xs text-yellow-200 mt-1">{item.age}</p>
+                    <p className="text-sm text-white font-semibold">{item.role}</p>
+                    <p className="text-xs text-white mt-1">{item.age}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -476,7 +477,7 @@ export function LogisticsSupplyChainLanding() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-white mb-4">
-              Các Câu Hỏi <span className="bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">Thường Gặp</span>
+              Các Câu Hỏi <span className="bg-gradient-to-r from-yellow-400 to-yellow-800 bg-clip-text ">Thường Gặp</span>
             </h2>
           </AnimatedSection>
 
@@ -517,7 +518,7 @@ export function LogisticsSupplyChainLanding() {
       </section>
 
       {/* SECTION 9: FINAL CTA */}
-      <section className="py-32 bg-gradient-to-br from-slate-900 via-orange-900/20 to-slate-900 text-white relative overflow-hidden border-t border-orange-500/30">
+      <section className="min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-orange-900/20 to-slate-900 text-white relative overflow-hidden border-t border-orange-500/30">
         <div className="absolute inset-0 opacity-20">
           {[...Array(25)].map((_, i) => (
             <div
@@ -537,7 +538,7 @@ export function LogisticsSupplyChainLanding() {
           <AnimatedSection>
             <h2 className="text-5xl md:text-6xl font-black leading-tight mb-8">
               Bắt Đầu Sự Nghiệp<br />
-              <span className="bg-gradient-to-r from-orange-400 via-cyan-400 to-lime-400 bg-clip-text text-transparent">Logistics Của Bạn?</span>
+              <span className="bg-gradient-to-r from-orange-400 to-white bg-clip-text text-transparent">Logistics Của Bạn?</span>
             </h2>
 
             <p className="text-xl text-white mb-12 max-w-2xl mx-auto leading-relaxed">
@@ -546,11 +547,11 @@ export function LogisticsSupplyChainLanding() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-              <button className="px-10 py-5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 font-bold text-white rounded-2xl transition-all hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/50 flex items-center justify-center gap-2 group text-lg">
+              <button className="px-10 py-5 bg-gradient-to-r border-2 border-white from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 font-bold text-white rounded-2xl transition-all hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/50 flex items-center justify-center gap-2 group text-lg">
                 <Target size={24} />
                 Xem Lộ Trình Học
               </button>
-              <button className="px-10 py-5 border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 font-bold rounded-2xl transition-all hover:scale-105 flex items-center justify-center gap-2 group text-lg">
+              <button className="px-10 py-5 border-2 border-white text-cyan-400 hover:bg-cyan-400/10 font-bold rounded-2xl transition-all hover:scale-105 flex items-center justify-center gap-2 group text-lg">
                 <Heart size={24} />
                 Tham Gia Ngay
               </button>
@@ -558,15 +559,15 @@ export function LogisticsSupplyChainLanding() {
 
             {/* Trust Badges */}
             <div className="flex flex-col sm:flex-row justify-center gap-6 text-sm">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-lime-500/20 to-lime-600/20 backdrop-blur border border-lime-500/50">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/20">
                 <CheckCircle2 size={16} className="text-lime-400" />
                 ✨ Miễn phí 100%
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 backdrop-blur border border-yellow-500/50">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/20">
                 <Star size={16} className="text-yellow-400 fill-yellow-400" />
                 ⭐ 4.9/5 từ 7.000+ học sinh
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-cyan-600/20 backdrop-blur border border-cyan-500/50">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/20">
                 <MapPin size={16} className="text-cyan-400" />
                 🌍 Cập nhật 2025
               </div>

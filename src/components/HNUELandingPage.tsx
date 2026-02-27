@@ -440,14 +440,14 @@ const HNUELandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 pt-16 pb-8">
+      <footer className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white border-t border-white/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div className="col-span-1 md:col-span-1">
                <div className="flex items-center gap-2 mb-6 text-blue-900 font-bold text-xl uppercase tracking-wider">
                   <BookOpen size={24} className="text-orange-500" /> HNUE
                </div>
-               <p className="text-slate-500 text-sm leading-relaxed mb-6">
+               <p className="text-white text-sm leading-relaxed mb-6">
                  Trường Đại học Sư phạm Hà Nội - Cái nôi của ngành sư phạm cả nước, nơi khơi nguồn tri thức và kiến tạo tương lai cho thế hệ trẻ Việt Nam.
                </p>
                <img src="https://images.unsplash.com/photo-1767595789539-cd012af80914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb24lMjBncmFkdWF0aW9uJTIwY2VyZW1vbnklMjB1bml2ZXJzaXR5fGVufDF8fHx8MTc3MTQ4MjczMXww&ixlib=rb-4.1.0&q=80&w=1080" className="h-24 w-full object-cover rounded opacity-80" alt="Graduation" />
@@ -457,20 +457,20 @@ const HNUELandingPage = () => {
               <div>
                 <h4 className="font-bold text-blue-900 mb-6 text-sm uppercase tracking-wider border-b-2 border-orange-200 inline-block pb-1">Về Nhà trường</h4>
                 <ul className="space-y-3 text-sm text-slate-600">
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Lịch sử phát triển</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Ban Giám hiệu</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Đội ngũ giảng viên</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Cơ sở vật chất</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Công khai giáo dục</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Lịch sử phát triển</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Ban Giám hiệu</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Đội ngũ giảng viên</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Cơ sở vật chất</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Công khai giáo dục</li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-bold text-blue-900 mb-6 text-sm uppercase tracking-wider border-b-2 border-orange-200 inline-block pb-1">Tin tức & Sự kiện</h4>
                 <ul className="space-y-3 text-sm text-slate-600">
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Tin hoạt động</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Tin đào tạo</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Hợp tác quốc tế</li>
-                  <li className="hover:text-orange-600 cursor-pointer transition-colors">Thông báo chung</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Tin hoạt động</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Tin đào tạo</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Hợp tác quốc tế</li>
+                  <li className="text-white hover:text-orange-600 cursor-pointer transition-colors">Thông báo chung</li>
                 </ul>
               </div>
             </div>
@@ -479,16 +479,16 @@ const HNUELandingPage = () => {
               <h4 className="font-bold text-blue-900 mb-6 text-sm uppercase tracking-wider border-b-2 border-orange-200 inline-block pb-1">Thống kê</h4>
               <div className="space-y-4">
                  <div className="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
-                    <span className="text-slate-500">Giảng viên</span>
-                    <span className="font-bold text-blue-900">800+</span>
+                    <span className="text-white">Giảng viên</span>
+                    <span className="font-bold text-orange-500">800+</span>
                  </div>
                  <div className="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
-                    <span className="text-slate-500">Sinh viên</span>
-                    <span className="font-bold text-blue-900">20.000+</span>
+                    <span className="text-white">Sinh viên</span>
+                    <span className="font-bold text-orange-500">20.000+</span>
                  </div>
                  <div className="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
-                    <span className="text-slate-500">Tiến sĩ/GS/PGS</span>
-                    <span className="font-bold text-blue-900">300+</span>
+                    <span className="text-white">Tiến sĩ/GS/PGS</span>
+                    <span className="font-bold text-orange-500">300+</span>
                  </div>
               </div>
             </div>

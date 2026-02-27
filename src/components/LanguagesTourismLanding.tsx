@@ -142,8 +142,8 @@ export function LanguagesTourismLanding() {
                     {[
                       { icon: Globe, label: 'Ngôn Ngữ', color: 'from-purple-500 to-pink-500' },
                       { icon: Plane, label: 'Du Lịch', color: 'from-cyan-500 to-teal-500' },
-                      { icon: Users, label: 'Giao Tiếp', color: 'from-pink-500 to-purple-500' },
-                      { icon: Compass, label: 'Khám Phá', color: 'from-teal-500 to-cyan-500' },
+                      { icon: Users, label: 'Giao Tiếp', color: 'from-red-500 to-blue-500' },
+                      { icon: Compass, label: 'Khám Phá', color: 'from-yellow-500 to-orange-600' },
                     ].map((item, i) => {
                       const Icon = item.icon;
                       return (
@@ -496,7 +496,7 @@ export function LanguagesTourismLanding() {
       </section>
 
       {/* SECTION 8: FINAL CTA */}
-      <section className="py-32 bg-gradient-to-br from-purple-600 via-pink-600 to-cyan-600 text-white relative overflow-hidden border-t-4 border-purple-400">
+      <section className="min-h-screen flex items-center  bg-gradient-to-br from-purple-600 via-pink-600 to-cyan-600 text-white relative overflow-hidden border-t-4 border-purple-400">
         <div className="absolute inset-0 opacity-20">
           {[...Array(25)].map((_, i) => (
             <div

@@ -2,18 +2,18 @@ import { GraduationCap, Mail, Phone, MapPin, Facebook, Youtube, Instagram, Twitt
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-slate-950 to-black text-slate-400 border-t border-slate-900 font-sans relative overflow-hidden">
+    <footer className="bg-gradient-to-b from-blue-950 to-green-700 text-slate-300 border-t border-blue-900 font-sans relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"></div>
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-500/5 rounded-full blur-[100px]"></div>
-      
+
       {/* Top gradient line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
-          
+
           {/* Brand Column - Enhanced */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6 text-white group cursor-pointer">
@@ -25,8 +25,8 @@ export function Footer() {
                 <span className="text-xs text-slate-500">Định hướng tương lai</span>
               </div>
             </div>
-            <p className="text-slate-400 text-base leading-relaxed mb-8 max-w-sm">
-              Nền tảng ôn thi và tư vấn tuyển sinh số 1 Việt Nam. Đồng hành cùng <span className="text-white font-semibold">500,000+</span> học sinh THPT trên con đường chinh phục cánh cổng đại học mơ ước.
+            <p className="text-gray-200 text-base leading-relaxed mb-8 max-w-sm">
+              Nền tảng ôn thi và tư vấn tuyển sinh số 1 Việt Nam. Đồng hành cùng <span className="text-black font-extrabold text-2xl">500,000+</span> học sinh THPT trên con đường chinh phục cánh cổng đại học mơ ước.
             </p>
             <div className="flex gap-3">
               {[
@@ -40,18 +40,18 @@ export function Footer() {
                 </a>
               ))}
             </div>
-            
+
             {/* Trust Badge */}
             <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 bg-slate-900/80 rounded-full border border-slate-800">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-xs font-medium text-slate-400">Hoạt động 24/7</span>
+              <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+              <span className="text-lg font-medium text-yellow-400">Hoạt động 24/7</span>
             </div>
           </div>
 
           {/* Links Column 1 - Enhanced */}
           <div>
-            <h3 className="font-bold text-white mb-6 uppercase tracking-wider text-xs flex items-center gap-2">
-              <Sparkles size={12} className="text-blue-400" /> Về Chúng Tôi
+            <h3 className="font-bold text-blue mb-6 uppercase tracking-wider text-lg flex items-center gap-2">
+              <Sparkles size={20} className="text-blue-400" /> Về Chúng Tôi
             </h3>
             <ul className="space-y-4 text-sm font-medium">
               {['Giới thiệu', 'Đội ngũ chuyên gia', 'Đối tác chiến lược', 'Tuyển dụng'].map((item, i) => (
@@ -68,8 +68,8 @@ export function Footer() {
 
           {/* Links Column 2 - Enhanced */}
           <div>
-            <h3 className="font-bold text-white mb-6 uppercase tracking-wider text-xs flex items-center gap-2">
-              <Zap size={12} className="text-yellow-400" /> Hỗ Trợ
+            <h3 className="font-bold text-blue mb-6 uppercase tracking-wider text-lg flex items-center gap-2">
+              <Zap size={20} className="text-yellow-400" /> Hỗ Trợ
             </h3>
             <ul className="space-y-4 text-sm font-medium">
               {['Trung tâm trợ giúp', 'Điều khoản sử dụng', 'Chính sách bảo mật', 'Báo cáo lỗi'].map((item, i) => (
@@ -86,32 +86,34 @@ export function Footer() {
 
           {/* Newsletter Column - Enhanced */}
           <div>
-            <h3 className="font-bold text-white mb-6 uppercase tracking-wider text-xs flex items-center gap-2">
-              <Mail size={12} className="text-purple-400" /> Đăng Ký Bản Tin
+            <h3 className="font-bold text-blue mb-6 uppercase tracking-wider text-lg flex items-center gap-2">
+              <Mail size={20} className="text-purple-400" /> Đăng Ký Bản Tin
             </h3>
-            <p className="text-xs text-slate-500 mb-4 leading-relaxed">
+            <p className="text-xs text-gray-200 mb-4 leading-relaxed">
               Nhận thông báo mới nhất về lịch thi, điểm chuẩn và các bí kíp ôn thi độc quyền.
             </p>
             <div className="relative group">
-              <input 
-                type="email" 
-                placeholder="Email của bạn..." 
-                className="w-full bg-slate-900 border-2 border-slate-800 rounded-xl py-3.5 pl-4 pr-14 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-600 group-hover:border-slate-700"
+              <input
+                type="email"
+                placeholder="Email của bạn..."
+                className="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl pl-4 pr-14 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
               />
-              <button className="absolute right-1.5 top-1.5 bottom-1.5 w-10 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg flex items-center justify-center transition-all hover:scale-105 shadow-lg shadow-blue-500/20">
+              <button
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg flex items-center justify-center transition-all hover:scale-105 shadow-md"
+              >
                 <ArrowRight size={16} />
               </button>
             </div>
-            
+
             {/* Contact Info */}
             <div className="mt-6 space-y-3">
-              <div className="flex items-center gap-3 text-xs text-slate-500 hover:text-slate-300 transition-colors cursor-pointer group">
-                <Phone size={14} className="text-blue-500 group-hover:scale-110 transition-transform" />
+              <div className="flex items-center gap-3 text-xs text-gray-200 hover:text-slate-300 transition-colors cursor-pointer group">
+                <Phone size={17} className="text-blue-500 group-hover:scale-110 transition-transform" />
                 <span>1800 1234 (Miễn phí)</span>
               </div>
-              <div className="flex items-center gap-3 text-xs text-slate-500 hover:text-slate-300 transition-colors cursor-pointer group">
-                <Mail size={14} className="text-purple-500 group-hover:scale-110 transition-transform" />
-                <span>support@tuyensinh2026.vn</span>
+              <div className="flex items-center gap-3 text-xs text-gray-200 hover:text-slate-300 transition-colors cursor-pointer group">
+                <Mail size={17} className="text-purple-500 group-hover:scale-110 transition-transform" />
+                <span>Support@tuyensinh2026.vn</span>
               </div>
             </div>
           </div>
@@ -124,10 +126,10 @@ export function Footer() {
             &copy; 2026 Tuyển Sinh 2026. All rights reserved.
           </p>
           <div className="flex items-center gap-1 group">
-             Made with 
-             <Heart size={12} className="text-red-500 fill-red-500 group-hover:scale-125 group-hover:animate-pulse transition-transform" /> 
-             in <span className="text-white font-semibold ml-1">Vietnam</span>
-             <span className="ml-2 text-2xl group-hover:animate-bounce" style={{animationDuration: '1s'}}>🇻🇳</span>
+            Made with
+            <Heart size={12} className="text-red-500 fill-red-500 group-hover:scale-125 group-hover:animate-pulse transition-transform" />
+            in <span className="text-white text-lg font-semibold ml-1">Vietnam</span>
+            <span className="ml-2 text-2xl  group-hover:animate-bounce" style={{ animationDuration: '1s' }}>🇻🇳</span>
           </div>
         </div>
       </div>

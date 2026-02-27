@@ -98,7 +98,7 @@ export function EconomicsFinanceLanding() {
 
               <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6 text-slate-900">
                 Quản Lý Tài Chính<br />
-                <span className="bg-gradient-to-r from-red-600 via-orange-500 to-green-600 bg-clip-text text-transparent">Thông Minh</span><br />
+                <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">Thông Minh</span><br />
                 Kiến Tạo Tương Lai Phồn Thịnh!
               </h1>
 
@@ -141,9 +141,9 @@ export function EconomicsFinanceLanding() {
                   <div className="grid grid-cols-2 gap-6">
                     {[
                       { icon: DollarSign, label: 'Tài chính', color: 'from-red-500 to-orange-500' },
-                      { icon: BarChart3, label: 'Đầu tư', color: 'from-green-500 to-teal-500' },
-                      { icon: Building2, label: 'Ngân hàng', color: 'from-orange-500 to-red-500' },
-                      { icon: PieChart, label: 'Kế toán', color: 'from-teal-500 to-green-500' },
+                      { icon: BarChart3, label: 'Đầu tư', color: 'from-yellow-500 to-red-600' },
+                      { icon: Building2, label: 'Ngân hàng', color: 'from-red-500 to-pink-600' },
+                      { icon: PieChart, label: 'Kế toán', color: 'from-purple-500 to-blue-500' },
                     ].map((item, i) => {
                       const Icon = item.icon;
                       return (
@@ -171,7 +171,7 @@ export function EconomicsFinanceLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-slate-900 mb-4">
-              💡 Tại sao chọn ngành <span className="bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent">Kinh Tế & Tài Chính?</span>
+              💡 Tại sao chọn ngành <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Kinh Tế & Tài Chính?</span>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               Ngành nghề không bao giờ lỗi thời – Nền tảng của nền kinh tế hiện đại.
@@ -184,19 +184,19 @@ export function EconomicsFinanceLanding() {
                 icon: Zap,
                 title: 'Luôn Luôn Cần Nguồn Nhân Lực',
                 desc: 'Tất cả doanh nghiệp đều cần Kế toán, Tài chính hoặc chuyên gia Ngân hàng',
-                color: 'from-red-500/30 to-red-600/30 border-red-300'
+                color: 'from-red-500 to-blue-600 border-red-300'
               },
               {
                 icon: Target,
                 title: 'Đa Dạng Cơ Hội Ứng Dụng',
                 desc: 'Chuyên ngành rộng, ứng dụng trong mọi lĩnh vực kinh doanh',
-                color: 'from-orange-500/30 to-orange-600/30 border-orange-300'
+                color: 'from-orange-500 to-yellow-400 border-orange-300'
               },
               {
                 icon: TrendingUp,
                 title: 'Lộ Trình Tăng Trưởng Nhanh',
                 desc: 'Tăng thu nhập qua các vị trí từ phân tích → quản lý quỹ → CFO',
-                color: 'from-green-500/30 to-green-600/30 border-green-300'
+                color: 'from-red-500 to-purple-600 border-purple-300'
               }
             ].map((card, idx) => {
               const Icon = card.icon;
@@ -217,14 +217,14 @@ export function EconomicsFinanceLanding() {
       </section>
 
       {/* SECTION 3: STATS */}
-      <section className="py-16 bg-gradient-to-r from-red-100/50 via-orange-100/50 to-green-100/50 border-y border-red-300/30">
+      <section className="py-16 bg-gradient-to-r from-red-100  to-green-100 border-y border-red-300/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { icon: Briefcase, number: 4100, label: 'Vị trí/tháng', suffix: '+', color: 'from-red-500 to-red-600' },
               { icon: DollarSign, number: 22, label: 'Lương khởi (triệu)', suffix: '-48M', color: 'from-orange-500 to-orange-600' },
-              { icon: TrendingUp, number: 85, label: 'Tăng cơ hội (%)', suffix: '', color: 'from-green-500 to-green-600' },
-              { icon: Building2, number: 500, label: 'Doanh nghiệp', suffix: '+', color: 'from-teal-500 to-teal-600' },
+              { icon: TrendingUp, number: 85, label: 'Tăng cơ hội (%)', suffix: '', color: 'from-yellow-500 to-yellow-500' },
+              { icon: Building2, number: 500, label: 'Doanh nghiệp', suffix: '+', color: 'from-teal-900 to-teal-600' },
             ].map((stat, idx) => {
               const { count, ref } = useCounter(stat.number, 2000);
               const Icon = stat.icon;
@@ -251,7 +251,7 @@ export function EconomicsFinanceLanding() {
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-slate-900 mb-4">
               Hành trình 4 năm từ<br />
-              <span className="bg-gradient-to-r from-red-600 via-orange-600 to-green-600 bg-clip-text text-transparent">Zero đến CFO</span>
+              <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">Zero đến CFO</span>
             </h2>
           </AnimatedSection>
 
@@ -261,25 +261,25 @@ export function EconomicsFinanceLanding() {
                 year: 'Năm 1',
                 title: 'Kiến Thức Cơ Bản',
                 items: ['Kế toán tài chính cơ bản', 'Excel & MISA', 'Phân tích báo cáo tài chính'],
-                color: 'from-red-500 to-red-600',
+                color: 'from-red-500 to-red-500',
               },
               {
                 year: 'Năm 2',
                 title: 'Chuyên Sâu Kế Toán',
                 items: ['Quản lý thu chi', 'SAP & QuickBooks', 'Lập kế hoạch ngân sách'],
-                color: 'from-orange-500 to-orange-600',
+                color: 'from-orange-500 to-orange-500',
               },
               {
                 year: 'Năm 3',
                 title: 'Phân Tích Chuyên Nghiệp',
                 items: ['Phân tích tài chính nâng cao', 'Phân tích thị trường vốn', 'Danh mục đầu tư'],
-                color: 'from-green-500 to-green-600',
+                color: 'from-purple-500 to-purple-500',
               },
               {
                 year: 'Năm 4',
                 title: 'Quản Lý Chiến Lược',
                 items: ['Lập dự toán chi tiêu', 'Tối ưu vốn', 'Quản lý tài chính toàn diện'],
-                color: 'from-teal-500 to-teal-600',
+                color: 'from-yellow-500 to-teal-600',
               }
             ].map((item, idx) => {
               return (
@@ -312,7 +312,7 @@ export function EconomicsFinanceLanding() {
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-slate-900 mb-4">
               Mức lương trong ngành –<br />
-              <span className="bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent">Thu nhập đáng mơ ước</span>
+              <span className="bg-gradient-to-r from-red-600 to-orange-700 bg-clip-text text-transparent">Thu nhập đáng mơ ước</span>
             </h2>
           </AnimatedSection>
 
@@ -331,7 +331,7 @@ export function EconomicsFinanceLanding() {
                       <p className="text-sm font-semibold text-slate-700">{item.exp}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-black bg-gradient-to-r from-red-600 via-orange-600 to-green-600 bg-clip-text text-transparent drop-shadow-sm">
+                      <div className="text-2xl font-black bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent drop-shadow-sm">
                         {item.salary}-{item.max}M₫
                       </div>
                     </div>
@@ -357,7 +357,7 @@ export function EconomicsFinanceLanding() {
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-slate-900 mb-4">
               Nơi đào tạo tốt nhất<br />
-              <span className="bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent">cho tài chính hàng đầu</span>
+              <span className="bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">cho tài chính hàng đầu</span>
             </h2>
           </AnimatedSection>
 
@@ -452,11 +452,11 @@ export function EconomicsFinanceLanding() {
                       <Star key={i} size={16} className="fill-yellow-300 text-yellow-300" />
                     ))}
                   </div>
-                  <p className="text-white mb-6 leading-relaxed italic font-medium">"{item.quote}"</p>
+                  <p className="text-black mb-6 leading-relaxed italic font-medium">"{item.quote}"</p>
                   <div className="border-t border-white/30 pt-4">
                     <p className="font-bold text-yellow-200 text-lg">{item.author}</p>
                     <p className="text-sm text-teal-100 font-semibold">{item.role}</p>
-                    <p className="text-xs text-pink-100 mt-1">{item.age}</p>
+                    <p className="text-xs mt-1">{item.age}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -466,7 +466,7 @@ export function EconomicsFinanceLanding() {
       </section>
 
       {/* SECTION 8: FINAL CTA */}
-      <section className="py-32 bg-gradient-to-br from-red-600 via-orange-600 to-green-600 text-white relative overflow-hidden border-t-4 border-red-400">
+      <section className="min-h-screen flex items-center bg-gradient-to-br from-red-600 via-orange-600 to-green-600 text-white relative overflow-hidden border-t-4 border-red-400">
         <div className="absolute inset-0 opacity-20">
           {[...Array(25)].map((_, i) => (
             <div

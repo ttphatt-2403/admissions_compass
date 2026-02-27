@@ -359,13 +359,13 @@ export function DesignCreativeLanding() {
                 badge: '🏛️ Trường Học Hàng Đầu',
                 title: 'Các Trường Đại Học Uy Tín',
                 items: ['ĐH Kiến Trúc Hà Nội: Đồ họa & Thiết kế Nội thất', 'RMIT Việt Nam: Đồ họa & Đa phương tiện', 'Arena Multimedia: Đa phương tiện & Motion'],
-                color: 'from-purple-500/20 border-purple-300'
+                color: 'from-purple-500/20 border-orange-300'
               },
               {
                 badge: '💻 Khóa Học Online',
                 title: 'Các Nền Tảng Quốc Tế',
                 items: ['Coursera: UI/UX Design', 'LinkedIn Learning: Motion Graphics', 'Udemy: Adobe After Effects'],
-                color: 'from-pink-500/20 border-pink-300'
+                color: 'from-pink-500/20 border-orange-300'
               },
               {
                 badge: '🎓 Chứng Chỉ HOT',
@@ -542,7 +542,7 @@ export function DesignCreativeLanding() {
       </section>
 
       {/* SECTION 9: FINAL CTA */}
-      <section className="py-32 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-600 text-white relative overflow-hidden border-t-4 border-purple-400">
+      <section className="min-h-screen flex items-center bg-gradient-to-br from-purple-600 via-pink-600 to-orange-600 text-white relative overflow-hidden border-t-4 border-purple-400">
         <div className="absolute inset-0 opacity-20">
           {[...Array(25)].map((_, i) => (
             <div

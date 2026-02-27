@@ -274,7 +274,7 @@ console.log("Ready?");
             <h2 className="text-4xl font-black text-slate-900 mb-4">
               Từ Zero đến{' '}
               {/* FIX: nền sáng → dùng gradient text thay vì text-blue-100 */}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 font-black">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500 font-black">
                 Hero
               </span>{' '}
               trong 4 năm
@@ -283,10 +283,10 @@ console.log("Ready?");
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { year: 'Năm 1', title: 'Nền Tảng', icon: BookOpen, color: 'from-blue-500 to-cyan-500', items: ['Toán cao cấp', 'Lập trình cơ bản', 'Thuật toán'] },
+              { year: 'Năm 1', title: 'Nền Tảng', icon: BookOpen, color: 'from-blue-500 to-blue-500', items: ['Toán cao cấp', 'Lập trình cơ bản', 'Thuật toán'] },
               { year: 'Năm 2', title: 'Chuyên Sâu', icon: Code2, color: 'from-purple-500 to-blue-500', items: ['Cơ sở dữ liệu', 'Web development', 'OOP'] },
-              { year: 'Năm 3', title: 'Chuyên Ngành', icon: Cpu, color: 'from-pink-500 to-purple-500', items: ['Chọn track: AI/Web', 'Framework', 'Thực tập'] },
-              { year: 'Năm 4', title: 'Sẵn Sàng', icon: Rocket, color: 'from-orange-500 to-red-500', items: ['Đồ án tốt nghiệp', 'Chứng chỉ', 'Portfolio'] }
+              { year: 'Năm 3', title: 'Chuyên Ngành', icon: Cpu, color: 'from-yellow-500 to-pink-500', items: ['Chọn track: AI/Web', 'Framework', 'Thực tập'] },
+              { year: 'Năm 4', title: 'Sẵn Sàng', icon: Rocket, color: 'from-orange-500 to-orange-500', items: ['Đồ án tốt nghiệp', 'Chứng chỉ', 'Portfolio'] }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -322,7 +322,7 @@ console.log("Ready?");
             <h2 className="text-4xl font-black text-slate-900 mb-4">
               Đầu tư cho tương lai –<br />
               {/* FIX: đổi text-emerald-100 (quá nhạt trên nền trắng) → gradient text emerald */}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600 font-black">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-black">
                 Thu hoạch xứng đáng
               </span>
             </h2>
@@ -391,7 +391,7 @@ console.log("Ready?");
               {
                 badge: '🏆 Top Tier',
                 title: 'Nhóm Top (Cạnh tranh cao)',
-                badgeColor: 'bg-amber-100 text-amber-700',
+                badgeColor: 'bg-green-100 text-green-700',
                 schools: ['Bách Khoa Hà Nội', 'UIT – ĐHQGHN', 'ĐHKHTN TP.HCM', 'Bách Khoa TP.HCM']
               },
               {
@@ -408,7 +408,7 @@ console.log("Ready?");
               }
             ].map((group, idx) => (
               <AnimatedSection key={idx} delay={idx * 100}>
-                <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 hover:border-blue-500/50 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+                <div className="p-8 rounded-3xl bg-slate-50 border-2 border-slate-200 hover:border-blue-500/50 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
                   <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-4 ${group.badgeColor}`}>
                     {group.badge}
                   </div>
@@ -430,14 +430,14 @@ console.log("Ready?");
 
       {/* ===================== SECTION 7: TESTIMONIALS ===================== */}
       {/* Nền dark → text sáng OK, giữ nguyên các màu này */}
-      <section className="py-24 bg-gradient-to-br from-blue-900 to-purple-900 text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-blue-900 to-purple-900 text-black relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px]"></div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black mb-4">
               Họ đã thành công –<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-black">
                 Bạn thì sao?
               </span>
             </h2>
@@ -474,8 +474,8 @@ console.log("Ready?");
                   <p className="text-slate-100 mb-6 leading-relaxed italic">"{item.quote}"</p>
                   <div className="border-t border-white/10 pt-4">
                     <p className="font-bold text-white">{item.author}</p>
-                    <p className="text-sm text-cyan-300">{item.role}</p>
-                    <p className="text-xs text-slate-400 mt-1">{item.age}</p>
+                    <p className="text-sm text-cyan-300 font-bold">{item.role}</p>
+                    <p className="text-sm text-cyan mt-1">{item.age}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -490,7 +490,7 @@ console.log("Ready?");
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-black text-slate-900 mb-4">
               Tại sao CNTT & AI{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">
                 Vượt Trội?
               </span>
             </h2>
@@ -518,8 +518,8 @@ console.log("Ready?");
                     <td className="px-6 py-4 font-semibold text-slate-800">{row.criteria}</td>
                     {/* FIX: thêm bg-blue-50/40 để phân biệt cột CNTT & AI */}
                     <td className="px-6 py-4 text-center font-bold text-blue-700 bg-blue-50/40">{row.cnit}</td>
-                    <td className="px-6 py-4 text-center text-slate-600">{row.other}</td>
-                    <td className="px-6 py-4 text-center text-slate-600">{row.business}</td>
+                    <td className="px-6 py-4  font-bold text-center text-slate-600">{row.other}</td>
+                    <td className="px-6 py-4 font-bold text-center text-slate-600">{row.business}</td>
                   </tr>
                 ))}
               </tbody>
@@ -579,7 +579,7 @@ console.log("Ready?");
       </section>
 
       {/* ===================== SECTION 10: CTA FINAL ===================== */}
-      <section className="py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
+      <section className="min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           {[...Array(30)].map((_, i) => (
             <div
@@ -595,9 +595,9 @@ console.log("Ready?");
           ))}
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <AnimatedSection>
-            <h2 className="text-5xl md:text-6xl font-black leading-tight mb-8">
+            <h2 className="text-3xl md:text-5xl font-black leading-tight mb-8">
               Bắt đầu hành trình<br />
               {/* FIX: nền dark → text-cyan-300 thay vì text-cyan-100 */}
               <span className="text-cyan-300 font-black">công nghệ</span> của bạn<br />

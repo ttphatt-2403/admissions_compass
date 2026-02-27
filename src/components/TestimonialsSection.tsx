@@ -214,18 +214,27 @@ export function TestimonialsSection() {
             <span className="w-12 h-px bg-slate-200"></span>
           </p>
           <div className="flex justify-center gap-16 flex-wrap">
-            {['VTV7', 'Dantri', 'VnExpress', 'Kenh14', 'TuoiTre'].map((brand, i) => (
-              <span
+            {[
+              { name: 'VTV7', href: 'https://vtv.vn/video/thuc-day-cung-vtv7-31-12-2019-413625.htm' },
+              { name: 'Dantri', href: 'https://dantri.com.vn/' },
+              { name: 'VnExpress', href: 'https://vnexpress.net/' },
+              { name: 'Kenh14', href: 'https://kenh14.vn/' },
+              { name: 'TuoiTre', href: 'https://tuoitre.vn/' }
+            ].map((brand, i) => (
+              <a
                 key={i}
-                className="text-2xl font-black text-slate-300 hover:text-slate-800 hover:scale-110 transition-all duration-300 cursor-pointer"
+                href={brand.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-2xl font-black text-blue-900 hover:text-blue hover:scale-110 transition-all duration-300 cursor-pointer"
                 style={{ transitionDelay: `${i * 50}ms` }}
               >
-                {brand}
-              </span>
+                {brand.name}
+              </a>
             ))}
           </div>
         </div>
-
+        
       </div>
     </section>
   );

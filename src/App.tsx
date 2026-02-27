@@ -546,7 +546,7 @@ export default function App() {
 
                     {/* Floating Card 1: Notification - Enhanced */}
                     <div className="absolute top-20 left-0 glass p-4 rounded-2xl shadow-xl flex items-center gap-3 w-64 animate-float">
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200">
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200">
                         <CheckCircle2 size={24} />
                       </div>
                       <div>
@@ -657,10 +657,10 @@ export default function App() {
                     className="group md:col-span-1 md:row-span-2 rounded-[32px] overflow-hidden cursor-pointer border border-slate-100 bg-white relative hover:shadow-xl hover:-translate-y-2 transition-all card-3d"
                   >
                     {/* Background gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-transparent to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="group md:col-span-1 md:row-span-2 rounded-[32px] cursor-pointer border border-slate-100 bg-white hover:bg-gradient-to-br hover:from-purple-50 hover:to-blue-50 hover:shadow-xl hover:-translate-y-2 transition-all"></div>
 
                     <div className="p-6 h-full flex flex-col relative z-10">
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 text-white rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-200 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                      <div className="relative z-10 w-12 h-12 bg-purple-600 text-white rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md">
                         <Globe size={24} />
                       </div>
                       <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-purple-600 transition-colors">Tra Cứu Trường</h3>
@@ -690,11 +690,11 @@ export default function App() {
                   {/* Card 3: Calculator */}
                   <div
                     onClick={() => setActiveTab('calculator')}
-                    className="group rounded-[32px] overflow-hidden cursor-pointer border border-slate-100 bg-white p-6 flex flex-col justify-between hover:bg-gradient-to-br hover:from-green-50 hover:to-emerald-50 hover:-translate-y-2 hover:shadow-xl transition-all card-3d"
+                    className="group rounded-[32px] cursor-pointer border border-slate-200 bg-white p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-green-200/40"
                   >
                     <div className="flex justify-between items-start">
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg shadow-green-200/50">
-                        <Calculator size={24} />
+                      <div className="relative z-10 w-12 h-12 bg-green-600 text-white rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-md">
+                        <Calculator size={30} strokeWidth={2.5} />
                       </div>
                       <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:rotate-45 transition-all">
                         <ArrowRight size={14} className="text-green-600" />
@@ -712,8 +712,8 @@ export default function App() {
                     className="group rounded-[32px] overflow-hidden cursor-pointer border border-slate-100 bg-white p-6 flex flex-col justify-between hover:bg-gradient-to-br hover:from-orange-50 hover:to-amber-50 hover:-translate-y-2 hover:shadow-xl transition-all card-3d"
                   >
                     <div className="flex justify-between items-start">
-                      <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-amber-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg shadow-orange-200/50">
-                        <Map size={24} />
+                      <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all">
+                        <Map size={30} />
                       </div>
                       <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:rotate-45 transition-all">
                         <ArrowRight size={14} className="text-orange-600" />
@@ -814,10 +814,10 @@ export default function App() {
                     },
                     {
                       name: 'Logistics & Supply Chain',
-                      icon: <Map size={28} />,
+                      icon: <Map size={28} strokeWidth={2.5}/>,
                       color: 'text-white',
-                      bg: 'bg-gradient-to-br from-green-500 to-green-700',
-                      glow: 'shadow-green-400',
+                      bg: 'bg-gradient-to-br from-yellow-500 to-yellow-500',
+                      glow: 'shadow-yellow-400',
                       desc: 'Vận tải, Kho bãi, Nhập khẩu',
                       jobs: '2,900+',
                       salary: '20-45M',
@@ -849,7 +849,7 @@ export default function App() {
                       name: 'Ngoại Ngữ & Du Lịch',
                       icon: <Globe size={28} />,
                       color: 'text-white',
-                      bg: 'bg-gradient-to-br from-indigo-500 to-indigo-700',
+                      bg: 'bg-gradient-to-br from-indigo-600 to-indigo-700',
                       glow: 'shadow-indigo-400',
                       desc: 'Anh, Hàn, Nhật, Du lịch',
                       jobs: '1,800+',

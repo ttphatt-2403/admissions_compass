@@ -98,7 +98,7 @@ export function MarketingSalesLanding() {
 
               <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6">
                 Vượt Mọi Giới Hạn –<br />
-                <span className="text-orange-100">Trở Thành Chuyên Gia</span><br />
+                <span className="text-orange-500">Trở Thành Chuyên Gia</span><br />
                 Marketing & Sales!
               </h1>
 
@@ -109,7 +109,7 @@ export function MarketingSalesLanding() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="px-8 py-4 bg-gradient-to-r from-orange-500 to-rose-600 hover:from-orange-600 hover:to-rose-700 text-white font-bold rounded-2xl transition-all hover:scale-110 hover:shadow-lg hover:shadow-orange-600/50 flex items-center gap-2 group">
+                <button className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-orange-600 hover:to-rose-700 text-white font-bold rounded-2xl transition-all hover:scale-110 hover:shadow-lg hover:shadow-orange-600/50 flex items-center gap-2 group">
                   <Sparkles size={20} />
                   Khám phá ngành ngay
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -269,10 +269,10 @@ export function MarketingSalesLanding() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { year: 'Năm 1', title: 'Nền Tảng', icon: BookOpen, color: 'from-orange-500 to-orange-600', items: ['Marketing cơ bản (4P)', 'SEO & Content Marketing', 'Sales Basics'] },
-              { year: 'Năm 2', title: 'Chuyên Sâu', icon: BarChart3, color: 'from-orange-600 to-rose-500', items: ['Analytics & KPIs', 'Google/FB Ads', 'CRM & Chatbot'] },
-              { year: 'Năm 3', title: 'Thực Chiến', icon: Zap, color: 'from-rose-500 to-rose-600', items: ['Chọn chuyên môn', 'Dự án thực tế', 'Multi-channel campaigns'] },
-              { year: 'Năm 4', title: 'Chuyên Nghiệp', icon: Rocket, color: 'from-rose-600 to-red-700', items: ['Sales Funnels', 'Đồ án tốt nghiệp', 'Portfolio ready'] }
+              { year: 'Năm 1', title: 'Nền Tảng', icon: BookOpen, color: 'from-yellow-500 to-orange-600', items: ['Marketing cơ bản (4P)', 'SEO & Content Marketing', 'Sales Basics'] },
+              { year: 'Năm 2', title: 'Chuyên Sâu', icon: BarChart3, color: 'from-red-600 to-orange-500', items: ['Analytics & KPIs', 'Google/FB Ads', 'CRM & Chatbot'] },
+              { year: 'Năm 3', title: 'Thực Chiến', icon: Zap, color: 'from-orange-500 to-orange-600', items: ['Chọn chuyên môn', 'Dự án thực tế', 'Multi-channel campaigns'] },
+              { year: 'Năm 4', title: 'Chuyên Nghiệp', icon: Rocket, color: 'from-orange-600 to-blue-700', items: ['Sales Funnels', 'Đồ án tốt nghiệp', 'Portfolio ready'] }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -399,12 +399,12 @@ export function MarketingSalesLanding() {
       </section>
 
       {/* SECTION 7: TESTIMONIALS */}
-      <section className="py-24 bg-gradient-to-br from-orange-600 via-rose-600 to-red-700 text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-orange-400 to-orange-500 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px]"></div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4">
+            <h2 className="text-4xl text-black font-black mb-4">
               Thành Công Từ Sự Bứt Phá –<br />
               <span className="text-orange-100">Bạn Có Thể Là Người Tiếp Theo!</span>
             </h2>
@@ -438,9 +438,9 @@ export function MarketingSalesLanding() {
                       <Star key={i} size={16} className="fill-yellow-300 text-yellow-300" />
                     ))}
                   </div>
-                  <p className="text-orange-50 mb-6 leading-relaxed italic">"{item.quote}"</p>
+                  <p className="text-orange-50 mb-6 leading-relaxed text-white italic">"{item.quote}"</p>
                   <div className="border-t border-white/10 pt-4">
-                    <p className="font-bold text-white">{item.author}</p>
+                    <p className="font-bold text-black">{item.author}</p>
                     <p className="text-sm text-orange-200">{item.role}</p>
                     <p className="text-xs text-orange-100/70 mt-1">{item.age}</p>
                   </div>
@@ -499,7 +499,7 @@ export function MarketingSalesLanding() {
       </section>
 
       {/* SECTION 9: FINAL CTA */}
-      <section className="py-32 bg-gradient-to-br from-orange-500 via-rose-500 to-red-600 text-white relative overflow-hidden">
+      <section className="min-h-screen flex items-center bg-gradient-to-br from-orange-500 via-rose-500 to-red-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           {[...Array(25)].map((_, i) => (
             <div
@@ -528,7 +528,7 @@ export function MarketingSalesLanding() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-              <button className="px-10 py-5 bg-white text-orange-600 hover:bg-orange-50 font-bold text-white rounded-2xl transition-all hover:scale-110 hover:shadow-2xl hover:shadow-orange-600/50 flex items-center justify-center gap-2 group text-lg">
+              <button className="px-10 py-5 bg-white text-orange-600 hover:bg-orange-50 font-bold text-black rounded-2xl transition-all hover:scale-110 hover:shadow-2xl hover:shadow-orange-600/50 flex items-center justify-center gap-2 group text-lg">
                 <Rocket size={24} />
                 Khám Phá Lộ Trình Học
               </button>

@@ -653,7 +653,7 @@ export const mockUniversities: University[] = [
       { code: 'MMT',    name: 'Mạng máy tính',               benchmarkScore: 25.80, subjects: 'A00, A01',      quota: 150, trend: 'down' },
       { code: 'TMDT',   name: 'Thương mại điện tử',          benchmarkScore: 25.50, subjects: 'A00, A01, D01', quota: 120, trend: 'stable' },
       { code: 'IOT',    name: 'Internet of Things',           benchmarkScore: 25.00, subjects: 'A00',           quota: 100, trend: 'stable' },
-      { code: 'GAME',   name: 'Công nghệ game',               benchmarkScore: 24.50, subjects: 'A00, A01',      quota: 80,  trend: 'new' },
+      { code: 'GAME',   name: 'Công nghệ game',               benchmarkScore: 24.50, subjects: 'A00, A01',      quota: 80, trend: 'new' },
       { code: 'ROBOT',  name: 'Kỹ thuật robot',              benchmarkScore: 25.50, subjects: 'A00',           quota: 60,  trend: 'up' },
     ]
   },

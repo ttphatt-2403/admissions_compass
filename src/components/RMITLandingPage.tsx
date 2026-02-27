@@ -455,13 +455,13 @@ const RMITLandingPage = () => {
       </section>
 
       {/* Minimal Footer */}
-      <footer className="bg-white border-t border-slate-100 py-12">
+      <footer className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white border-t border-white/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
                 <div className="bg-red-600 text-white font-bold text-xl px-2 py-0.5">RMIT</div>
-                <span className="font-bold text-slate-900">UNIVERSITY VIETNAM</span>
+                <span className="text-white font-bold text-slate-900">UNIVERSITY VIETNAM</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-500">
                 <div className="flex items-start gap-2">
@@ -484,7 +484,7 @@ const RMITLandingPage = () => {
             </div>
             
             <div>
-              <h4 className="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Khám phá</h4>
+              <h4 className="text-white font-bold text-slate-900 mb-4 uppercase text-lg tracking-wider">Khám phá</h4>
               <ul className="space-y-2 text-sm text-slate-500">
                 <li><a href="#" className="hover:text-red-600 transition-colors">Về RMIT</a></li>
                 <li><a href="#" className="hover:text-red-600 transition-colors">Cựu sinh viên</a></li>
@@ -494,7 +494,7 @@ const RMITLandingPage = () => {
             </div>
             
             <div>
-              <h4 className="font-bold text-slate-900 mb-4 uppercase text-xs tracking-wider">Kết nối</h4>
+              <h4 className="text-white font-bold text-slate-900 mb-4 uppercase text-lg tracking-wider">Kết nối</h4>
               <div className="flex gap-4">
                 <a href="#" className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-red-600 hover:text-white transition-all"><Facebook className="w-4 h-4" /></a>
                 <a href="#" className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-red-600 hover:text-white transition-all"><Instagram className="w-4 h-4" /></a>
