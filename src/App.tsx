@@ -98,6 +98,7 @@ import { Footer } from './components/Footer';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
 import Chatbot from './components/Chatbot';
+import Community from './components/Community';
 import {
   TrendingUp,
   Clock,
@@ -1192,6 +1193,7 @@ export default function App() {
         {activeTab === 'math-roadmap' && <MathRoadmap />}
         {activeTab === 'chemistry-roadmap' && <ChemistryRoadmap />}
         {activeTab === 'chatbot' && <Chatbot />}
+        {activeTab === 'community' && <Community />}
         {activeTab === 'fpt-landing' && <FPTLandingPage />}
         {activeTab === 'vnu-landing' && <VNULandingPage />}
         {activeTab === 'rmit-landing' && <RMITLandingPage />}

@@ -847,7 +847,7 @@ export function StudyPath({
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
                   Chinh Phục{" "}
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                     Đại Học
                   </span>{" "}
                   <br />
@@ -926,7 +926,7 @@ export function StudyPath({
               <h2 className="text-3xl font-bold text-gray-900 mb-3">
                 Chọn Khối Thi
               </h2>
-              <p className="text-gray-500">
+              <p className="text-slate-400">
                 Lựa chọn tổ hợp môn thế mạnh của bạn
               </p>
             </div>
@@ -1009,7 +1009,7 @@ export function StudyPath({
                     Hàm số, Hình học, Tích phân...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
@@ -1019,7 +1019,7 @@ export function StudyPath({
                 className="group bg-white p-6 rounded-2xl border border-teal-100 hover:border-teal-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
                 <div className="absolute right-0 top-0 w-32 h-32 bg-teal-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="w-16 h-16 bg-gradient-to-br from-teal-100 to-cyan-100 text-teal-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-cyan-600 text-teal-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" /><path d="M8.5 2h7" /><path d="M7 16h10" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
@@ -1051,7 +1051,7 @@ export function StudyPath({
                     Dao động, Sóng, Điện xoay chiều...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-amber-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
@@ -1061,7 +1061,7 @@ export function StudyPath({
                 className="group bg-white p-6 rounded-2xl border border-emerald-100 hover:border-emerald-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
                 <div className="absolute right-0 top-0 w-32 h-32 bg-emerald-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-100 to-green-100 text-emerald-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-red-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 6 6" /><path d="m4 14 6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" /><path d="m22 22-5-10-5 10" /><path d="M14 18h6" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
@@ -1072,7 +1072,7 @@ export function StudyPath({
                     12 thì, Ngữ pháp, Đọc hiểu...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
@@ -1093,7 +1093,7 @@ export function StudyPath({
                     Di truyền, Tiến hóa, Sinh thái...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
@@ -1103,7 +1103,7 @@ export function StudyPath({
                 className="group bg-white p-6 rounded-2xl border border-violet-100 hover:border-violet-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
                 <div className="absolute right-0 top-0 w-32 h-32 bg-violet-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="w-16 h-16 bg-gradient-to-br from-violet-100 to-purple-100 text-violet-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-violet-400 to-purple-600 text-violet-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /><path d="M8 7h6" /><path d="M8 11h8" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
@@ -1114,7 +1114,7 @@ export function StudyPath({
                     Đọc hiểu, Nghị luận, Tác phẩm...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-violet-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
@@ -1124,7 +1124,7 @@ export function StudyPath({
                 className="group bg-white p-6 rounded-2xl border border-amber-100 hover:border-amber-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
                 <div className="absolute right-0 top-0 w-32 h-32 bg-amber-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-600 text-amber-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14,2 14,8 20,8" /><line x1="12" y1="18" x2="12" y2="12" /><line x1="9" y1="15" x2="15" y2="15" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
@@ -1135,7 +1135,7 @@ export function StudyPath({
                     Thế giới, Việt Nam, Chiến tranh...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-amber-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
@@ -1166,7 +1166,7 @@ export function StudyPath({
                 className="group bg-white p-6 rounded-2xl border border-orange-100 hover:border-orange-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
                 <div className="absolute right-0 top-0 w-32 h-32 bg-orange-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-red-100 text-orange-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-green-600 text-orange-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="M7 21h10" /><path d="M12 3v18" /><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
@@ -1177,7 +1177,7 @@ export function StudyPath({
                     Pháp luật, Quyền công dân...
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-colors relative z-10">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
