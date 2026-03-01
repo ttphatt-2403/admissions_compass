@@ -995,15 +995,15 @@ export function StudyPath({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
               <div
                 onClick={() => setView("math")}
-                className="group bg-slate-800/50 backdrop-blur p-6 rounded-2xl border border-slate-700 hover:border-blue-500/50 shadow-sm hover:shadow-2xl hover:shadow-blue-500/20 cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
+                className="group bg-white backdrop-blur p-6 rounded-2xl border border-slate-700 hover:border-blue-500/50 shadow-sm hover:shadow-2xl hover:shadow-blue-500/20 cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
                 <div className="absolute right-0 top-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500/30 to-blue-600/30 text-blue-400 rounded-xl flex items-center justify-center relative z-10 shadow-sm border border-blue-500/50">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="4" y2="4" /><line x1="4" x2="20" y1="20" y2="20" /><path d="M4 4 12 12 4 20" /><path d="M20 4 12 12 20 20" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
-                  <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors">
-                    📐 Môn Toán
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-300 transition-colors">
+                     Môn Toán
                   </h3>
                   <p className="text-sm text-slate-400 mt-1">
                     Hàm số, Hình học, Tích phân...
