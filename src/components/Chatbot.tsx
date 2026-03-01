@@ -44,34 +44,30 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
-      
-      const genAI = new GoogleGenAI({
-        apiKey: apiKey,
+      // Call Vercel API instead of direct Gemini API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: input }),
       });
 
-      const result = await genAI.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: input,
-      });
-      
-      // Handle different response structures
-      let text = '';
-      if (result.text) {
-        text = result.text;
-      } else if (result.response && result.response.text) {
-        text = result.response.text;
-      } else if (result.candidates && result.candidates[0] && result.candidates[0].content && result.candidates[0].content.parts) {
-        text = result.candidates[0].content.parts.map(part => part.text).join('');
-      } else {
-        throw new Error('Unexpected API response structure');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Unknown error');
       }
 
       // Simulate typing delay for better UX
       setTimeout(() => {
         const assistantMessage: Message = { 
           role: 'assistant', 
-          content: text, 
+          content: data.response, 
           timestamp: new Date(),
           isTyping: false
         };
@@ -80,7 +76,7 @@ const Chatbot = () => {
       }, 500);
 
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
+      console.error('Error calling chat API:', error);
       setTimeout(() => {
         const errorMessage: Message = {
           role: 'assistant',

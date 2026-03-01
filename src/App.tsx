@@ -93,6 +93,7 @@ import { LogisticsSupplyChainLanding } from './components/LogisticsSupplyChainLa
 import { DesignCreativeLanding } from './components/DesignCreativeLanding';
 import { EconomicsFinanceLanding } from './components/EconomicsFinanceLanding';
 import { LanguagesTourismLanding } from './components/LanguagesTourismLanding';
+import { B2BLanding } from './components/B2BLanding';
 import { Footer } from './components/Footer';
 
 import { TestimonialsSection } from './components/TestimonialsSection';
@@ -1214,6 +1215,7 @@ export default function App() {
         {activeTab === 'design-creative-landing' && <DesignCreativeLanding />}
         {activeTab === 'economics-finance-landing' && <EconomicsFinanceLanding />}
         {activeTab === 'languages-tourism-landing' && <LanguagesTourismLanding />}
+        {activeTab === 'b2b-landing' && <B2BLanding />}
       </main>
 
       {activeTab !== 'chatbot' && <Footer />}

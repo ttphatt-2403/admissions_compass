@@ -19,6 +19,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'news' as TabType, label: 'Tin Tức' },
     { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
     { id: 'community' as TabType, label: 'Cộng Đồng' },
+    { id: 'b2b-landing' as TabType, label: 'Hợp Tác B2B' },
   ];
 
   return (
