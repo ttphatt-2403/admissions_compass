@@ -745,7 +745,7 @@ export function StudyPath({
               <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
-              <span className="font-black text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="font-black text-xl bg-gradient-to-r text-white bg-clip-text text-transparent">
                 StudyPath
               </span>
             </div>
@@ -862,7 +862,7 @@ export function StudyPath({
                   <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all hover:-translate-y-1">
                     🎯 Bắt đầu ngay
                   </button>
-                  <button className="w-full sm:w-auto px-8 py-4 bg-slate-700/50 text-slate-200 border border-slate-600 rounded-xl font-bold text-lg hover:bg-slate-600/50 transition-all backdrop-blur-sm">
+                  <button className="w-full sm:w-auto px-8 py-4 bg-slate-700/50 text-slate-200 border border-blue-600 rounded-xl font-bold text-lg shadow-2xl hover:shadow-purple-500/50 transition-all hover:-translate-y-1">
                     📖 Tìm hiểu thêm
                   </button>
                 </div>

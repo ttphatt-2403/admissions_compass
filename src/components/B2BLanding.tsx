@@ -77,9 +77,9 @@ export function B2BLanding() {
   const cooperationTypes = [
     { id: 'banner', name: 'Quảng cáo Banner', icon: <Megaphone size={32} />, color: 'from-blue-500 to-blue-600' },
     { id: 'pr', name: 'Bài viết PR', icon: <FileText size={32} />, color: 'from-purple-500 to-purple-600' },
-    { id: 'landing', name: 'Landing Page riêng', icon: <Globe size={32} />, color: 'from-indigo-500 to-indigo-600' },
+    { id: 'landing', name: 'Landing Page riêng', icon: <Globe size={32} />, color: 'from-red-500 to-red-600' },
     { id: 'webinar', name: 'Webinar/Livestream', icon: <Video size={32} />, color: 'from-orange-500 to-orange-600' },
-    { id: 'email', name: 'Email Marketing', icon: <Mail size={32} />, color: 'from-green-500 to-green-600' }
+    { id: 'email', name: 'Email Marketing', icon: <Mail size={32} />, color: 'from-yellow-500 to-yellow-500' }
   ];
 
   const partners = [
@@ -166,7 +166,7 @@ export function B2BLanding() {
 
               <h1 className="text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
                 Kết nối trực tiếp với{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-red-600">
                   500.000+ học sinh
                 </span>{' '}
                 mỗi năm
@@ -179,26 +179,26 @@ export function B2BLanding() {
               <div className="grid grid-cols-2 gap-4 py-4">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-600 shrink-0" size={20} />
-                  <span className="text-slate-700 font-medium">100.000+ tài khoản đăng ký</span>
+                  <span className="text-slate-700 font-bold">100.000+ tài khoản đăng ký</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-600 shrink-0" size={20} />
-                  <span className="text-slate-700 font-medium">70% là học sinh lớp 12</span>
+                  <span className="text-slate-700 font-bold">70% là học sinh lớp 12</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-600 shrink-0" size={20} />
-                  <span className="text-slate-700 font-medium">Tăng trưởng 30% mỗi năm</span>
+                  <span className="text-slate-700 font-bold">Tăng trưởng 30% mỗi năm</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-600 shrink-0" size={20} />
-                  <span className="text-slate-700 font-medium">Thời gian onsite TB: 8 phút</span>
+                  <span className="text-slate-700 font-bold">Thời gian onsite TB: 8 phút</span>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <a 
                   href="#contact"
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all inline-flex items-center justify-center gap-2 group"
+                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all inline-flex items-center justify-center gap-2 group"
                 >
                   Đề xuất hợp tác
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -337,7 +337,7 @@ export function B2BLanding() {
                   { year: '2025', title: 'Mở rộng toàn quốc', users: '500K+ users' }
                 ].map((item, idx) => (
                   <div key={idx} className="relative flex items-center gap-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg z-10">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg z-10">
                       {item.year}
                     </div>
                     <div className="flex-1 bg-white rounded-xl p-4 shadow-md border border-slate-200">
@@ -571,7 +571,7 @@ export function B2BLanding() {
           {/* Highlight Box */}
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur-xl opacity-50"></div>
-            <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-center">
+            <div className="relative bg-gradient-to-r from-blue-600 to-blue-600 rounded-2xl p-8 text-center">
               <h3 className="text-3xl font-black mb-3">Tối ưu chi phí tuyển sinh – Tiếp cận đúng đối tượng</h3>
               <p className="text-blue-100 text-lg max-w-3xl mx-auto">
                 Chi phí quảng cáo hiệu quả hơn 3-5 lần so với các kênh truyền thống nhờ targeting chính xác
@@ -614,7 +614,7 @@ export function B2BLanding() {
             ))}
 
             {/* Custom Package Card */}
-            <div className="group bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 border-2 border-slate-700 hover:border-blue-500 transition-all hover:shadow-xl cursor-pointer text-white md:col-span-2 lg:col-span-3">
+            <div className="group bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl p-8 border-2 border-slate-700 hover:border-blue-500 transition-all hover:shadow-xl cursor-pointer text-white md:col-span-2 lg:col-span-3">
               <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex-1">
                   <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mb-6">
@@ -627,7 +627,7 @@ export function B2BLanding() {
                 </div>
                 <a 
                   href="#contact"
-                  className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:shadow-xl transition-all inline-flex items-center gap-2"
+                  className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-500 text-white rounded-xl font-bold hover:shadow-xl transition-all inline-flex items-center gap-2"
                 >
                   Liên hệ tư vấn
                   <ArrowRight size={20} />
@@ -735,7 +735,7 @@ export function B2BLanding() {
                   title: 'Trao đổi Phương án',
                   description: 'Tư vấn chi tiết về gói hợp tác, ngân sách và timeline phù hợp.',
                   icon: <Briefcase size={28} />,
-                  color: 'from-indigo-500 to-indigo-600'
+                  color: 'from-red-500 to-red-600'
                 },
                 {
                   step: '03',
@@ -749,7 +749,7 @@ export function B2BLanding() {
                   title: 'Triển khai & Đo lường',
                   description: 'Thực hiện chiến dịch, theo dõi KPI và báo cáo định kỳ.',
                   icon: <BarChart3 size={28} />,
-                  color: 'from-pink-500 to-pink-600'
+                  color: 'from-orange-500 to-orange-600'
                 }
               ].map((item, idx) => (
                 <div key={idx} className="relative">
@@ -986,7 +986,7 @@ export function B2BLanding() {
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all inline-flex items-center justify-center gap-2 group"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all inline-flex items-center justify-center gap-2 group"
                 >
                   <Send size={20} />
                   Gửi đề xuất hợp tác
