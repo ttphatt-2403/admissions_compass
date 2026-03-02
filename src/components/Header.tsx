@@ -1,4 +1,4 @@
-import { GraduationCap, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { TabType } from '../types';
 
@@ -19,6 +19,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'news' as TabType, label: 'Tin Tức' },
     { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
     { id: 'community' as TabType, label: 'Cộng Đồng' },
+    { id: 'riasec' as TabType, label: 'Trắc Nghiệm RIASEC' },
     { id: 'b2b-landing' as TabType, label: 'Hợp Tác B2B' },
   ];
 
@@ -30,11 +31,11 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setActiveTab('home')}
           >
-            <GraduationCap className="text-blue-600" size={32} />
-            <div>
-              <h1 className="font-bold text-blue-600">Tuyển Sinh 2026</h1>
-              <p className="text-xs text-gray-600">Định hướng tương lai</p>
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="La bàn Tuyển sinh" 
+              className="h-12 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}

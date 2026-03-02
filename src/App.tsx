@@ -95,6 +95,7 @@ import { EconomicsFinanceLanding } from './components/EconomicsFinanceLanding';
 import { LanguagesTourismLanding } from './components/LanguagesTourismLanding';
 import { B2BLanding } from './components/B2BLanding';
 import { Footer } from './components/Footer';
+import RIASECTest from './components/RIASECTest';
 
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
@@ -1195,6 +1196,7 @@ export default function App() {
         {activeTab === 'chemistry-roadmap' && <ChemistryRoadmap />}
         {activeTab === 'chatbot' && <Chatbot />}
         {activeTab === 'community' && <Community />}
+        {activeTab === 'riasec' && <RIASECTest />}
         {activeTab === 'fpt-landing' && <FPTLandingPage />}
         {activeTab === 'vnu-landing' && <VNULandingPage />}
         {activeTab === 'rmit-landing' && <RMITLandingPage />}
