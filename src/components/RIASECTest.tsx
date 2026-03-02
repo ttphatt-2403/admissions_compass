@@ -79,7 +79,7 @@ const RIASECTest = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mb-6 shadow-lg">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-6 shadow-lg ">
               <Compass className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-800 mb-4">
@@ -103,7 +103,7 @@ const RIASECTest = () => {
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
               {(Object.keys(RIASEC_LABELS) as RIASECType[]).map((type) => (
-                <div key={type} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200">
+                <div key={type} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200 ">
                   <div className="text-2xl mb-2">{RIASEC_LABELS[type].icon}</div>
                   <div className="font-bold text-gray-800">{type} - {RIASEC_LABELS[type].name}</div>
                   <div className="text-sm text-gray-500">{RIASEC_LABELS[type].fullName}</div>
@@ -140,7 +140,7 @@ const RIASECTest = () => {
           <div className="text-center">
             <button
               onClick={() => setPhase('quiz')}
-              className="px-12 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+              className="w-72 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
             >
               Bắt đầu làm bài
             </button>
@@ -201,7 +201,7 @@ const RIASECTest = () => {
                           onClick={() => handleAnswer(question.id, option.value)}
                           className={`px-4 py-2 rounded-full font-medium transition-all duration-200 ${
                             answers[question.id] === option.value
-                              ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md transform scale-105'
+                              ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md transform scale-105'
                               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                           }`}
                         >
@@ -239,7 +239,7 @@ const RIASECTest = () => {
               <button
                 onClick={handleNext}
                 disabled={!canProceed}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 Trang sau
                 <ChevronRight className="w-5 h-5" />

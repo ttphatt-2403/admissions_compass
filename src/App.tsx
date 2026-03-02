@@ -477,7 +477,11 @@ export default function App() {
                     <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1]">
                       Chinh Phục <br />
                       <span className="gradient-text-animated">
-                        Cánh Cổng Đại Học
+                        Cánh Cổng
+                      </span>
+                      <br />
+                      <span className="gradient-text-animated">
+                        Đại Học
                       </span>
                     </h1>
 

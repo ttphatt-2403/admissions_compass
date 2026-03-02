@@ -208,7 +208,7 @@ export function TestimonialsSection() {
         {/* Enhanced Logos Marquee */}
         <div className="mt-24 border-t border-slate-200 pt-16 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-transparent pointer-events-none"></div>
-          <p className="text-center text-slate-400 font-bold uppercase tracking-widest text-xs mb-10 flex items-center justify-center gap-2">
+          <p className="text-center text-black font-bold uppercase tracking-widest text-xs mb-10 flex items-center justify-center gap-2">
             <span className="w-12 h-px bg-slate-200"></span>
             Được nhắc đến trên
             <span className="w-12 h-px bg-slate-200"></span>

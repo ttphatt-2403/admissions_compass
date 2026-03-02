@@ -10,6 +10,9 @@ interface HeaderProps {
 export function Header({ activeTab, setActiveTab }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // flip this flag to true if you want the AI‑chatbot tab to appear again
+  const ENABLE_CHATBOT = false;
+
   const navItems = [
     { id: 'home' as TabType, label: 'Trang Chủ' },
     { id: 'documents' as TabType, label: 'Tài Liệu' },
@@ -17,11 +20,18 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'calculator' as TabType, label: 'Tính Điểm' },
     { id: 'studypath' as TabType, label: 'Lộ Trình' },
     { id: 'news' as TabType, label: 'Tin Tức' },
+    // the chatbot item is kept here for reference but filtered out below when
+    // the feature is disabled
     { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
     { id: 'community' as TabType, label: 'Cộng Đồng' },
     { id: 'riasec' as TabType, label: 'Trắc Nghiệm RIASEC' },
     { id: 'b2b-landing' as TabType, label: 'Hợp Tác B2B' },
   ];
+
+  // hide chatbot item when the flag is false
+  const visibleNavItems = navItems.filter(
+    (item) => item.id !== 'chatbot' || ENABLE_CHATBOT
+  );
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -40,7 +50,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
@@ -67,7 +77,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <nav className="md:hidden pb-4 space-y-2">
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => {
