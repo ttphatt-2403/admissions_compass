@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, RotateCcw, Target, BookOpen, Compass, CheckCircle2, Circle } from 'lucide-react';
 import { RIASEC_QUESTIONS, RIASEC_LABELS, ANSWER_OPTIONS, RIASECType } from '../data/riasec/questions';
 import { calculateScores, getTopTypes, getCareerSuggestions, SINGLE_TYPE_CAREERS } from '../data/riasec/careers';
@@ -9,10 +9,12 @@ const RIASECTest = () => {
   const [phase, setPhase] = useState<TestPhase>('intro');
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  
+  // track a question that should be highlighted (unanswered warning)
+  const [highlightedQuestion, setHighlightedQuestion] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const questionsPerPage = 6;
   const totalPages = Math.ceil(RIASEC_QUESTIONS.length / questionsPerPage);
-  
+
   const currentQuestions = useMemo(() => {
     const start = currentPage * questionsPerPage;
     return RIASEC_QUESTIONS.slice(start, start + questionsPerPage);
@@ -30,9 +32,27 @@ const RIASECTest = () => {
 
   const handleAnswer = (questionId: number, value: number) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }));
+    if (highlightedQuestion === questionId) {
+      setHighlightedQuestion(null);
+    }
   };
 
   const handleNext = () => {
+    if (!canProceed) {
+      const firstUnanswered = currentQuestions.find(
+        q => answers[q.id] === undefined
+      );
+
+      if (firstUnanswered) {
+        setErrorMessage("⚠️ Bạn chưa trả lời hết các câu hỏi trên trang này!");
+        setHighlightedQuestion(firstUnanswered.id);
+      }
+
+      return;
+    }
+
+    setErrorMessage(null);
+
     if (currentPage < totalPages - 1) {
       setCurrentPage(prev => prev + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -47,10 +67,36 @@ const RIASECTest = () => {
   };
 
   const handleSubmit = () => {
-    if (isComplete) {
+    if (!isComplete) {
+      if (!isComplete) {
+        const firstUnanswered = RIASEC_QUESTIONS.find(
+          q => answers[q.id] === undefined
+        );
+
+        if (firstUnanswered) {
+          const idx = RIASEC_QUESTIONS.findIndex(
+            q => q.id === firstUnanswered.id
+          );
+
+          const newPage = Math.floor(idx / questionsPerPage);
+
+          setErrorMessage("⚠️ Bạn còn câu hỏi chưa trả lời. Vui lòng hoàn thành trước khi xem kết quả!");
+          setCurrentPage(newPage);
+
+          setTimeout(() => {
+            setHighlightedQuestion(firstUnanswered.id);
+          }, 100);
+        }
+
+        return;
+      }
+
       setPhase('result');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    setPhase('result');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleReset = () => {
@@ -58,6 +104,7 @@ const RIASECTest = () => {
     setCurrentPage(0);
     setAnswers({});
   };
+
 
   const scores = useMemo(() => calculateScores(answers), [answers]);
   const topTypes = useMemo(() => getTopTypes(scores, 3), [scores]);
@@ -72,6 +119,32 @@ const RIASECTest = () => {
       percentage: (score / maxScore) * 100
     }));
   }, [scores]);
+
+  // keep the unanswered highlight visible briefly
+  useEffect(() => {
+    if (highlightedQuestion != null) {
+      const timer = setTimeout(() => setHighlightedQuestion(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [highlightedQuestion]);
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+  // scroll to highlighted question when set or when page changes
+  useEffect(() => {
+    if (highlightedQuestion != null) {
+      const el = document.getElementById(`question-${highlightedQuestion}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [highlightedQuestion, currentPage]);
 
   // Intro Screen
   if (phase === 'intro') {
@@ -96,8 +169,8 @@ const RIASECTest = () => {
               Mô hình RIASEC là gì?
             </h2>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Mô hình RIASEC (hay Holland Code) được phát triển bởi nhà tâm lý học John Holland, 
-              giúp xác định sở thích nghề nghiệp dựa trên 6 nhóm tính cách cơ bản. 
+              Mô hình RIASEC (hay Holland Code) được phát triển bởi nhà tâm lý học John Holland,
+              giúp xác định sở thích nghề nghiệp dựa trên 6 nhóm tính cách cơ bản.
               Kết quả sẽ cho bạn thấy những ngành học và nghề nghiệp phù hợp nhất với bản thân.
             </p>
 
@@ -166,30 +239,37 @@ const RIASECTest = () => {
               </span>
             </div>
             <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%` }}
               />
             </div>
           </div>
 
+          {errorMessage && (
+            <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-xl mb-4 animate-pulse">
+              {errorMessage}
+            </div>
+          )}
+
           {/* Questions */}
           <div className="space-y-4 mb-6">
             {currentQuestions.map((question, index) => (
-              <div 
-                key={question.id} 
-                className={`bg-white rounded-2xl shadow-lg p-6 border-2 transition-all duration-300 ${
-                  answers[question.id] !== undefined 
-                    ? 'border-green-400 bg-green-50/30' 
+              <div
+                id={`question-${question.id}`}
+                key={question.id}
+                className={`bg-white rounded-2xl shadow-lg p-6 border-2 transition-all duration-300 ${highlightedQuestion === question.id
+                  ? 'border-red-500 bg-red-50 animate-pulse'
+                  : answers[question.id] !== undefined
+                    ? 'border-green-400 bg-green-50/30'
                     : 'border-transparent hover:border-blue-200'
-                }`}
+                  }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
-                    answers[question.id] !== undefined 
-                      ? 'bg-green-500' 
-                      : 'bg-gray-400'
-                  }`}>
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${answers[question.id] !== undefined
+                    ? 'bg-green-500'
+                    : 'bg-gray-400'
+                    }`}>
                     {currentPage * questionsPerPage + index + 1}
                   </div>
                   <div className="flex-1">
@@ -199,11 +279,10 @@ const RIASECTest = () => {
                         <button
                           key={option.value}
                           onClick={() => handleAnswer(question.id, option.value)}
-                          className={`px-4 py-2 rounded-full font-medium transition-all duration-200 ${
-                            answers[question.id] === option.value
-                              ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md transform scale-105'
-                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                          }`}
+                          className={`px-4 py-2 rounded-full font-medium transition-all duration-200 ${answers[question.id] === option.value
+                            ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md transform scale-105'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
                         >
                           {option.label}
                         </button>
@@ -220,7 +299,7 @@ const RIASECTest = () => {
             <button
               onClick={handlePrev}
               disabled={currentPage === 0}
-              className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-600 rounded-full font-medium hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="group relative flex items-center gap-2 px-8 py-3 bg-gray-100 text-gray-700 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-gray-200 hover:shadow-xl hover:-translate-y-1 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md"
             >
               <ChevronLeft className="w-5 h-5" />
               Trang trước
@@ -229,20 +308,19 @@ const RIASECTest = () => {
             {currentPage === totalPages - 1 ? (
               <button
                 onClick={handleSubmit}
-                disabled={!isComplete}
-                className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full font-bold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className={`group relative overflow-hidden flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-red-600 to-red-600 text-white rounded-full text-lg font-bold shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-105${!isComplete ? 'opacity-80' : ''}`}
               >
-                <CheckCircle2 className="w-5 h-5" />
+                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full"></span>
+                <CheckCircle2 className="w-6 h-6 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
                 Xem kết quả
               </button>
             ) : (
               <button
                 onClick={handleNext}
-                disabled={!canProceed}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="group relative overflow-hidden flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-semibold shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:from-blue-600 hover:to-indigo-600"
               >
                 Trang sau
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
               </button>
             )}
           </div>
@@ -257,7 +335,7 @@ const RIASECTest = () => {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full mb-6 shadow-lg">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-full mb-6 shadow-lg">
             <CheckCircle2 className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
@@ -270,20 +348,19 @@ const RIASECTest = () => {
 
         {/* Score Chart */}
         <div className="bg-white rounded-3xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Biểu đồ điểm số</h2>
-          
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">BIỂU ĐỒ ĐIỂM SỐ</h2>
+
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             {scorePercentages
               .sort((a, b) => b.score - a.score)
               .map((item, index) => (
-                <div 
+                <div
                   key={item.type}
-                  className={`p-4 rounded-xl border-2 ${
-                    index === 0 ? 'border-yellow-400 bg-yellow-50' :
+                  className={`bg-white rounded-2xl p-5 transition-all duration-300 ease-out hover:scale-105 hover:shadow-2xl hover:-translate-y-1cursor-pointer ${index === 0 ? 'border-yellow-400 bg-yellow-50' :
                     index === 1 ? 'border-gray-300 bg-gray-50' :
-                    index === 2 ? 'border-orange-300 bg-orange-50' :
-                    'border-gray-200 bg-white'
-                  }`}
+                      index === 2 ? 'border-orange-300 bg-orange-50' :
+                        'border-gray-200 bg-white'
+                    }`}
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-3xl">{RIASEC_LABELS[item.type].icon}</span>
@@ -298,13 +375,12 @@ const RIASECTest = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full rounded-full transition-all duration-1000 ${
-                          index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-500' :
+                      <div
+                        className={`h-full rounded-full bg-blue-500 transition-all duration-1000 ease-out ${index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-500' :
                           index === 1 ? 'bg-gradient-to-r from-gray-400 to-gray-500' :
-                          index === 2 ? 'bg-gradient-to-r from-orange-400 to-orange-500' :
-                          'bg-gradient-to-r from-blue-400 to-blue-500'
-                        }`}
+                            index === 2 ? 'bg-gradient-to-r from-orange-400 to-orange-500' :
+                              'bg-gradient-to-r from-blue-400 to-blue-500'
+                          }`}
                         style={{ width: `${item.percentage}%` }}
                       />
                     </div>
@@ -339,7 +415,7 @@ const RIASECTest = () => {
                   stroke="#e5e7eb"
                   strokeWidth="1"
                 />
-                
+
                 {/* Score polygon */}
                 <polygon
                   points={`
@@ -354,7 +430,7 @@ const RIASECTest = () => {
                   stroke="#3b82f6"
                   strokeWidth="2"
                 />
-                
+
                 {/* Labels */}
                 <text x="100" y="12" textAnchor="middle" className="text-xs font-bold fill-gray-700">R</text>
                 <text x="180" y="55" textAnchor="start" className="text-xs font-bold fill-gray-700">I</text>
@@ -369,26 +445,29 @@ const RIASECTest = () => {
 
         {/* Top Types */}
         <div className="bg-white rounded-3xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 ">
             🏆 Top 3 nhóm tính cách của bạn
           </h2>
-          
+
           <div className="space-y-4">
             {topTypes.map((type, index) => (
-              <div 
+              <div
                 key={type}
-                className={`p-6 rounded-2xl border-2 ${
-                  index === 0 ? 'border-yellow-400 bg-gradient-to-r from-yellow-50 to-amber-50' :
-                  index === 1 ? 'border-gray-300 bg-gradient-to-r from-gray-50 to-slate-50' :
-                  'border-orange-300 bg-gradient-to-r from-orange-50 to-red-50'
-                }`}
+                className={`bg-white rounded-2xl p-5
+    transition-all duration-300 ease-out
+    hover:scale-105
+    hover:shadow-2xl
+    hover:-translate-y-1
+    cursor-pointer ${index === 0 ? 'border-yellow-400 bg-gradient-to-r from-yellow-50 to-amber-50' :
+                    index === 1 ? 'border-gray-300 bg-gradient-to-r from-gray-50 to-slate-50' :
+                      'border-orange-300 bg-gradient-to-r from-orange-50 to-red-50'
+                  }`}
               >
                 <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${
-                    index === 0 ? 'bg-yellow-400' :
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${index === 0 ? 'bg-yellow-400' :
                     index === 1 ? 'bg-gray-300' :
-                    'bg-orange-400'
-                  }`}>
+                      'bg-orange-400'
+                    }`}>
                     {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
                   </div>
                   <div className="flex-1">
@@ -425,7 +504,7 @@ const RIASECTest = () => {
             <p className="text-gray-600 mb-4">{suggestions.primary.description}</p>
             <div className="flex flex-wrap gap-2">
               {suggestions.primary.majors.map((major, idx) => (
-                <span 
+                <span
                   key={idx}
                   className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium"
                 >
@@ -445,7 +524,7 @@ const RIASECTest = () => {
               <p className="text-gray-600 mb-4">{suggestions.combo.description}</p>
               <div className="flex flex-wrap gap-2">
                 {suggestions.combo.majors.map((major, idx) => (
-                  <span 
+                  <span
                     key={idx}
                     className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full font-medium"
                   >
@@ -465,7 +544,7 @@ const RIASECTest = () => {
             <p className="text-gray-600 mb-4">{SINGLE_TYPE_CAREERS[topTypes[1]].description}</p>
             <div className="flex flex-wrap gap-2">
               {SINGLE_TYPE_CAREERS[topTypes[1]].majors.map((major, idx) => (
-                <span 
+                <span
                   key={idx}
                   className="px-4 py-2 bg-green-100 text-green-700 rounded-full font-medium"
                 >
@@ -480,7 +559,7 @@ const RIASECTest = () => {
         <div className="text-center">
           <button
             onClick={handleReset}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
           >
             <RotateCcw className="w-5 h-5" />
             Làm lại bài test
