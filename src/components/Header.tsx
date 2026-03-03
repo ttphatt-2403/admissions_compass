@@ -25,7 +25,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
     { id: 'community' as TabType, label: 'Cộng Đồng' },
     { id: 'riasec' as TabType, label: 'Trắc Nghiệm RIASEC' },
-    { id: 'b2b-landing' as TabType, label: 'Hợp Tác B2B' },
+    { id: 'b2b-landing' as TabType, label: 'Hợp Tác B2B', highlight: true },
   ];
 
   // hide chatbot item when the flag is false
@@ -49,15 +49,17 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-2">
             {visibleNavItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`transition-colors ${
+                className={`px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeTab === item.id
-                    ? 'text-blue-600 font-semibold'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'bg-blue-100 text-blue-600 font-semibold shadow-sm'
+                    : item.highlight
+                    ? 'text-red-500 font-semibold hover:bg-red-50 hover:text-red-600'
+                    : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
                 }`}
               >
                 {item.label}
@@ -84,10 +86,12 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
                   setActiveTab(item.id);
                   setIsMobileMenuOpen(false);
                 }}
-                className={`block w-full text-left px-4 py-2 rounded transition-colors ${
+                className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ${
                   activeTab === item.id
-                    ? 'bg-blue-50 text-blue-600 font-semibold'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-blue-100 text-blue-600 font-semibold shadow-sm border-l-4 border-blue-500'
+                    : item.highlight
+                    ? 'text-red-500 font-semibold hover:bg-red-50'
+                    : 'text-gray-600 hover:bg-blue-50'
                 }`}
               >
                 {item.label}

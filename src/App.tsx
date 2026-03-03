@@ -66,9 +66,9 @@ function useCounter(end: number, duration: number = 2000, startOnView: boolean =
 }
 
 // --- Animated Section Wrapper ---
-function AnimatedSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function AnimatedSection({ children, className = "", delay = 0, id }: { children: React.ReactNode; className?: string; delay?: number; id?: string }) {
   return (
-    <div className={className}>
+    <div id={id} className={className}>
       {children}
     </div>
   );
@@ -159,6 +159,55 @@ const homeNews = [
     category: 'Du học',
     date: '1 tuần trước',
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '6',
+    title: 'FPT University công bố học bổng 100% cho thí sinh điểm cao',
+    category: 'Học bổng',
+    date: '3 ngày trước',
+    image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '7',
+    title: 'Điểm chuẩn dự kiến các trường Y Dược năm 2026 tăng mạnh',
+    category: 'Điểm chuẩn',
+    date: '4 ngày trước',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '8',
+    title: 'Ngành AI và Data Science: Cơ hội việc làm bùng nổ',
+    category: 'Xu hướng',
+    date: '5 ngày trước',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '9',
+    title: 'Hướng dẫn đăng ký xét tuyển sớm 2026 chi tiết nhất',
+    category: 'Hướng dẫn',
+    date: '6 ngày trước',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '10',
+    title: 'VinUni mở thêm 3 ngành mới về công nghệ năm 2026',
+    category: 'Tuyển sinh',
+    date: '1 tuần trước',
+    image: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '11',
+    title: 'Bí quyết viết CV ấn tượng cho xét tuyển học bạ',
+    category: 'Góc học tập',
+    date: '1 tuần trước',
+    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=400'
+  },
+  {
+    id: '12',
+    title: 'ĐH Kinh tế Quốc dân ra mắt chương trình đào tạo quốc tế',
+    category: 'Tuyển sinh',
+    date: '2 tuần trước',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=400'
   }
 ];
 
@@ -248,8 +297,8 @@ export default function App() {
           100% { transform: translateX(0); }
         }
         @keyframes ticker {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
         @keyframes scroll-up {
           0% { transform: translateY(0); }
@@ -303,7 +352,7 @@ export default function App() {
         
         .animate-scroll-left { animation: scroll-left 40s linear infinite; }
         .animate-scroll-right { animation: scroll-right 40s linear infinite; }
-        .animate-ticker { animation: ticker 25s linear infinite; }
+        .animate-ticker { animation: ticker 30s linear infinite; }
         .animate-scroll-up { animation: scroll-up 20s linear infinite; }
         .animate-float { animation: float 6s ease-in-out infinite; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
@@ -471,7 +520,7 @@ export default function App() {
                   {/* Left: Content */}
                   <AnimatedSection className="text-left space-y-8">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-0 shadow-lg text-blue-600 font-bold text-xs uppercase tracking-wider">
-                      <Sparkles size={14} className="animate-spin-slow" /> Nền tảng ôn thi số 1 Việt Nam
+                      <Sparkles size={14} className="animate-spin-slow" /> Nền tảng ôn thi hàng đầu Việt Nam
                     </div>
 
                     <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1]">
@@ -661,7 +710,10 @@ export default function App() {
 
                   {/* Card 2: UNIVERSITIES - With Auto-Scrolling List */}
                   <div
-                    onClick={() => setActiveTab('universities')}
+                    onClick={() => {
+                      const el = document.getElementById('partners-section');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="group md:col-span-1 md:row-span-2 rounded-[32px] overflow-hidden cursor-pointer border border-slate-100 bg-white relative hover:shadow-xl hover:-translate-y-2 transition-all card-3d"
                   >
                     {/* Background gradient */}
@@ -951,7 +1003,10 @@ export default function App() {
                 {/* Bottom CTA */}
                 <div className="mt-16 text-center">
                   <p className="text-slate-600 mb-6">Chưa chọn được ngành? Hãy thử bài test định hướng ngành học!</p>
-                  <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-2xl transition-all hover:scale-110 hover:shadow-lg hover:shadow-blue-600/50 group flex items-center gap-2 mx-auto">
+                  <button 
+                    onClick={() => setActiveTab('riasec')}
+                    className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-2xl transition-all hover:scale-110 hover:shadow-lg hover:shadow-blue-600/50 group flex items-center gap-2 mx-auto"
+                  >
                     Bắt đầu kiểm tra
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -960,7 +1015,7 @@ export default function App() {
             </div>
 
             {/* 4. TOP PARTNERS SECTION (Professional) */}
-            <AnimatedSection className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+            <AnimatedSection id="partners-section" className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-[100px] pointer-events-none"></div>
               <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-100/30 rounded-full blur-[100px] pointer-events-none"></div>

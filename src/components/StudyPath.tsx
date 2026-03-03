@@ -729,109 +729,13 @@ export function StudyPath({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black font-sans text-white pb-20 relative overflow-hidden">
+    <div className="min-h-screen bg-white font-sans text-slate-900 pb-20 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100/50 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-cyan-100/50 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
       </div>
-
-      {/* 1. Navbar (Responsive) */}
-      <nav className="bg-slate-900/50 backdrop-blur-md border-b border-slate-700/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
-                <BookOpen className="h-6 w-6 text-white" />
-              </div>
-              <span className="font-black text-xl bg-gradient-to-r text-white bg-clip-text text-transparent">
-                StudyPath
-              </span>
-            </div>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <a
-                href="#"
-                className="text-slate-300 hover:text-cyan-400 font-medium transition-colors"
-              >
-                Lộ Trình
-              </a>
-              <a
-                href="#"
-                className="text-slate-300 hover:text-cyan-400 font-medium transition-colors"
-              >
-                Tài Liệu
-              </a>
-              <a
-                href="#"
-                className="text-slate-300 hover:text-cyan-400 font-medium transition-colors"
-              >
-                Đại Học
-              </a>
-              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all hover:-translate-y-0.5">
-                Đăng Nhập
-              </button>
-            </div>
-
-            {/* Mobile/Tablet Hamburger */}
-            <div className="flex items-center md:hidden">
-              <button
-                onClick={() =>
-                  setIsMobileMenuOpen(!isMobileMenuOpen)
-                }
-                className="text-slate-300 hover:text-cyan-400 p-2 transition-colors"
-              >
-                {isMobileMenuOpen ? (
-                  <X size={24} />
-                ) : (
-                  <Menu size={24} />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu Drawer */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-lg">
-            <div className="px-4 pt-2 pb-6 space-y-1">
-              <a
-                href="#"
-                className="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-md"
-              >
-                Lộ Trình
-              </a>
-              <a
-                href="#"
-                className="block px-3 py-3 text-base font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-700/30 rounded-md transition-colors"
-              >
-                Tài Liệu
-              </a>
-              <a
-                href="#"
-                className="block px-3 py-3 text-base font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-700/30 rounded-md transition-colors"
-              >
-                Đại Học
-              </a>
-              <div className="pt-4">
-                <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-5 py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all">
-                  Đăng Nhập
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Progress Bar (Integrated into Nav for Sticky Effect) */}
-        <div className="h-1 w-full bg-slate-700/50">
-          <div
-            className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 transition-all duration-700 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </nav>
 
       {/* Main Content Container */}
       <div className="max-w-[1440px] mx-auto relative z-10">
@@ -841,11 +745,11 @@ export function StudyPath({
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Text Column */}
               <div className="text-center lg:text-left space-y-8 animate-fade-in">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-300 text-sm font-bold border border-blue-500/30 backdrop-blur-sm mb-2 hover:bg-blue-500/20 transition-colors">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-600 text-sm font-bold border border-blue-200 backdrop-blur-sm mb-2 hover:bg-blue-200 transition-colors">
                   <Trophy size={16} />
                   <span>🚀 Lộ trình ôn thi 2026</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
                   Chinh Phục{" "}
                   <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                     Đại Học
@@ -853,61 +757,53 @@ export function StudyPath({
                   <br />
                   Trong Tầm Tay
                 </h1>
-                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                   Kế hoạch học tập được cá nhân hóa cho từng
                   khối thi. Theo dõi tiến độ, hoàn thành nhiệm
                   vụ và đạt điểm số mơ ước.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-                  <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all hover:-translate-y-1">
-                    🎯 Bắt đầu ngay
-                  </button>
-                  <button className="w-full sm:w-auto px-8 py-4 bg-slate-700/50 text-slate-200 border border-blue-600 rounded-xl font-bold text-lg shadow-2xl hover:shadow-purple-500/50 transition-all hover:-translate-y-1">
-                    📖 Tìm hiểu thêm
-                  </button>
-                </div>
               </div>
 
               {/* Illustration Column (Hidden on Mobile/Tablet portrait if needed, strictly 2 cols on Desktop) */}
               <div className="hidden lg:block relative group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-700/50 backdrop-blur max-w-md mx-auto transform group-hover:scale-105 transition-transform duration-500">
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/50 to-purple-100/50 rounded-full blur-3xl opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-white p-8 rounded-3xl shadow-2xl border border-slate-200 backdrop-blur max-w-md mx-auto transform group-hover:scale-105 transition-transform duration-500">
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <p className="text-sm text-slate-400 font-medium">
+                      <p className="text-sm text-slate-500 font-medium">
                         📊 Tiến độ hôm nay
                       </p>
-                      <h3 className="text-2xl font-bold text-white">
+                      <h3 className="text-2xl font-bold text-slate-900">
                         Rất tốt! 🔥
                       </h3>
                     </div>
-                    <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 border border-green-500/50">
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500 border border-green-200">
                       <CheckCircle2 size={24} />
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-4 p-3 bg-slate-700/30 rounded-xl border border-slate-600/50 backdrop-blur hover:bg-slate-700/50 transition-colors">
-                      <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 border border-blue-500/50">
+                    <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl border border-slate-200 backdrop-blur hover:bg-slate-100 transition-colors">
+                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-500 border border-blue-200">
                         <BrainCircuit size={20} />
                       </div>
                       <div>
-                        <p className="font-bold text-white">
+                        <p className="font-bold text-slate-900">
                           Toán: Hàm số
                         </p>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-slate-500">
                           30 câu trắc nghiệm
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4 p-3 bg-slate-700/30 rounded-xl border border-slate-600/50 backdrop-blur hover:bg-slate-700/50 transition-colors">
-                      <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 border border-purple-500/50">
+                    <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl border border-slate-200 backdrop-blur hover:bg-slate-100 transition-colors">
+                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-500 border border-purple-200">
                         <Sparkles size={20} />
                       </div>
                       <div>
-                        <p className="font-bold text-white">
+                        <p className="font-bold text-slate-900">
                           Lý: Dao động cơ
                         </p>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-slate-500">
                           Lý thuyết chương 1
                         </p>
                       </div>
@@ -926,7 +822,7 @@ export function StudyPath({
               <h2 className="text-3xl font-bold text-gray-900 mb-3">
                 Chọn Khối Thi
               </h2>
-              <p className="text-slate-400">
+              <p className="text-slate-600">
                 Lựa chọn tổ hợp môn thế mạnh của bạn
               </p>
             </div>
@@ -950,25 +846,25 @@ export function StudyPath({
                                 relative p-6 rounded-2xl cursor-pointer border-2 transition-all duration-300
                                 flex flex-col items-center text-center hover:-translate-y-2 group
                                 ${activeGroup === group
-                      ? "border-purple-500 bg-gradient-to-br from-purple-500/20 to-purple-600/10 shadow-xl shadow-purple-500/20 ring-2 ring-purple-500/50"
-                      : "border-slate-700 bg-slate-800/50 backdrop-blur shadow-sm hover:shadow-lg hover:border-purple-400/50 hover:shadow-purple-500/20"
+                      ? "border-purple-500 bg-gradient-to-br from-purple-100 to-purple-50 shadow-xl shadow-purple-500/20 ring-2 ring-purple-500/50"
+                      : "border-slate-200 bg-white backdrop-blur shadow-sm hover:shadow-lg hover:border-purple-400/50 hover:shadow-purple-500/20"
                     }
                             `}
                 >
                   <div
                     className={`
                                 w-14 h-14 rounded-full flex items-center justify-center mb-4 text-xl font-black transition-all
-                                ${activeGroup === group ? "bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/50" : "bg-slate-700 text-slate-300 group-hover:bg-purple-500/30 group-hover:text-purple-300"}
+                                ${activeGroup === group ? "bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/50" : "bg-slate-100 text-slate-600 group-hover:bg-purple-100 group-hover:text-purple-600"}
                             `}
                   >
                     {group}
                   </div>
                   <h3
-                    className={`text-xl font-bold mb-1 transition-colors ${activeGroup === group ? "text-purple-200" : "text-white"}`}
+                    className={`text-xl font-bold mb-1 transition-colors ${activeGroup === group ? "text-purple-600" : "text-slate-900"}`}
                   >
                     Khối {group}
                   </h3>
-                  <p className={`text-sm transition-colors ${activeGroup === group ? "text-purple-300" : "text-slate-400"}`}>
+                  <p className={`text-sm transition-colors ${activeGroup === group ? "text-purple-500" : "text-slate-500"}`}>
                     {group === "A00"
                       ? "Toán - Lý - Hóa"
                       : group === "A01"
@@ -985,27 +881,27 @@ export function StudyPath({
           {/* 4. Subject Detail Cards */}
           <div className="mb-16">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-white mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                 🎓 Chi Tiết Từng Môn
               </h2>
-              <p className="text-slate-400">
+              <p className="text-slate-600">
                 Xem lộ trình chuyên sâu cho từng môn học
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
               <div
                 onClick={() => setView("math")}
-                className="group bg-white backdrop-blur p-6 rounded-2xl border border-slate-700 hover:border-blue-500/50 shadow-sm hover:shadow-2xl hover:shadow-blue-500/20 cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
+                className="group bg-white backdrop-blur p-6 rounded-2xl border border-slate-200 hover:border-blue-500/50 shadow-sm hover:shadow-2xl hover:shadow-blue-500/20 cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
               >
-                <div className="absolute right-0 top-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500/30 to-blue-600/30 text-blue-400 rounded-xl flex items-center justify-center relative z-10 shadow-sm border border-blue-500/50">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-blue-100 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 text-blue-500 rounded-xl flex items-center justify-center relative z-10 shadow-sm border border-blue-200">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="4" y2="4" /><line x1="4" x2="20" y1="20" y2="20" /><path d="M4 4 12 12 4 20" /><path d="M20 4 12 12 20 20" /></svg>
                 </div>
                 <div className="relative z-10 flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-300 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-500 transition-colors">
                      Môn Toán
                   </h3>
-                  <p className="text-sm text-slate-400 mt-1">
+                  <p className="text-sm text-slate-500 mt-1">
                     Hàm số, Hình học, Tích phân...
                   </p>
                 </div>
