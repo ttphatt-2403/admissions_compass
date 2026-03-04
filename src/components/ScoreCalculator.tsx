@@ -49,6 +49,7 @@ export function ScoreCalculator() {
   const [suggestions, setSuggestions] = useState<MajorSuggestion[]>([]);
   const [isCalculating, setIsCalculating] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
 
@@ -198,7 +199,10 @@ export function ScoreCalculator() {
       default: return 'Không xác định';
     }
   };
-
+  const filteredSuggestions = suggestions.filter((item) =>
+    item.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="relative bg-gradient-to-br from-green-600 via-teal-600 to-cyan-700 text-white py-16 overflow-hidden">
@@ -343,6 +347,18 @@ export function ScoreCalculator() {
               className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center flex-wrap gap-4">
                 <div className="flex items-center gap-3">
+                  <div className="w-full md:w-80">
+                    <input
+                      type="text"
+                      placeholder="Tìm theo tên trường hoặc ngành..."
+                      value={searchTerm}
+                      onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+                    />
+                  </div>
                   <div className="p-2 bg-yellow-100 text-yellow-600 rounded-lg">
                     <Lightbulb size={24} />
                   </div>
@@ -352,14 +368,14 @@ export function ScoreCalculator() {
                   </div>
                 </div>
                 <div className="text-sm font-medium text-gray-500">
-                  Tìm thấy <span className="text-green-600 font-bold">{suggestions.length}</span> kết quả phù hợp
+                  Tìm thấy <span className="text-green-600 font-bold">{filteredSuggestions.length}</span> kết quả phù hợp
                 </div>
               </div>
 
               {suggestions.length > 0 ? (
                 <>
                   <div className="divide-y divide-gray-100">
-                    {suggestions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((suggestion, index) => (
+                    {filteredSuggestions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((suggestion, index) => (
                       <div key={index} className="p-6 hover:bg-gray-50 transition-colors duration-200 group">
                         <div className="flex flex-col md:flex-row gap-6">
                           {/* University Info */}
@@ -434,8 +450,8 @@ export function ScoreCalculator() {
                   </div>
 
                   {/* Pagination Controls */}
-                  {Math.ceil(suggestions.length / itemsPerPage) > 1 && (() => {
-                    const totalPages = Math.ceil(suggestions.length / itemsPerPage);
+                  {Math.ceil(filteredSuggestions.length / itemsPerPage) > 1 && (() => {
+                    const totalPages = Math.ceil(filteredSuggestions.length / itemsPerPage);
                     const maxVisiblePages = 5; // số trang hiển thị ở giữa
 
                     const getPageNumbers = () => {
@@ -509,7 +525,7 @@ export function ScoreCalculator() {
                             ) : (
                               <button
                                 key={index}
-                                onClick={() => setCurrentPage(page as number)}
+                                onClick={() => handlePageChange(page as number)}
                                 className={`
                 w-11 h-11 flex items-center justify-center rounded-full font-semibold text-sm transition-all duration-200
                 ${currentPage === page
