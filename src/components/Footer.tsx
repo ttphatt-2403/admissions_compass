@@ -2,7 +2,7 @@ import { GraduationCap, Mail, Phone, MapPin, Facebook, Youtube, Instagram, Twitt
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-blue-950 to-green-700 text-slate-300 border-t border-blue-900 font-sans relative overflow-hidden">
+    <footer className="bg-slate-900 from-slate-900 to-blue-950 text-slate-300 border-t border-blue-900 font-sans relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"></div>
@@ -120,7 +120,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar - Enhanced */}
-        <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-slate-600">
+        <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-white">
           <p className="flex items-center gap-2">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             &copy; 2026 Tuyển Sinh 2026. All rights reserved.

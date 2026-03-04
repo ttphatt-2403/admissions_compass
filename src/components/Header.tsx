@@ -54,11 +54,11 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`px-3 py-2 rounded-lg transition-all duration-200 ${
+                className={`px-2 py-1 rounded-lg transition-all duration-200 ${
                   activeTab === item.id
-                    ? 'bg-blue-100 text-blue-600 font-semibold shadow-sm'
+                    ? 'bg-blue-100 px-3 py-2 text-blue-600 font-semibold shadow-sm'
                     : item.highlight
-                    ? 'text-red-500 font-semibold hover:bg-red-50 hover:text-red-600'
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white font-bold px-5 py-2 rounded-full shadow-lg hover:shadow-2xl hover:scale-110 transform transition-all duration-300 animate-pulse'
                     : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
                 }`}
               >

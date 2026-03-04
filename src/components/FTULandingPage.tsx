@@ -337,60 +337,7 @@ const FTULandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1a1a1a] text-white pt-16 pb-8 border-t-4 border-[#990000]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div className="col-span-1 md:col-span-1">
-               <div className="w-16 h-16 rounded-full bg-[#990000] flex items-center justify-center font-bold text-2xl border-2 border-[#D4AF37] mb-6">FTU</div>
-               <p className="text-slate-400 text-sm leading-relaxed">
-                 Trường Đại học Ngoại thương - Đơn vị tiên phong trong đào tạo nguồn nhân lực chất lượng cao về kinh tế và kinh doanh quốc tế.
-               </p>
-            </div>
-            
-            <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-8">
-              <div>
-                <h4 className="font-bold uppercase text-[#D4AF37] mb-6 text-sm tracking-wider">Trụ sở chính</h4>
-                <ul className="space-y-4 text-sm text-slate-300">
-                  <li className="flex items-start gap-3">
-                    <MapPin size={16} className="mt-1 shrink-0 text-slate-500" />
-                    <span>91 Chùa Láng, Đống Đa, Hà Nội</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Phone size={16} className="shrink-0 text-slate-500" />
-                    <span>(024) 3259 5158</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Mail size={16} className="shrink-0 text-slate-500" />
-                    <span>tuyensinh@ftu.edu.vn</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold uppercase text-[#D4AF37] mb-6 text-sm tracking-wider">Cơ sở</h4>
-                <ul className="space-y-4 text-sm text-slate-300">
-                  <li>Cơ sở II: TP. Hồ Chí Minh</li>
-                  <li>Cơ sở Quảng Ninh</li>
-                </ul>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-bold uppercase text-[#D4AF37] mb-6 text-sm tracking-wider">Kết nối</h4>
-              <div className="flex gap-4">
-                 {/* Social Icons placeholders */}
-                 <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center hover:bg-[#990000] transition-colors cursor-pointer">F</div>
-                 <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center hover:bg-[#990000] transition-colors cursor-pointer">Y</div>
-                 <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center hover:bg-[#990000] transition-colors cursor-pointer">L</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-xs">
-            <p>&copy; 2026 Foreign Trade University. All Rights Reserved.</p>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 };

@@ -321,7 +321,7 @@ export default function VLULandingPage() {
         </div>
       </div>
 
-      {/* 6. Footer */}
+      {/* 6. Footer
       <footer className="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
@@ -369,7 +369,7 @@ export default function VLULandingPage() {
             © 2026 Van Lang University. All rights reserved. Designed for Figma Make.
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

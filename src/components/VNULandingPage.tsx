@@ -483,7 +483,7 @@ const VNULandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+      {/* <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
@@ -520,7 +520,7 @@ const VNULandingPage = () => {
             &copy; 2026 Đại học Quốc gia Hà Nội. Bảo lưu mọi quyền.
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };

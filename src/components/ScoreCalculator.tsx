@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Calculator, Lightbulb, TrendingUp, AlertCircle, RefreshCw, GraduationCap } from 'lucide-react';
 import { mockUniversities, University, Major } from './UniversitySearch';
 
@@ -36,6 +36,8 @@ const subjectCombinations: SubjectCombination[] = [
 ];
 
 export function ScoreCalculator() {
+  const suggestionsRef = useRef<HTMLDivElement | null>(null);
+  const itemsPerPage = 5; // items per page
   const [selectedCombination, setSelectedCombination] = useState<SubjectCombination>(subjectCombinations[0]);
   const [scores, setScores] = useState<Record<string, string>>({
     'Toán': '',
@@ -46,6 +48,18 @@ export function ScoreCalculator() {
   const [totalScore, setTotalScore] = useState<number | null>(null);
   const [suggestions, setSuggestions] = useState<MajorSuggestion[]>([]);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+
+    // Scroll mượt lên đầu danh sách
+    setTimeout(() => {
+      suggestionsRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 50);
+  };
 
   const handleCombinationChange = (combinationId: string) => {
     const combination = subjectCombinations.find(c => c.id === combinationId);
@@ -59,6 +73,7 @@ export function ScoreCalculator() {
       setScores(newScores);
       setTotalScore(null);
       setSuggestions([]);
+      setCurrentPage(1);
     }
   };
 
@@ -97,7 +112,7 @@ export function ScoreCalculator() {
 
     setIsCalculating(true);
     setTotalScore(total);
-    
+
     // Simulate calculation delay for better UX
     setTimeout(() => {
       generateSuggestions(total);
@@ -113,13 +128,13 @@ export function ScoreCalculator() {
         // Check if major accepts the selected combination
         // major.subjects is a string like "A00, A01, D01"
         const acceptedCombinations = major.subjects.split(',').map(s => s.trim());
-        
+
         if (acceptedCombinations.includes(selectedCombination.id)) {
           let probability: 'high' | 'medium' | 'low' | null = null;
-          
+
           // Determine probability
           const diff = score - major.benchmarkScore;
-          
+
           if (diff >= 1.0) {
             probability = 'high'; // Safe zone
           } else if (diff >= 0) {
@@ -163,6 +178,7 @@ export function ScoreCalculator() {
     });
 
     setSuggestions(newSuggestions);
+    setCurrentPage(1); // Reset to page 1 when new suggestions are generated
   };
 
   const getProbabilityColor = (probability: string) => {
@@ -192,7 +208,7 @@ export function ScoreCalculator() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
           }}></div>
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
@@ -212,7 +228,7 @@ export function ScoreCalculator() {
             <GraduationCap className="text-green-600" />
             Nhập điểm thi của bạn
           </h3>
-          
+
           {/* Combination Selector */}
           <div className="mb-8">
             <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -322,7 +338,9 @@ export function ScoreCalculator() {
             </div>
 
             {/* Suggestions List */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+            <div
+              ref={suggestionsRef}
+              className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center flex-wrap gap-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-yellow-100 text-yellow-600 rounded-lg">
@@ -339,80 +357,187 @@ export function ScoreCalculator() {
               </div>
 
               {suggestions.length > 0 ? (
-                <div className="divide-y divide-gray-100">
-                  {suggestions.map((suggestion, index) => (
-                    <div key={index} className="p-6 hover:bg-gray-50 transition-colors duration-200 group">
-                      <div className="flex flex-col md:flex-row gap-6">
-                        {/* University Info */}
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center font-bold text-gray-600 text-sm">
-                                {suggestion.universityShortName.charAt(0)}
+                <>
+                  <div className="divide-y divide-gray-100">
+                    {suggestions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((suggestion, index) => (
+                      <div key={index} className="p-6 hover:bg-gray-50 transition-colors duration-200 group">
+                        <div className="flex flex-col md:flex-row gap-6">
+                          {/* University Info */}
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center font-bold text-gray-600 text-sm">
+                                  {suggestion.universityShortName.charAt(0)}
+                                </div>
+                                <div>
+                                  <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+                                    {suggestion.name}
+                                  </h4>
+                                  <p className="text-gray-600 font-medium text-sm">{suggestion.university}</p>
+                                </div>
                               </div>
-                              <div>
-                                <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
-                                  {suggestion.name}
-                                </h4>
-                                <p className="text-gray-600 font-medium text-sm">{suggestion.university}</p>
-                              </div>
+                              <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getProbabilityColor(suggestion.probability)}`}>
+                                {getProbabilityText(suggestion.probability).toUpperCase()}
+                              </span>
                             </div>
-                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getProbabilityColor(suggestion.probability)}`}>
-                              {getProbabilityText(suggestion.probability).toUpperCase()}
-                            </span>
+
+                            <div className="mt-4 flex flex-wrap gap-3">
+                              <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                                Mã ngành: {suggestion.majorCode}
+                              </span>
+                              <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-800">
+                                Top {suggestion.ranking}
+                              </span>
+                            </div>
                           </div>
-                          
-                          <div className="mt-4 flex flex-wrap gap-3">
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                              Mã ngành: {suggestion.majorCode}
-                            </span>
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-800">
-                              Top {suggestion.ranking}
-                            </span>
+
+                          {/* Score Comparison */}
+                          <div className="flex items-center gap-6 md:border-l md:border-gray-100 md:pl-6 min-w-[280px]">
+                            <div className="text-center">
+                              <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Điểm chuẩn 2025</p>
+                              <p className="text-2xl font-bold text-gray-900">{suggestion.benchmarkScore}</p>
+                            </div>
+
+                            <div className="flex-1 h-1 bg-gray-200 rounded-full relative overflow-hidden">
+                              <div
+                                className={`absolute top-0 left-0 h-full rounded-full ${suggestion.yourScore >= suggestion.benchmarkScore ? 'bg-green-500' : 'bg-yellow-500'}`}
+                                style={{ width: '100%' }}
+                              ></div>
+                            </div>
+
+                            <div className="text-center">
+                              <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Chênh lệch</p>
+                              <p className={`text-2xl font-bold ${suggestion.yourScore >= suggestion.benchmarkScore ? 'text-green-600' : 'text-yellow-600'}`}>
+                                {suggestion.yourScore >= suggestion.benchmarkScore ? '+' : ''}
+                                {(suggestion.yourScore - suggestion.benchmarkScore).toFixed(2)}
+                              </p>
+                            </div>
                           </div>
                         </div>
 
-                        {/* Score Comparison */}
-                        <div className="flex items-center gap-6 md:border-l md:border-gray-100 md:pl-6 min-w-[280px]">
-                          <div className="text-center">
-                            <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Điểm chuẩn 2025</p>
-                            <p className="text-2xl font-bold text-gray-900">{suggestion.benchmarkScore}</p>
-                          </div>
-                          
-                          <div className="flex-1 h-1 bg-gray-200 rounded-full relative overflow-hidden">
-                            <div 
-                              className={`absolute top-0 left-0 h-full rounded-full ${suggestion.yourScore >= suggestion.benchmarkScore ? 'bg-green-500' : 'bg-yellow-500'}`}
-                              style={{ width: '100%' }}
-                            ></div>
-                          </div>
-
-                          <div className="text-center">
-                            <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Chênh lệch</p>
-                            <p className={`text-2xl font-bold ${suggestion.yourScore >= suggestion.benchmarkScore ? 'text-green-600' : 'text-yellow-600'}`}>
-                              {suggestion.yourScore >= suggestion.benchmarkScore ? '+' : ''}
-                              {(suggestion.yourScore - suggestion.benchmarkScore).toFixed(2)}
-                            </p>
-                          </div>
+                        {/* Advice Message */}
+                        <div className="mt-4 pt-4 border-t border-dashed border-gray-100">
+                          {suggestion.yourScore >= suggestion.benchmarkScore ? (
+                            <div className="flex items-center gap-2 text-sm text-green-700">
+                              <TrendingUp size={16} />
+                              <span>Điểm của bạn đang ở mức an toàn so với năm ngoái. Hãy tự tin đăng ký nguyện vọng!</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-sm text-yellow-700">
+                              <AlertCircle size={16} />
+                              <span>Điểm thấp hơn một chút. Cân nhắc đặt làm nguyện vọng ưu tiên nếu bạn thực sự yêu thích.</span>
+                            </div>
+                          )}
                         </div>
                       </div>
+                    ))}
+                  </div>
 
-                      {/* Advice Message */}
-                      <div className="mt-4 pt-4 border-t border-dashed border-gray-100">
-                        {suggestion.yourScore >= suggestion.benchmarkScore ? (
-                          <div className="flex items-center gap-2 text-sm text-green-700">
-                            <TrendingUp size={16} />
-                            <span>Điểm của bạn đang ở mức an toàn so với năm ngoái. Hãy tự tin đăng ký nguyện vọng!</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2 text-sm text-yellow-700">
-                            <AlertCircle size={16} />
-                            <span>Điểm thấp hơn một chút. Cân nhắc đặt làm nguyện vọng ưu tiên nếu bạn thực sự yêu thích.</span>
-                          </div>
-                        )}
+                  {/* Pagination Controls */}
+                  {Math.ceil(suggestions.length / itemsPerPage) > 1 && (() => {
+                    const totalPages = Math.ceil(suggestions.length / itemsPerPage);
+                    const maxVisiblePages = 5; // số trang hiển thị ở giữa
+
+                    const getPageNumbers = () => {
+                      const pages: (number | string)[] = [];
+
+                      if (totalPages <= maxVisiblePages + 2) {
+                        return Array.from({ length: totalPages }, (_, i) => i + 1);
+                      }
+
+                      pages.push(1);
+
+                      let start = Math.max(2, currentPage - 1);
+                      let end = Math.min(totalPages - 1, currentPage + 1);
+
+                      if (currentPage <= 3) {
+                        start = 2;
+                        end = 4;
+                      }
+
+                      if (currentPage >= totalPages - 2) {
+                        start = totalPages - 3;
+                        end = totalPages - 1;
+                      }
+
+                      if (start > 2) {
+                        pages.push("...");
+                      }
+
+                      for (let i = start; i <= end; i++) {
+                        pages.push(i);
+                      }
+
+                      if (end < totalPages - 1) {
+                        pages.push("...");
+                      }
+
+                      pages.push(totalPages);
+
+                      return pages;
+                    };
+
+                    return (
+                      <div className="flex flex-col items-center gap-6 p-8 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+
+                        {/* Page Info */}
+                        <div className="text-sm font-medium text-gray-600">
+                          Trang <span className="text-green-600 font-bold">{currentPage}</span> /{" "}
+                          <span className="font-bold">{totalPages}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+
+                          {/* Previous */}
+                          <button
+                            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                            disabled={currentPage === 1}
+                            className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-gray-300 text-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                          >
+                            ←
+                          </button>
+
+                          {/* Page Numbers */}
+                          {getPageNumbers().map((page, index) =>
+                            page === "..." ? (
+                              <span
+                                key={index}
+                                className="w-11 h-11 flex items-center justify-center text-gray-400 font-semibold"
+                              >
+                                ...
+                              </span>
+                            ) : (
+                              <button
+                                key={index}
+                                onClick={() => setCurrentPage(page as number)}
+                                className={`
+                w-11 h-11 flex items-center justify-center rounded-full font-semibold text-sm transition-all duration-200
+                ${currentPage === page
+                                    ? "bg-gradient-to-r from-green-600 to-teal-600 text-white shadow-lg scale-110"
+                                    : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 hover:shadow-md"
+                                  }
+              `}
+                              >
+                                {page}
+                              </button>
+                            )
+                          )}
+
+                          {/* Next */}
+                          <button
+                            onClick={() =>
+                              handlePageChange(Math.min(totalPages, currentPage + 1))
+                            }
+                            disabled={currentPage === totalPages}
+                            className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-gray-300 text-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                          >
+                            →
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    );
+                  })()}
+                </>
               ) : (
                 <div className="py-16 text-center">
                   <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">

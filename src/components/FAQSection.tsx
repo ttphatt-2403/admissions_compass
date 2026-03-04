@@ -114,7 +114,7 @@ export function FAQSection() {
             </div>
 
             {/* Enhanced Chat CTA Card */}
-            <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-500">
+            <div className="bg-gradient-to-br from-blue-600  to-blue-700 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-500">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl translate-x-1/2 -translate-y-1/2 group-hover:bg-white/20 group-hover:scale-150 transition-all duration-700"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-400/20 rounded-full blur-xl -translate-x-1/2 translate-y-1/2"></div>
 

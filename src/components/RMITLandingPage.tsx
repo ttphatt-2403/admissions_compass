@@ -454,7 +454,7 @@ const RMITLandingPage = () => {
         </div>
       </section>
 
-      {/* Minimal Footer */}
+      {/* Minimal Footer
       <footer className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white border-t border-white/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -512,7 +512,7 @@ const RMITLandingPage = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };

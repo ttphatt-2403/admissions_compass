@@ -409,7 +409,7 @@ const HMULandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-12">
@@ -457,7 +457,7 @@ const HMULandingPage = () => {
             &copy; 2026 Hanoi Medical University. All rights reserved.
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };

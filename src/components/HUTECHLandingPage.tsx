@@ -418,7 +418,7 @@ export default function HUTECHLandingPage() {
         </div>
       </div>
 
-      {/* 6. Footer */}
+      {/* 6. Footer
       <footer className="bg-gray-950 text-white py-12 border-t border-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
@@ -469,7 +469,7 @@ export default function HUTECHLandingPage() {
             © 2026 HUTECH University. All rights reserved.
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

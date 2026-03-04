@@ -411,7 +411,7 @@ export default function GDULandingPage() {
         </div>
       </div>
 
-      {/* 6. Footer */}
+      {/* 6. Footer
       <footer className="bg-gray-100 text-gray-600 py-12 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
@@ -475,7 +475,7 @@ export default function GDULandingPage() {
             © 2026 Gia Dinh University. All rights reserved.
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

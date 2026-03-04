@@ -439,7 +439,7 @@ const HNUELandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white border-t border-white/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
@@ -498,7 +498,7 @@ const HNUELandingPage = () => {
             <p>&copy; 2026 Hanoi National University of Education. All Rights Reserved.</p>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };

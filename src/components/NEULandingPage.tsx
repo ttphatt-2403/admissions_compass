@@ -438,7 +438,7 @@ const NEULandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="bg-[#003366] text-slate-300 py-12 border-t border-[#004080]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -494,7 +494,7 @@ const NEULandingPage = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };

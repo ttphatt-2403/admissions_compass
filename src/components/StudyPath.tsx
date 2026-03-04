@@ -729,7 +729,7 @@ export function StudyPath({
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900 pb-20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-slate-600 to-blue-500 font-sans text-slate-900 pb-20 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl animate-pulse"></div>
@@ -881,10 +881,10 @@ export function StudyPath({
           {/* 4. Subject Detail Cards */}
           <div className="mb-16">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
                 🎓 Chi Tiết Từng Môn
               </h2>
-              <p className="text-slate-600">
+              <p className="text-black">
                 Xem lộ trình chuyên sâu cho từng môn học
               </p>
             </div>
