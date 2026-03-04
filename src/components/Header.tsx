@@ -25,7 +25,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
     { id: 'community' as TabType, label: 'Cộng Đồng' },
     { id: 'riasec' as TabType, label: 'Trắc Nghiệm RIASEC' },
-    { id: 'b2b-landing' as TabType, label: 'Hợp Tác B2B', highlight: true },
+    { id: 'b2b-landing' as TabType, label: 'Hợp Tác Tuyển Sinh', highlight: true },
   ];
 
   // hide chatbot item when the flag is false

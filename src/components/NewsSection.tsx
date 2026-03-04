@@ -9,6 +9,7 @@ interface NewsArticle {
   date: string;
   image: string;
   isHot?: boolean;
+  link?: string;
 }
 
 const mockNews: NewsArticle[] = [
@@ -18,33 +19,37 @@ const mockNews: NewsArticle[] = [
     summary: 'Kỳ thi THPT Quốc gia năm 2026 dự kiến diễn ra vào đầu tháng 6, với nhiều thay đổi quan trọng về cấu trúc đề thi...',
     category: 'Chính sách',
     date: '2 ngày trước',
-    image: 'education policy',
+    image: 'image.png',
     isHot: true,
+    link: 'https://thuvienphapluat.vn/hoi-dap-phap-luat/lich-thi-thpt-quoc-gia-2026-dien-ra-vao-ngay-1161262026-du-kien-dung-khong-138059892.html'
   },
   {
     id: '2',
     title: 'Top 10 ngành học hot nhất năm 2026',
-    summary: 'Công nghệ thông tin, Trí tuệ nhân tạo và An ninh mạng tiếp tục dẫn đầu danh sách ngành học được quan tâm nhiều nhất...',
+    summary: 'Sau khi quan sát, tổng kết sự phát triển của nền kinh tế Việt Nam và dự đoán nhu cầu nhân lực của thế giới trong giai đoạn 2025 – 2035, Zila Education đưa ra 10 gợi ý về những ngành nghề hot trong tương lai và cần thiết hiện nay....',
     category: 'Xu hướng',
-    date: '3 ngày trước',
+    date: '5 tháng trước',
     image: 'computer technology',
     isHot: true,
+    link: 'https://www.zila.com.vn/nhung-nganh-nghe-co-trien-vong-trong-tuong-lai.html'
   },
   {
     id: '3',
     title: 'ĐH Bách Khoa HN tăng chỉ tiêu tuyển sinh ngành CNTT',
-    summary: 'Trường ĐH Bách Khoa Hà Nội thông báo tăng 200 chỉ tiêu cho ngành Công nghệ thông tin do nhu cầu nhân lực cao...',
+    summary: 'Đại học Bách khoa Hà Nội dự kiến tuyển 9.680 sinh viên dựa trên 3 phương thức, tăng khả năng trúng tuyển ...',
     category: 'Tuyển sinh',
     date: '5 ngày trước',
     image: 'university campus',
+    link: 'https://xaydungchinhsach.chinhphu.vn/tuyen-sinh-2025-chi-tieu-phuong-thuc-tuyen-sinh-cua-dai-hoc-bach-khoa-ha-noi-119250115115824712.htm'
   },
   {
     id: '4',
     title: 'Hướng dẫn đăng ký xét tuyển đại học 2026',
-    summary: 'Các bước đăng ký nguyện vọng xét tuyển đại học, cao đẳng năm 2026 chi tiết từ A đến Z cho thí sinh và phụ huynh...',
+    summary: 'Bộ GD&ĐT đã mở lại hệ thống đăng ký nguyện vọng đến hết 17h00 ngày 30/7 để tạo thêm điều kiện ...',
     category: 'Hướng dẫn',
     date: '1 tuần trước',
     image: 'student studying',
+    link: 'https://quantrimang.com/cong-nghe/cach-dang-ky-nguyen-vong-dai-hoc-truc-tuyen-191440'
   },
   {
     id: '5',
@@ -53,14 +58,16 @@ const mockNews: NewsArticle[] = [
     category: 'Phân tích',
     date: '1 tuần trước',
     image: 'data analysis',
+    link: 'https://vietnamnet.vn/giao-duc/diem-thi/tra-cuu-diem-chuan-cd-dh-2026/diem'
   },
   {
     id: '6',
     title: 'Học bổng toàn phần cho sinh viên xuất sắc',
-    summary: 'Nhiều trường đại học công bố chương trình học bổng toàn phần, bán phần dành cho tân sinh viên có thành tích cao...',
+    summary: 'Mùa tuyển sinh năm 2026, nhiều cơ sở giáo dục đại học đã công bố các chương trình học bổng “khủng” nhằm thu hút thí sinh. Các chính sách này ...',
     category: 'Học bổng',
     date: '2 tuần trước',
     image: 'scholarship graduation',
+    link: 'https://giaoducthudo.giaoducthoidai.vn/nhieu-co-so-giao-duc-dai-hoc-tung-chinh-sach-hoc-bong-cho-tan-sinh-vien-co-noi-hang-tram-trieu-204080.html'
   },
   {
     id: '7',
@@ -69,14 +76,16 @@ const mockNews: NewsArticle[] = [
     category: 'Kinh nghiệm',
     date: '2 tuần trước',
     image: 'student success',
+    link: 'https://vietnamnet.vn/bi-quyet-hoc-tap-cua-nu-thu-khoa-khoi-a00-tot-nghiep-thpt-2025-voi-3-diem-10-2422317.html'
   },
   {
     id: '8',
     title: 'Cập nhật điểm chuẩn các trường năm 2025',
-    summary: 'Tổng hợp đầy đủ điểm chuẩn trúng tuyển của tất cả các trường đại học, cao đẳng trên cả nước năm 2025...',
+    summary: 'Hơn 200 đại học công bố điểm chuẩn 2025, 6 ngành lấy 30 điểm, ở Đại học Ngoại ngữ, Đại học Huế, Học viện Khoa học quân sự và Học viện Quân y.Phổ điểm thi tốt nghiệp các môn...',
     category: 'Điểm chuẩn',
     date: '3 tuần trước',
     image: 'university building',
+    link: 'https://vnexpress.net/diem-chuan-hon-200-dai-hoc-nam-2025-cap-nhat-nhanh-chi-tiet-chinh-xac-nhat-4929038.html'
   },
 ];
 
@@ -85,8 +94,8 @@ const categories = ['Tất cả', 'Chính sách', 'Tuyển sinh', 'Học bổng'
 export function NewsSection() {
   const [selectedCategory, setSelectedCategory] = useState('Tất cả');
 
-  const filteredNews = selectedCategory === 'Tất cả' 
-    ? mockNews 
+  const filteredNews = selectedCategory === 'Tất cả'
+    ? mockNews
     : mockNews.filter(news => news.category === selectedCategory);
 
   return (
@@ -109,11 +118,10 @@ export function NewsSection() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-orange-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category
+                  ? 'bg-orange-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
               >
                 {category}
               </button>
@@ -147,9 +155,20 @@ export function NewsSection() {
                     </div>
                     <h3 className="font-bold text-lg mb-2 line-clamp-2">{news.title}</h3>
                     <p className="text-gray-600 text-sm line-clamp-3">{news.summary}</p>
-                    <button className="mt-4 text-orange-600 font-semibold text-sm hover:text-orange-700">
-                      Đọc thêm →
-                    </button>
+                    {news.link ? (
+                      <a
+                        href={news.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-block text-orange-600 font-semibold text-sm hover:text-orange-700"
+                      >
+                        Đọc thêm →
+                      </a>
+                    ) : (
+                      <button className="mt-4 text-orange-600 font-semibold text-sm hover:text-orange-700">
+                        Đọc thêm →
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -180,9 +199,20 @@ export function NewsSection() {
                   </div>
                   <h3 className="font-semibold mb-2 line-clamp-2">{news.title}</h3>
                   <p className="text-gray-600 text-sm line-clamp-3 mb-4">{news.summary}</p>
-                  <button className="text-blue-600 font-semibold text-sm hover:text-blue-700">
-                    Xem chi tiết →
-                  </button>
+                  {news.link ? (
+                    <a
+                      href={news.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 font-semibold text-sm hover:text-blue-700"
+                    >
+                      Xem chi tiết →
+                    </a>
+                  ) : (
+                    <button className="text-blue-600 font-semibold text-sm hover:text-blue-700">
+                      Xem chi tiết →
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
