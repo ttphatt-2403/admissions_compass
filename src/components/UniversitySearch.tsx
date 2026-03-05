@@ -1197,6 +1197,7 @@ export function UniversitySearch() {
                             </p>
                           </div>
                           <div className="text-right ml-4">
+                            <p className="text-xs font-bold text-gray-500 mb-1">Điểm chuẩn năm 2025</p>
                             <div className="flex items-center gap-2 justify-end mb-1">
                               <span className="text-3xl font-black bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
                                 {major.benchmarkScore}
