@@ -11,6 +11,15 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// runtime sanity check – if any of these are missing the app will crash early
+Object.entries(firebaseConfig).forEach(([key, value]) => {
+  if (typeof value !== "string" || value.trim().length === 0) {
+    console.warn(`Environment variable ${key} is not set. Check your .env file.`);
+  }
+});
+
+console.log("Firebase configuration:", firebaseConfig); // remove in production
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

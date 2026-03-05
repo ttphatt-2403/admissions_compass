@@ -9,21 +9,22 @@ interface Document {
   type: string;
   downloads: number;
   views: number;
+  link: string;
 }
 
 const mockDocuments: Document[] = [
-  { id: '1', title: 'Tổng hợp công thức Toán 12 - Đầy đủ', subject: 'Toán', grade: '12', type: 'Lý thuyết', downloads: 15420, views: 28900 },
-  { id: '2', title: 'Đề thi thử THPT QG 2026 - Toán (Có đáp án)', subject: 'Toán', grade: '12', type: 'Đề thi', downloads: 12350, views: 24100 },
-  { id: '3', title: 'Ngữ pháp Tiếng Anh tổng hợp THPT', subject: 'Tiếng Anh', grade: '12', type: 'Lý thuyết', downloads: 18200, views: 32400 },
-  { id: '4', title: '1500 câu trắc nghiệm Vật Lý có giải chi tiết', subject: 'Vật Lý', grade: '12', type: 'Bài tập', downloads: 9800, views: 19200 },
-  { id: '5', title: 'Lịch sử Việt Nam - Tóm tắt sự kiện quan trọng', subject: 'Lịch Sử', grade: '12', type: 'Lý thuyết', downloads: 7600, views: 15800 },
-  { id: '6', title: 'Hóa học hữu cơ - Chuyên đề phản ứng', subject: 'Hóa Học', grade: '12', type: 'Chuyên đề', downloads: 10200, views: 21300 },
-  { id: '7', title: 'Sinh học di truyền - Bài tập nâng cao', subject: 'Sinh Học', grade: '12', type: 'Bài tập', downloads: 8900, views: 17500 },
-  { id: '8', title: 'Địa lý Việt Nam - Bản đồ tư duy', subject: 'Địa Lý', grade: '12', type: 'Tài liệu tham khảo', downloads: 6500, views: 13200 },
-  { id: '9', title: 'Đề thi thử THPT QG 2026 - Tiếng Anh', subject: 'Tiếng Anh', grade: '12', type: 'Đề thi', downloads: 14100, views: 26800 },
-  { id: '10', title: 'Văn học Việt Nam - Phân tích tác phẩm', subject: 'Văn', grade: '12', type: 'Lý thuyết', downloads: 11200, views: 22400 },
-  { id: '11', title: 'Toán 11 - Các dạng bài hàm số', subject: 'Toán', grade: '11', type: 'Bài tập', downloads: 5400, views: 11200 },
-  { id: '12', title: 'GDCD - Tóm tắt kiến thức cơ bản', subject: 'GDCD', grade: '12', type: 'Lý thuyết', downloads: 4800, views: 9600 },
+  { id: '1', title: 'Tổng hợp công thức Toán 12 - Đầy đủ', subject: 'Toán', grade: '12', type: 'Lý thuyết', downloads: 15420, views: 28900, link: "https://drive.google.com/drive/folders/1sSB3tPt4rkUS-vHzQhCmwJ4cwNsEPgfJ" },
+  { id: '2', title: 'Đề thi thử THPT QG 2026 - Toán (Có đáp án)', subject: 'Toán', grade: '12', type: 'Đề thi', downloads: 12350, views: 24100, link: "https://drive.google.com/drive/folders/1sSB3tPt4rkUS-vHzQhCmwJ4cwNsEPgfJ" },
+  { id: '3', title: 'Ngữ pháp Tiếng Anh tổng hợp THPT', subject: 'Tiếng Anh', grade: '12', type: 'Lý thuyết', downloads: 18200, views: 32400, link: "https://drive.google.com/drive/u/0/folders/11O_q1lcKORiInDURrGvJKBpo0ok8H2sh" },
+  { id: '4', title: '1500 câu trắc nghiệm Vật Lý có giải chi tiết', subject: 'Vật Lý', grade: '12', type: 'Bài tập', downloads: 9800, views: 19200, link: "https://drive.google.com/drive/u/0/folders/1ro0TTs0JBhTpPU8elJuo1iUPmJ-FeNX-" },
+  { id: '5', title: 'Lịch sử Việt Nam - Tóm tắt sự kiện quan trọng', subject: 'Lịch Sử', grade: '12', type: 'Lý thuyết', downloads: 7600, views: 15800, link: "https://drive.google.com/drive/u/0/folders/1TuRHSaeJWXTtG2mVx4pvpFh3hCQEV0x_" },
+  { id: '6', title: 'Hóa học hữu cơ - Chuyên đề phản ứng', subject: 'Hóa Học', grade: '12', type: 'Chuyên đề', downloads: 10200, views: 21300, link: "https://drive.google.com/drive/u/0/folders/1PocYKHUA5YtA0Nw4B5vEHfW7G5D45W1B" },
+  { id: '7', title: 'Sinh học di truyền - Bài tập nâng cao', subject: 'Sinh Học', grade: '12', type: 'Bài tập', downloads: 8900, views: 17500, link: "https://drive.google.com/drive/folders/1sSB3tPt4rkUS-vHzQhCmwJ4cwNsEPgfJ" },
+  { id: '8', title: 'Địa lý Việt Nam - Bản đồ tư duy', subject: 'Địa Lý', grade: '12', type: 'Tài liệu tham khảo', downloads: 6500, views: 13200, link: "https://drive.google.com/drive/u/0/folders/1VI7pRktlrMtAoBSGeEeQFXAUdu9JK0Ir" },
+  { id: '9', title: 'Đề thi thử THPT QG 2026 - Tiếng Anh', subject: 'Tiếng Anh', grade: '12', type: 'Đề thi', downloads: 14100, views: 26800, link: "https://drive.google.com/drive/folders/1W7Vtkxw7tQg4VIwbL4ow6HNQEuRsL6qW" },
+  { id: '10', title: 'Văn học Việt Nam - Phân tích tác phẩm', subject: 'Văn', grade: '12', type: 'Lý thuyết', downloads: 11200, views: 22400, link: "https://drive.google.com/drive/folders/1tvq1JIU1pHe4RXSkdjR2WGjtfA93J5ED" },
+  { id: '11', title: 'Toán 11 - Các dạng bài hàm số', subject: 'Toán', grade: '11', type: 'Bài tập', downloads: 5400, views: 11200, link: "https://drive.google.com/drive/folders/1sSB3tPt4rkUS-vHzQhCmwJ4cwNsEPgfJ" },
+  { id: '12', title: 'GDCD - Tóm tắt kiến thức cơ bản', subject: 'GDCD', grade: '12', type: 'Lý thuyết', downloads: 4800, views: 9600, link: "https://drive.google.com/drive/folders/1sSB3tPt4rkUS-vHzQhCmwJ4cwNsEPgfJ" },
 ];
 
 const subjects = ['Tất cả', 'Toán', 'Văn', 'Tiếng Anh', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Lịch Sử', 'Địa Lý', 'GDCD'];
@@ -42,7 +43,7 @@ export function DocumentLibrary() {
     const matchesSubject = selectedSubject === 'Tất cả' || doc.subject === selectedSubject;
     const matchesGrade = selectedGrade === 'Tất cả' || doc.grade === selectedGrade;
     const matchesType = selectedType === 'Tất cả' || doc.type === selectedType;
-    
+
     return matchesSearch && matchesSubject && matchesGrade && matchesType;
   });
 
@@ -55,7 +56,7 @@ export function DocumentLibrary() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
           }}></div>
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
@@ -151,9 +152,9 @@ export function DocumentLibrary() {
                 </span>
                 <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">Lớp {doc.grade}</span>
               </div>
-              
+
               <h3 className="font-bold text-lg mb-3 line-clamp-2 text-gray-900 group-hover:text-blue-600 transition-colors">{doc.title}</h3>
-              
+
               <div className="text-xs text-gray-500 mb-4">
                 <span className="px-3 py-1.5 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg border border-gray-200">{doc.type}</span>
               </div>
@@ -169,10 +170,15 @@ export function DocumentLibrary() {
                 </div>
               </div>
 
-              <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform group-hover:scale-105">
+              <a
+                href={doc.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform group-hover:scale-105"
+              >
                 <Download size={18} />
                 Tải xuống miễn phí
-              </button>
+              </a>
             </div>
           ))}
         </div>
