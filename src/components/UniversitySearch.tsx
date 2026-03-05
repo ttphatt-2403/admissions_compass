@@ -968,11 +968,20 @@ const regions = [
 ];
 const types = ["Tất cả", "Công lập", "Tư thục"];
 
+// Tạo danh sách các ngành unique từ dữ liệu
+const allMajors = Array.from(
+  new Set(
+    mockUniversities.flatMap((uni) => uni.majors.map((m) => m.name))
+  )
+).sort();
+const majors = ["Tất cả ngành", ...allMajors];
+
 export function UniversitySearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] =
     useState("Tất cả");
   const [selectedType, setSelectedType] = useState("Tất cả");
+  const [selectedMajor, setSelectedMajor] = useState("Tất cả ngành");
   const [expandedUniversity, setExpandedUniversity] = useState<
     string | null
   >(null);
@@ -991,8 +1000,11 @@ export function UniversitySearch() {
         uni.location === selectedRegion;
       const matchesType =
         selectedType === "Tất cả" || uni.type === selectedType;
+      const matchesMajor =
+        selectedMajor === "Tất cả ngành" ||
+        uni.majors.some((m) => m.name === selectedMajor);
 
-      return matchesSearch && matchesRegion && matchesType;
+      return matchesSearch && matchesRegion && matchesType && matchesMajor;
     },
   );
 
@@ -1036,7 +1048,7 @@ export function UniversitySearch() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter Bar */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-4 gap-4">
             <div className="md:col-span-1 relative">
               <Search
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -1049,6 +1061,21 @@ export function UniversitySearch() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+            </div>
+            <div>
+              <select
+                value={selectedMajor}
+                onChange={(e) =>
+                  setSelectedMajor(e.target.value)
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {majors.map((major) => (
+                  <option key={major} value={major}>
+                    {major}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <select

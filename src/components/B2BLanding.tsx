@@ -508,16 +508,6 @@ export function B2BLanding() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:bg-white/10 transition-all">
-              <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mb-6">
-                <Target size={28} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Tiếp cận đúng tệp học sinh</h3>
-              <p className="text-slate-300 leading-relaxed">
-                70% người dùng là học sinh lớp 12 - đối tượng có nhu cầu tuyển sinh cao nhất. Tối ưu chi phí marketing bằng cách tiếp cận đúng người, đúng thời điểm.
-              </p>
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:bg-white/10 transition-all">
               <div className="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center mb-6">
                 <BarChart3 size={28} />
               </div>
@@ -534,16 +524,6 @@ export function B2BLanding() {
               <h3 className="text-2xl font-bold mb-4">Landing tuyển sinh riêng biệt</h3>
               <p className="text-slate-300 leading-relaxed">
                 Xây dựng trang landing chuyên nghiệp, tích hợp form đăng ký, chatbot tư vấn, giúp tăng conversion rate đến 40%.
-              </p>
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:bg-white/10 transition-all">
-              <div className="w-14 h-14 bg-orange-600 rounded-xl flex items-center justify-center mb-6">
-                <Video size={28} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Webinar & Livestream tương tác</h3>
-              <p className="text-slate-300 leading-relaxed">
-                Đồng tổ chức các buổi tư vấn trực tuyến, livestream ngày hội tuyển sinh với hàng nghìn học sinh tham dự.
               </p>
             </div>
 

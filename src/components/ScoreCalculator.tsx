@@ -220,7 +220,7 @@ export function ScoreCalculator() {
             </div>
             <div>
               <h2 className="text-4xl font-extrabold">Công Cụ Tính Điểm & Gợi Ý Ngành</h2>
-              <p className="text-green-100 mt-1">Tính điểm thi và nhận gợi ý ngành học từ dữ liệu tuyển sinh 2025 mới nhất</p>
+              <p className="text-green-100 mt-1">Tính điểm thi và nhận gợi ý ngành học từ dữ liệu tuyển sinh năm 2025 mới nhất</p>
             </div>
           </div>
         </div>
@@ -301,6 +301,40 @@ export function ScoreCalculator() {
             </div>
           </div>
 
+          {/* Formula Explanation */}
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-8 border border-amber-200 shadow-md">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Lightbulb size={24} className="text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-amber-800 mb-3">Công thức tính điểm xét tuyển</h3>
+                <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
+                  <p className="text-center font-mono text-lg text-gray-800 font-semibold">
+                    Điểm xét tuyển = Môn 1 + Môn 2 + Môn 3 + Điểm ưu tiên
+                  </p>
+                </div>
+                <div className="space-y-2 text-sm text-gray-700">
+                  <p className="flex items-start gap-2">
+                    <span className="text-amber-600 font-bold">•</span>
+                    <span><strong>Môn 1, 2, 3:</strong> Điểm các môn trong tổ hợp xét tuyển (thang điểm 0-10)</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <span className="text-amber-600 font-bold">•</span>
+                    <span><strong>Điểm ưu tiên:</strong> Gồm điểm ưu tiên khu vực (tối đa 0.75) và đối tượng (tối đa 2.0)</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <span className="text-amber-600 font-bold">•</span>
+                    <span><strong>Điểm tối đa:</strong> 30 điểm (không tính ưu tiên) hoặc 32.75 điểm (có ưu tiên)</span>
+                  </p>
+                </div>
+                <div className="mt-4 p-3 bg-amber-100 rounded-lg text-sm text-amber-800">
+                  <strong>Ví dụ:</strong> Toán 8.5 + Lý 7.0 + Hóa 8.0 + Ưu tiên 0.5 = <strong>24.0 điểm</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button
             onClick={calculateScore}
             disabled={isCalculating}
@@ -372,6 +406,33 @@ export function ScoreCalculator() {
                 </div>
               </div>
 
+              {/* Probability Legend */}
+              <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100">
+                <div className="flex flex-wrap items-center gap-4">
+                  <span className="text-sm font-semibold text-gray-700">Chú thích mức độ khả năng đậu:</span>
+                  <div className="flex flex-wrap gap-3">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border bg-green-100 text-green-700 border-green-200">
+                        KHẢ NĂNG CAO
+                      </span>
+                      <span className="text-xs text-gray-600">Điểm bạn cao hơn điểm chuẩn ≥ 0.5</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border bg-yellow-100 text-yellow-700 border-yellow-200">
+                        CƠ HỘI TỐT
+                      </span>
+                      <span className="text-xs text-gray-600">Điểm chênh lệch trong khoảng -0.5 đến +0.5</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border bg-red-100 text-red-700 border-red-200">
+                        MẠO HIỂM
+                      </span>
+                      <span className="text-xs text-gray-600">Điểm bạn thấp hơn điểm chuẩn &gt; 0.5</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {suggestions.length > 0 ? (
                 <>
                   <div className="divide-y divide-gray-100">
@@ -392,9 +453,6 @@ export function ScoreCalculator() {
                                   <p className="text-gray-600 font-medium text-sm">{suggestion.university}</p>
                                 </div>
                               </div>
-                              <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getProbabilityColor(suggestion.probability)}`}>
-                                {getProbabilityText(suggestion.probability).toUpperCase()}
-                              </span>
                             </div>
 
                             <div className="mt-4 flex flex-wrap gap-3">
@@ -403,6 +461,9 @@ export function ScoreCalculator() {
                               </span>
                               <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-800">
                                 Top {suggestion.ranking}
+                              </span>
+                              <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getProbabilityColor(suggestion.probability)}`}>
+                                {getProbabilityText(suggestion.probability).toUpperCase()}
                               </span>
                             </div>
                           </div>
