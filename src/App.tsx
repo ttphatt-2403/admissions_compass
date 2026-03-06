@@ -1279,7 +1279,7 @@ export default function App() {
         {activeTab === 'b2b-landing' && <B2BLanding />}
       </main>
 
-      {activeTab !== 'chatbot' && <Footer />}
+      {activeTab !== 'chatbot' && activeTab !== 'community' && <Footer />}
     </div>
   );
 }

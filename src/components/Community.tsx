@@ -1,17 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { Send, User as UserIcon, Circle, MessageSquare, Heart, Link, Image, Smile, Gift, ChevronDown } from "lucide-react";
+import { Send, Heart, Link, Image, Smile, Gift, ChevronDown, LogIn } from "lucide-react";
+import { db } from "../lib/firebase";
+import { collection, addDoc, query, orderBy, onSnapshot, updateDoc, doc, serverTimestamp, Timestamp } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext";
 
 interface ChatMessage {
-    id: number;
+    id: string;
     author: string;
     content: string;
     timestamp: Date;
     likes?: number;
-}
-
-interface OnlineUser {
-    name: string;
-    online: boolean;
 }
 
 const getInitials = (name: string) => {
@@ -38,15 +36,9 @@ const getAvatarColor = (name: string) => {
 };
 
 const Community = () => {
-    const [messages, setMessages] = useState<ChatMessage[]>([{
-        id: 1,
-        author: 'Hệ thống',
-        content: 'Chào mừng bạn đến với cộng đồng! Hãy bắt đầu trò chuyện.',
-        timestamp: new Date(),
-    }]);
+    const { user, signInWithGoogle } = useAuth();
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState("");
-    const [username, setUsername] = useState("Bạn");
-    const [users, setUsers] = useState<OnlineUser[]>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const messagesContainerRef = useRef<HTMLDivElement>(null);
     const shouldAutoScrollRef = useRef(true);
@@ -54,54 +46,45 @@ const Community = () => {
     const [showScrollBtn, setShowScrollBtn] = useState(false);
     const [unreadCount, setUnreadCount] = useState(0);
 
+    // Get username from Firebase user
+    const username = user?.displayName || user?.email?.split('@')[0] || 'Người dùng';
 
+    // Load messages from Firestore realtime
     useEffect(() => {
-        // ask for username once
-        let name = localStorage.getItem('chatName');
-        if (!name) {
-            name = prompt('Nhập tên của bạn để tham gia cộng đồng:', '') || 'Bạn';
-            localStorage.setItem('chatName', name);
-        }
-        setUsername(name);
+        const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const messagesData: ChatMessage[] = [];
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                messagesData.push({
+                    id: doc.id,
+                    author: data.author,
+                    content: data.content,
+                    timestamp: data.timestamp?.toDate() || new Date(),
+                    likes: data.likes || 0,
+                });
+            });
+            setMessages(messagesData);
+        });
 
-        // populate with some fake online users; in a real app this would come from server
-        const sample = [
-            "Thuy Van",
-            "Kai",
-            "ngocngo",
-            "TH1",
-            "CR10",
-            "baoduong324",
-            "Carwyn0305",
-            "Quankun",
-            "Thảo1124",
-            "phuongnt",
-        ];
-        setUsers(sample.map((n) => ({ name: n, online: true })));
+        return () => unsubscribe();
     }, []);
 
-    const sendMessage = () => {
-        if (!input.trim()) return;
-        const newMessage: ChatMessage = {
-            id: Date.now(),
-            author: username,
-            content: input,
-            timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, newMessage]);
-        setInput("");
-        // show tiny typing indicator and simulate a quick system reply for liveliness
-        setIsTyping(true);
-        setTimeout(() => {
-            setIsTyping(false);
-            const reply: ChatMessage = {
-                id: Date.now() + 1,
-                author: 'Hệ thống',
-                content: 'Hệ thống đã nhận tin nhắn của bạn. Thành viên khác sẽ trả lời sớm.',
-                timestamp: new Date(),
-            };
-            setMessages((prev) => [...prev, reply]);
-        }, 800);
+    const sendMessage = async () => {
+        if (!input.trim() || !user) return;
+        try {
+            // Save message to Firestore
+            await addDoc(collection(db, "messages"), {
+                author: username,
+                content: input,
+                timestamp: serverTimestamp(),
+                likes: 0,
+            });
+            setInput("");
+        } catch (error) {
+            console.error("Error sending message:", error);
+            alert("Không thể gửi tin nhắn. Vui lòng thử lại.");
+        }
     };
 
     useEffect(() => {
@@ -143,8 +126,18 @@ const Community = () => {
         }
     };
 
-    const toggleLike = (id: number) => {
-        setMessages((prev) => prev.map(m => m.id === id ? { ...m, likes: (m.likes || 0) + 1 } : m));
+    const toggleLike = async (id: string) => {
+        try {
+            const messageRef = doc(db, "messages", id);
+            const currentMessage = messages.find(m => m.id === id);
+            if (currentMessage) {
+                await updateDoc(messageRef, {
+                    likes: (currentMessage.likes || 0) + 1
+                });
+            }
+        } catch (error) {
+            console.error("Error updating likes:", error);
+        }
     };
 
     return (
@@ -180,31 +173,8 @@ const Community = () => {
         }
       `}</style>
 
-            {/* Header */}
-            <div className="max-w-6xl mx-auto w-full mb-6">
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 shadow-2xl rounded-2xl px-8 py-6">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                                <MessageSquare className="w-8 h-8 text-white" />
-                            </div>
-                            <div>
-                                <h1 className="text-2xl font-bold text-white">Cộng đồng trò chuyện</h1>
-                                <p className="text-blue-100 text-sm mt-1">Kết nối với {users.length} thành viên đang trực tuyến</p>
-                            </div>
-                        </div>
-                        <div className="text-right">
-                            <div className="text-3xl font-bold text-white">{messages.length}</div>
-                            <p className="text-blue-100 text-sm">Tin nhắn</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {/* Chat content container */}
-            <div className="max-w-6xl mx-auto w-full flex flex-1 bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border border-gray-700 relative">
-                {/* Messages area */}
-                <div className="flex-1 flex flex-col">
+            <div className="max-w-6xl mx-auto w-full flex-1 bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border border-gray-700 relative flex flex-col">
                     <div ref={messagesContainerRef} onScroll={handleContainerScroll} className="flex-1 overflow-y-auto p-8 space-y-5 bg-gray-900 custom-scrollbar">
                         {messages.map((msg, idx) => (
                             <div
@@ -220,7 +190,7 @@ const Community = () => {
                                     )}
                                     <div>
                                         <div className={`flex items-baseline gap-2 ${msg.author === username ? 'flex-row-reverse' : 'flex-row'}`}>
-                                            <span className="text-xs font-semibold text-white">{msg.author === username ? 'Bạn' : msg.author}</span>
+                                            <span className="text-xs font-semibold text-white">{msg.author === username && user ? 'Bạn' : msg.author}</span>
                                             <span className="text-xs text-white">{msg.timestamp.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
                                         </div>
                                         <div
@@ -286,70 +256,59 @@ const Community = () => {
 
                     {/* Input area */}
                     <div className="p-6 bg-gray-700 text-white border-t border-black-600">
-                        {/* formatting toolbar */}
-                        <div className="mb-2 flex items-center gap-3 text-gray-400">
-                            <button className="hover:text-white transition-colors"><strong>B</strong></button>
-                            <button className="hover:text-white transition-colors italic"><em>I</em></button>
-                            <button className="hover:text-white transition-colors"><span className="font-mono">f(x)</span></button>
-                            <button className="hover:text-white transition-colors"><code>{`</>`}</code></button>
-                            <button className="hover:text-white transition-colors"><Link className="w-5 h-5" /></button>
-                            <button className="hover:text-white transition-colors"><Image className="w-5 h-5" /></button>
-                            <button className="hover:text-white transition-colors"><Smile className="w-5 h-5" /></button>
-                            <button className="hover:text-white transition-colors"><Gift className="w-5 h-5" /></button>
-                        </div>
-                        <div className="flex gap-3 items-end">
-                            <textarea
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyPress={handleKeyPress}
-                                placeholder="Viết tin nhắn của bạn..."
-                                className="flex-1 resize-none p-4 bg-gray-800 border border-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-gray-100 transition-all"
-                                rows={2}
-                            />
-                            <button
-                                onClick={sendMessage}
-                                className="px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl shadow-lg hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 font-semibold"
-                                disabled={!input.trim()}
-                            >
-                                <Send className="w-6 h-6" />
-                                <span className="hidden sm:inline">Gửi</span>
-                            </button>
-                        </div>
-                        <div className="text-xs text-gray-400 mt-3 flex items-center justify-between">
-                            <span>Đang chat dưới tên <strong className="text-white">{username}</strong></span>
-                            <span>{input.length}/1000</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Users list */}
-                <div className="w-72 border-l border-gray-700 bg-white/5 backdrop-blur-md border-l border-white/10 p-6 overflow-y-auto custom-scrollbar">
-                    <div className="mb-6">
-                        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                            <Circle className="w-3 h-3 text-green-400 animate-pulse" />
-                            Đang trực tuyến ({users.length})
-                        </h2>
-                        <p className="text-xs text-gray-400 mt-1">Những thành viên hoạt động</p>
-                    </div>
-
-                    <div className="space-y-2">
-                        {users.map((u, idx) => (
-                            <div
-                                key={idx}
-                                className="flex items-center gap-3 px-3 py-2 hover:bg-gray-700 rounded-xl transition-all duration-200 cursor-pointer group"
-                            >
-                                <div className={`w-9 h-9 rounded-full ${getAvatarColor(u.name)} flex items-center justify-center text-xs font-bold text-white relative`}>
-                                    {getInitials(u.name)}
-                                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-800"></div>
+                        {!user ? (
+                            <div className="flex flex-col items-center justify-center py-8 space-y-4">
+                                <div className="text-center">
+                                    <LogIn className="w-12 h-12 text-blue-400 mx-auto mb-3" />
+                                    <h3 className="text-xl font-bold text-white mb-2">Đăng nhập để tham gia trò chuyện</h3>
+                                    <p className="text-gray-400 mb-4">Bạn cần đăng nhập bằng Google để gửi tin nhắn trong cộng đồng</p>
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors">{u.name}</p>
-                                    <p className="text-xs text-gray-500">Hoạt động</p>
-                                </div>
+                                <button
+                                    onClick={signInWithGoogle}
+                                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 font-semibold"
+                                >
+                                    <LogIn className="w-5 h-5" />
+                                    Đăng nhập với Google
+                                </button>
                             </div>
-                        ))}
+                        ) : (
+                            <>
+                                {/* formatting toolbar */}
+                                <div className="mb-2 flex items-center gap-3 text-gray-400">
+                                    <button className="hover:text-white transition-colors"><strong>B</strong></button>
+                                    <button className="hover:text-white transition-colors italic"><em>I</em></button>
+                                    <button className="hover:text-white transition-colors"><span className="font-mono">f(x)</span></button>
+                                    <button className="hover:text-white transition-colors"><code>{`</>`}</code></button>
+                                    <button className="hover:text-white transition-colors"><Link className="w-5 h-5" /></button>
+                                    <button className="hover:text-white transition-colors"><Image className="w-5 h-5" /></button>
+                                    <button className="hover:text-white transition-colors"><Smile className="w-5 h-5" /></button>
+                                    <button className="hover:text-white transition-colors"><Gift className="w-5 h-5" /></button>
+                                </div>
+                                <div className="flex gap-3 items-end">
+                                    <textarea
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        onKeyPress={handleKeyPress}
+                                        placeholder="Viết tin nhắn của bạn..."
+                                        className="flex-1 resize-none p-4 bg-gray-800 border border-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-gray-100 transition-all"
+                                        rows={2}
+                                    />
+                                    <button
+                                        onClick={sendMessage}
+                                        className="px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl shadow-lg hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 font-semibold"
+                                        disabled={!input.trim()}
+                                    >
+                                        <Send className="w-6 h-6" />
+                                        <span className="hidden sm:inline">Gửi</span>
+                                    </button>
+                                </div>
+                                <div className="text-xs text-gray-400 mt-3 flex items-center justify-between">
+                                    <span>Đang chat dưới tên <strong className="text-white">{username}</strong></span>
+                                    <span>{input.length}/1000</span>
+                                </div>
+                            </>
+                        )}
                     </div>
-                </div>
             </div>
         </div>
     );
