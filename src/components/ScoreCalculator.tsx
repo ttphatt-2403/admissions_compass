@@ -26,23 +26,150 @@ interface MajorSuggestion {
   majorCode: string;
 }
 
-const subjectCombinations: SubjectCombination[] = [
-  { id: 'A00', name: 'A00 - Toán, Lý, Hóa', subjects: ['Toán', 'Vật Lý', 'Hóa Học'] },
-  { id: 'A01', name: 'A01 - Toán, Lý, Anh', subjects: ['Toán', 'Vật Lý', 'Tiếng Anh'] },
-  { id: 'B00', name: 'B00 - Toán, Hóa, Sinh', subjects: ['Toán', 'Hóa Học', 'Sinh Học'] },
-  { id: 'C00', name: 'C00 - Văn, Sử, Địa', subjects: ['Văn', 'Lịch Sử', 'Địa Lý'] },
-  { id: 'D01', name: 'D01 - Toán, Văn, Anh', subjects: ['Toán', 'Văn', 'Tiếng Anh'] },
-  { id: 'D07', name: 'D07 - Toán, Hóa, Anh', subjects: ['Toán', 'Hóa Học', 'Tiếng Anh'] },
+interface Block {
+  id: string;
+  name: string;
+  combinations: SubjectCombination[];
+}
+
+const blocks: Block[] = [
+  {
+    id: 'A',
+    name: 'Khối A',
+    combinations: [
+      { id: 'A00', name: 'A00: Toán, Vật lý, Hóa học', subjects: ['Toán', 'Vật lý', 'Hóa học'] },
+      { id: 'A01', name: 'A01: Toán, Vật lý, Tiếng Anh', subjects: ['Toán', 'Vật lý', 'Tiếng Anh'] },
+      { id: 'A02', name: 'A02: Toán, Vật lý, Sinh học', subjects: ['Toán', 'Vật lý', 'Sinh học'] },
+      { id: 'A03', name: 'A03: Toán, Vật lý, Lịch sử', subjects: ['Toán', 'Vật lý', 'Lịch sử'] },
+      { id: 'A04', name: 'A04: Toán, Vật lý, Địa lý', subjects: ['Toán', 'Vật lý', 'Địa lý'] },
+      { id: 'A05', name: 'A05: Toán, Hóa học, Lịch sử', subjects: ['Toán', 'Hóa học', 'Lịch sử'] },
+      { id: 'A06', name: 'A06: Toán, Hóa học, Địa lý', subjects: ['Toán', 'Hóa học', 'Địa lý'] },
+      { id: 'A07', name: 'A07: Toán, Lịch sử, Địa lý', subjects: ['Toán', 'Lịch sử', 'Địa lý'] },
+      { id: 'A08', name: 'A08: Toán, Lịch sử, GDKTPL', subjects: ['Toán', 'Lịch sử', 'GDKTPL'] },
+      { id: 'A09', name: 'A09: Toán, Địa lý, GDKTPL', subjects: ['Toán', 'Địa lý', 'GDKTPL'] },
+      { id: 'A10', name: 'A10: Toán, Vật lý, GDKTPL', subjects: ['Toán', 'Vật lý', 'GDKTPL'] },
+      { id: 'A11', name: 'A11: Toán, Hóa học, GDKTPL', subjects: ['Toán', 'Hóa học', 'GDKTPL'] },
+    ]
+  },
+  {
+    id: 'B',
+    name: 'Khối B',
+    combinations: [
+      { id: 'B00', name: 'B00: Toán, Hóa học, Sinh học', subjects: ['Toán', 'Hóa học', 'Sinh học'] },
+      { id: 'B02', name: 'B02: Toán, Sinh học, Địa lý', subjects: ['Toán', 'Sinh học', 'Địa lý'] },
+      { id: 'B03', name: 'B03: Toán, Sinh học, Ngữ văn', subjects: ['Toán', 'Sinh học', 'Ngữ văn'] },
+      { id: 'B04', name: 'B04: Toán, Sinh học, GDKTPL', subjects: ['Toán', 'Sinh học', 'GDKTPL'] },
+      { id: 'B08', name: 'B08: Toán, Sinh học, Tiếng Anh', subjects: ['Toán', 'Sinh học', 'Tiếng Anh'] },
+    ]
+  },
+  {
+    id: 'C',
+    name: 'Khối C',
+    combinations: [
+      { id: 'C00', name: 'C00: Ngữ văn, Lịch sử, Địa lý', subjects: ['Ngữ văn', 'Lịch sử', 'Địa lý'] },
+      { id: 'C01', name: 'C01: Ngữ văn, Toán, Vật lý', subjects: ['Ngữ văn', 'Toán', 'Vật lý'] },
+      { id: 'C02', name: 'C02: Ngữ văn, Toán, Hóa học', subjects: ['Ngữ văn', 'Toán', 'Hóa học'] },
+      { id: 'C03', name: 'C03: Ngữ văn, Toán, Lịch sử', subjects: ['Ngữ văn', 'Toán', 'Lịch sử'] },
+      { id: 'C04', name: 'C04: Ngữ văn, Toán, Địa lý', subjects: ['Ngữ văn', 'Toán', 'Địa lý'] },
+      { id: 'C05', name: 'C05: Ngữ văn, Vật lý, Hóa học', subjects: ['Ngữ văn', 'Vật lý', 'Hóa học'] },
+      { id: 'C08', name: 'C08: Ngữ văn, Hóa học, Sinh học', subjects: ['Ngữ văn', 'Hóa học', 'Sinh học'] },
+      { id: 'C12', name: 'C12: Ngữ văn, Lịch sử, Sinh học', subjects: ['Ngữ văn', 'Lịch sử', 'Sinh học'] },
+      { id: 'C13', name: 'C13: Ngữ văn, Sinh học, Địa lý', subjects: ['Ngữ văn', 'Sinh học', 'Địa lý'] },
+      { id: 'C14', name: 'C14: Ngữ văn, Toán, GDKTPL', subjects: ['Ngữ văn', 'Toán', 'GDKTPL'] },
+      { id: 'C17', name: 'C17: Ngữ văn, Hóa học, GDKTPL', subjects: ['Ngữ văn', 'Hóa học', 'GDKTPL'] },
+      { id: 'C19', name: 'C19: Ngữ văn, Lịch sử, GDKTPL', subjects: ['Ngữ văn', 'Lịch sử', 'GDKTPL'] },
+      { id: 'C20', name: 'C20: Ngữ văn, Địa lý, GDKTPL', subjects: ['Ngữ văn', 'Địa lý', 'GDKTPL'] },
+    ]
+  },
+  {
+    id: 'D',
+    name: 'Khối D',
+    combinations: [
+      { id: 'D01', name: 'D01: Ngữ văn, Toán, Tiếng Anh', subjects: ['Ngữ văn', 'Toán', 'Tiếng Anh'] },
+      { id: 'D02', name: 'D02: Ngữ văn, Toán, Tiếng Nga', subjects: ['Ngữ văn', 'Toán', 'Tiếng Nga'] },
+      { id: 'D03', name: 'D03: Ngữ văn, Toán, Tiếng Pháp', subjects: ['Ngữ văn', 'Toán', 'Tiếng Pháp'] },
+      { id: 'D04', name: 'D04: Ngữ văn, Toán, Tiếng Trung', subjects: ['Ngữ văn', 'Toán', 'Tiếng Trung'] },
+      { id: 'D05', name: 'D05: Ngữ văn, Toán, Tiếng Đức', subjects: ['Ngữ văn', 'Toán', 'Tiếng Đức'] },
+      { id: 'D06', name: 'D06: Ngữ văn, Toán, Tiếng Nhật', subjects: ['Ngữ văn', 'Toán', 'Tiếng Nhật'] },
+      { id: 'D07', name: 'D07: Toán, Hóa học, Tiếng Anh', subjects: ['Toán', 'Hóa học', 'Tiếng Anh'] },
+      { id: 'D08', name: 'D08: Toán, Sinh học, Tiếng Anh', subjects: ['Toán', 'Sinh học', 'Tiếng Anh'] },
+      { id: 'D09', name: 'D09: Toán, Lịch sử, Tiếng Anh', subjects: ['Toán', 'Lịch sử', 'Tiếng Anh'] },
+      { id: 'D10', name: 'D10: Toán, Địa lý, Tiếng Anh', subjects: ['Toán', 'Địa lý', 'Tiếng Anh'] },
+      { id: 'D11', name: 'D11: Ngữ văn, Vật lý, Tiếng Anh', subjects: ['Ngữ văn', 'Vật lý', 'Tiếng Anh'] },
+      { id: 'D12', name: 'D12: Ngữ văn, Hóa học, Tiếng Anh', subjects: ['Ngữ văn', 'Hóa học', 'Tiếng Anh'] },
+      { id: 'D13', name: 'D13: Ngữ văn, Sinh học, Tiếng Anh', subjects: ['Ngữ văn', 'Sinh học', 'Tiếng Anh'] },
+      { id: 'D14', name: 'D14: Ngữ văn, Lịch sử, Tiếng Anh', subjects: ['Ngữ văn', 'Lịch sử', 'Tiếng Anh'] },
+      { id: 'D15', name: 'D15: Ngữ văn, Địa lý, Tiếng Anh', subjects: ['Ngữ văn', 'Địa lý', 'Tiếng Anh'] },
+      { id: 'D20', name: 'D20: Toán, Địa lý, Tiếng Trung', subjects: ['Toán', 'Địa lý', 'Tiếng Trung'] },
+      { id: 'D21', name: 'D21: Toán, Hóa học, Tiếng Đức', subjects: ['Toán', 'Hóa học', 'Tiếng Đức'] },
+      { id: 'D22', name: 'D22: Toán, Hóa học, Tiếng Nga', subjects: ['Toán', 'Hóa học', 'Tiếng Nga'] },
+      { id: 'D23', name: 'D23: Toán, Hóa học, Tiếng Nhật', subjects: ['Toán', 'Hóa học', 'Tiếng Nhật'] },
+      { id: 'D24', name: 'D24: Toán, Hóa học, Tiếng Pháp', subjects: ['Toán', 'Hóa học', 'Tiếng Pháp'] },
+      { id: 'D25', name: 'D25: Toán, Hóa học, Tiếng Trung', subjects: ['Toán', 'Hóa học', 'Tiếng Trung'] },
+      { id: 'D26', name: 'D26: Toán, Vật lý, Tiếng Đức', subjects: ['Toán', 'Vật lý', 'Tiếng Đức'] },
+      { id: 'D27', name: 'D27: Toán, Vật lý, Tiếng Nga', subjects: ['Toán', 'Vật lý', 'Tiếng Nga'] },
+      { id: 'D28', name: 'D28: Toán, Vật lý, Tiếng Nhật', subjects: ['Toán', 'Vật lý', 'Tiếng Nhật'] },
+      { id: 'D29', name: 'D29: Toán, Vật lý, Tiếng Pháp', subjects: ['Toán', 'Vật lý', 'Tiếng Pháp'] },
+      { id: 'D30', name: 'D30: Toán, Vật lý, Tiếng Trung', subjects: ['Toán', 'Vật lý', 'Tiếng Trung'] },
+      { id: 'D31', name: 'D31: Toán, Sinh học, Tiếng Đức', subjects: ['Toán', 'Sinh học', 'Tiếng Đức'] },
+      { id: 'D32', name: 'D32: Toán, Sinh học, Tiếng Nga', subjects: ['Toán', 'Sinh học', 'Tiếng Nga'] },
+      { id: 'D33', name: 'D33: Toán, Sinh học, Tiếng Nhật', subjects: ['Toán', 'Sinh học', 'Tiếng Nhật'] },
+      { id: 'D34', name: 'D34: Toán, Sinh học, Tiếng Pháp', subjects: ['Toán', 'Sinh học', 'Tiếng Pháp'] },
+      { id: 'D35', name: 'D35: Toán, Sinh học, Tiếng Trung', subjects: ['Toán', 'Sinh học', 'Tiếng Trung'] },
+      { id: 'D42', name: 'D42: Ngữ văn, Địa lý, Tiếng Nga', subjects: ['Ngữ văn', 'Địa lý', 'Tiếng Nga'] },
+      { id: 'D43', name: 'D43: Ngữ văn, Địa lý, Tiếng Nhật', subjects: ['Ngữ văn', 'Địa lý', 'Tiếng Nhật'] },
+      { id: 'D44', name: 'D44: Ngữ văn, Địa lý, Tiếng Pháp', subjects: ['Ngữ văn', 'Địa lý', 'Tiếng Pháp'] },
+      { id: 'D45', name: 'D45: Ngữ văn, Địa lý, Tiếng Trung', subjects: ['Ngữ văn', 'Địa lý', 'Tiếng Trung'] },
+      { id: 'D55', name: 'D55: Ngữ văn, Vật lý, Tiếng Trung', subjects: ['Ngữ văn', 'Vật lý', 'Tiếng Trung'] },
+      { id: 'D63', name: 'D63: Ngữ văn, Lịch sử, Tiếng Nhật', subjects: ['Ngữ văn', 'Lịch sử', 'Tiếng Nhật'] },
+      { id: 'D64', name: 'D64: Ngữ văn, Lịch sử, Tiếng Pháp', subjects: ['Ngữ văn', 'Lịch sử', 'Tiếng Pháp'] },
+      { id: 'D65', name: 'D65: Ngữ văn, Lịch sử, Tiếng Trung', subjects: ['Ngữ văn', 'Lịch sử', 'Tiếng Trung'] },
+      { id: 'D66', name: 'D66: Ngữ văn, GDKTPL, Tiếng Anh', subjects: ['Ngữ văn', 'GDKTPL', 'Tiếng Anh'] },
+      { id: 'D68', name: 'D68: Ngữ văn, GDKTPL, Tiếng Nga', subjects: ['Ngữ văn', 'GDKTPL', 'Tiếng Nga'] },
+      { id: 'D70', name: 'D70: Ngữ văn, GDKTPL, Tiếng Pháp', subjects: ['Ngữ văn', 'GDKTPL', 'Tiếng Pháp'] },
+      { id: 'D71', name: 'D71: Ngữ văn, GDKTPL, Tiếng Trung', subjects: ['Ngữ văn', 'GDKTPL', 'Tiếng Trung'] },
+      { id: 'D84', name: 'D84: Toán, Tiếng Anh, GDKTPL', subjects: ['Toán', 'Tiếng Anh', 'GDKTPL'] },
+    ]
+  },
+  {
+    id: 'H',
+    name: 'Khối H (Năng Khiếu)',
+    combinations: [
+      { id: 'H01', name: 'H01: Toán, Ngữ Văn, Vẽ Mỹ Thuật', subjects: ['Toán', 'Ngữ văn', 'Vẽ Mỹ thuật'] },
+      { id: 'H02', name: 'H02: Toán, Vẽ Hình Hoạ, Vẽ Màu Trang Trí', subjects: ['Toán', 'Vẽ Hình Hoạ', 'Vẽ Màu Trang Trí'] },
+      { id: 'H04', name: 'H04: Toán, Tiếng Anh, Vẽ Năng Khiếu', subjects: ['Toán', 'Tiếng Anh', 'Vẽ Năng Khiếu'] },
+      { id: 'H06', name: 'H06: Ngữ văn, Tiếng Anh, Vẽ Mỹ Thuật', subjects: ['Ngữ văn', 'Tiếng Anh', 'Vẽ Mỹ Thuật'] },
+      { id: 'H07', name: 'H07: Toán, Hình Họa, Trang Trí', subjects: ['Toán', 'Hình Họa', 'Trang Trí'] },
+      { id: 'H08', name: 'H08: Ngữ văn, Lịch Sử, Vẽ Mỹ Thuật', subjects: ['Ngữ văn', 'Lịch Sử', 'Vẽ Mỹ Thuật'] },
+    ]
+  },
+  {
+    id: 'M',
+    name: 'Khối M (Sư Phạm Mầm Non)',
+    combinations: [
+      { id: 'M00', name: 'M00: Toán, Ngữ Văn, Hát', subjects: ['Toán', 'Ngữ văn', 'Hát'] },
+      { id: 'M01', name: 'M01: Ngữ văn, Lịch sử, Năng khiếu', subjects: ['Ngữ văn', 'Lịch sử', 'Năng khiếu'] },
+      { id: 'M02', name: 'M02: Toán, Năng khiếu 1, Năng khiếu 2', subjects: ['Toán', 'Năng khiếu 1', 'Năng khiếu 2'] },
+      { id: 'M03', name: 'M03: Ngữ văn, Năng khiếu 1, Năng khiếu 2', subjects: ['Ngữ văn', 'Năng khiếu 1', 'Năng khiếu 2'] },
+      { id: 'M04', name: 'M04: Toán, Đọc kể diễn cảm, Hát – Múa', subjects: ['Toán', 'Đọc kể diễn cảm', 'Hát – Múa'] },
+      { id: 'M09', name: 'M09: Toán, Năng khiếu mầm non 1 (Kể chuyện, đọc, diễn cảm), Năng khiếu mầm non 2 (Hát)', subjects: ['Toán', 'Năng khiếu mầm non 1', 'Năng khiếu mầm non 2'] },
+      { id: 'M10', name: 'M10: Toán, Tiếng Anh, Năng khiếu 1', subjects: ['Toán', 'Tiếng Anh', 'Năng khiếu 1'] },
+      { id: 'M11', name: 'M11: Ngữ văn, Năng khiếu báo chí, Tiếng Anh', subjects: ['Ngữ văn', 'Năng khiếu báo chí', 'Tiếng Anh'] },
+      { id: 'M13', name: 'M13: Toán, Sinh học, Năng khiếu', subjects: ['Toán', 'Sinh học', 'Năng khiếu'] },
+      { id: 'M14', name: 'M14: Ngữ văn, Năng khiếu báo chí, Toán', subjects: ['Ngữ văn', 'Năng khiếu báo chí', 'Toán'] },
+    ]
+  }
 ];
 
 export function ScoreCalculator() {
   const suggestionsRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = 5; // items per page
-  const [selectedCombination, setSelectedCombination] = useState<SubjectCombination>(subjectCombinations[0]);
+  const [selectedBlock, setSelectedBlock] = useState<Block>(blocks[0]);
+  const [selectedCombination, setSelectedCombination] = useState<SubjectCombination>(blocks[0].combinations[0]);
   const [scores, setScores] = useState<Record<string, string>>({
     'Toán': '',
-    'Vật Lý': '',
-    'Hóa Học': '',
+    'Vật lý': '',
+    'Hóa học': '',
   });
   const [priorityScore, setPriorityScore] = useState('');
   const [totalScore, setTotalScore] = useState<number | null>(null);
@@ -62,8 +189,26 @@ export function ScoreCalculator() {
     }, 50);
   };
 
+  const handleBlockChange = (blockId: string) => {
+    const block = blocks.find(b => b.id === blockId);
+    if (block) {
+      setSelectedBlock(block);
+      const firstCombination = block.combinations[0];
+      setSelectedCombination(firstCombination);
+      // Reset scores
+      const newScores: Record<string, string> = {};
+      firstCombination.subjects.forEach(subject => {
+        newScores[subject] = '';
+      });
+      setScores(newScores);
+      setTotalScore(null);
+      setSuggestions([]);
+      setCurrentPage(1);
+    }
+  };
+
   const handleCombinationChange = (combinationId: string) => {
-    const combination = subjectCombinations.find(c => c.id === combinationId);
+    const combination = selectedBlock.combinations.find(c => c.id === combinationId);
     if (combination) {
       setSelectedCombination(combination);
       // Reset scores
@@ -233,6 +378,27 @@ export function ScoreCalculator() {
             Nhập điểm thi của bạn
           </h3>
 
+          {/* Block Selector */}
+          <div className="mb-6">
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Chọn khối ngành
+            </label>
+            <div className="relative">
+              <select
+                value={selectedBlock.id}
+                onChange={(e) => handleBlockChange(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none font-medium text-gray-900"
+              >
+                {blocks.map(block => (
+                  <option key={block.id} value={block.id}>{block.name}</option>
+                ))}
+              </select>
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-500">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
+          </div>
+
           {/* Combination Selector */}
           <div className="mb-8">
             <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -244,7 +410,7 @@ export function ScoreCalculator() {
                 onChange={(e) => handleCombinationChange(e.target.value)}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none font-medium text-gray-900"
               >
-                {subjectCombinations.map(combo => (
+                {selectedBlock.combinations.map(combo => (
                   <option key={combo.id} value={combo.id}>{combo.name}</option>
                 ))}
               </select>
