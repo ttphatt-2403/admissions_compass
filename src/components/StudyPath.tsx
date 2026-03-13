@@ -30,6 +30,8 @@ import { LiteratureRoadmap } from "./LiteratureRoadmap";
 import { HistoryRoadmap } from "./HistoryRoadmap";
 import { GeographyRoadmap } from "./GeographyRoadmap";
 import { GDCDRoadmap } from "./GDCDRoadmap";
+import { InformaticsRoadmap } from "./InformaticsRoadmap";
+import { TechnologyRoadmap } from "./TechnologyRoadmap";
 
 // --- Types ---
 interface Task {
@@ -552,7 +554,7 @@ export function StudyPath({
   setActiveTab: (tab: any) => void;
 }) {
   const [view, setView] = useState<
-    "overview" | "math" | "chemistry" | "physics" | "english" | "biology" | "literature" | "history" | "geography" | "gdcd"
+    "overview" | "math" | "chemistry" | "physics" | "english" | "biology" | "literature" | "history" | "geography" | "gdcd" | "informatics" | "technology"
   >("overview");
   const [activeGroup, setActiveGroup] = useState("A00");
   const [completedTasks, setCompletedTasks] = useState<
@@ -695,6 +697,34 @@ export function StudyPath({
           <ArrowLeft size={20} /> Quay lại tổng quan
         </button>
         <GDCDRoadmap />
+      </div>
+    );
+  }
+
+  if (view === "informatics") {
+    return (
+      <div className="relative">
+        <button
+          onClick={() => setView("overview")}
+          className="fixed bottom-6 right-6 z-50 bg-white shadow-xl border border-slate-200 text-slate-700 px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-slate-50 transition-all hover:-translate-y-1"
+        >
+          <ArrowLeft size={20} /> Quay lại tổng quan
+        </button>
+        <InformaticsRoadmap />
+      </div>
+    );
+  }
+
+  if (view === "technology") {
+    return (
+      <div className="relative">
+        <button
+          onClick={() => setView("overview")}
+          className="fixed bottom-6 right-6 z-50 bg-white shadow-xl border border-slate-200 text-slate-700 px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-slate-50 transition-all hover:-translate-y-1"
+        >
+          <ArrowLeft size={20} /> Quay lại tổng quan
+        </button>
+        <TechnologyRoadmap />
       </div>
     );
   }
@@ -899,7 +929,7 @@ export function StudyPath({
                 </div>
                 <div className="relative z-10 flex-1">
                   <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-500 transition-colors">
-                     Môn Toán
+                    Môn Toán
                   </h3>
                   <p className="text-sm text-slate-500 mt-1">
                     Hàm số, Hình học, Tích phân...
@@ -1074,6 +1104,48 @@ export function StudyPath({
                   </p>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
+                  <ArrowRight size={16} />
+                </div>
+              </div>
+
+              <div
+                onClick={() => setView("informatics")}
+                className="group bg-white p-6 rounded-2xl border border-cyan-100 hover:border-cyan-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
+              >
+                <div className="absolute right-0 top-0 w-32 h-32 bg-cyan-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 text-cyan-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
+                </div>
+                <div className="relative z-10 flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-cyan-600 transition-colors">
+                    Tin học
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">
+                    ATTT, Mạng, Dấu vết số...
+                  </p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors relative z-10">
+                  <ArrowRight size={16} />
+                </div>
+              </div>
+
+              <div
+                onClick={() => setView("technology")}
+                className="group bg-white p-6 rounded-2xl border border-blue-100 hover:border-blue-300 shadow-sm hover:shadow-lg cursor-pointer transition-all flex items-center gap-4 relative overflow-hidden"
+              >
+                <div className="absolute right-0 top-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-600 text-blue-600 rounded-xl flex items-center justify-center relative z-10 shadow-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" /></svg>
+                </div>
+                <div className="relative z-10 flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    Công nghệ
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Thiết kế, Lắp ráp, Cơ khí...
+                  </p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors relative z-10">
                   <ArrowRight size={16} />
                 </div>
               </div>
