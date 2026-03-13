@@ -17,6 +17,7 @@ export interface University {
   majors: Major[];
   type: string;
   ranking: number;
+  combinations?: string[];
 }
 
 export interface Major {
@@ -41,30 +42,31 @@ export const mockUniversities: University[] = [
 
   {
     id: 'vnu-hn',
-    name: 'Đại học Quốc gia Hà Nội',
-    shortName: 'VNU-HN',
+    name: 'Đại học Quốc gia ',
+    shortName: 'VNU',
     location: 'Hà Nội',
     type: 'Công lập',
     ranking: 1,
     majors: [
-      { code: 'CNTT',     name: 'Công nghệ thông tin',         benchmarkScore: 28.0,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 400, trend: 'up' },
-      { code: 'KHMT',     name: 'Khoa học máy tính',           benchmarkScore: 27.8,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 350, trend: 'up' },
-      { code: 'KHDL',     name: 'Khoa học dữ liệu',            benchmarkScore: 27.5,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 150, trend: 'up' },
-      { code: 'AI',       name: 'Trí tuệ nhân tạo',            benchmarkScore: 27.3,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 100, trend: 'up' },
-      { code: 'ATTT',     name: 'An toàn thông tin',            benchmarkScore: 27.0,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 120, trend: 'up' },
-      { code: 'HTTT',     name: 'Hệ thống thông tin',           benchmarkScore: 26.8,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 200, trend: 'stable' },
-      { code: 'TMDT',     name: 'Thương mại điện tử',           benchmarkScore: 26.5,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',      quota: 100, trend: 'up' },
-      { code: 'QHQT',     name: 'Quan hệ quốc tế',             benchmarkScore: 27.8,  subjects: 'C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84',      quota: 150, trend: 'up' },
-      { code: 'LUAT',     name: 'Luật',                         benchmarkScore: 27.5,  subjects: 'C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84',      quota: 200, trend: 'up' },
-      { code: 'KTQT',     name: 'Kinh tế quốc tế',             benchmarkScore: 27.2,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84',      quota: 200, trend: 'up' },
-      { code: 'QTKD',     name: 'Quản trị kinh doanh',         benchmarkScore: 27.0,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84',      quota: 300, trend: 'up' },
-      { code: 'TTBC',     name: 'Báo chí',                      benchmarkScore: 26.5,  subjects: 'C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84',      quota: 100, trend: 'stable' },
-      { code: 'NNA',      name: 'Ngôn ngữ Anh',                benchmarkScore: 26.5,  subjects: 'D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D66, D84',           quota: 250, trend: 'stable' },
-      { code: 'TOAN',     name: 'Toán',                         benchmarkScore: 26.2,  subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, C01, C02, C03, C04, C14, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84',           quota: 150, trend: 'down' },
-      { code: 'VATLY',    name: 'Vật lý',                      benchmarkScore: 25.5,  subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',           quota: 100, trend: 'stable' },
-      { code: 'HOAHOC',   name: 'Hóa học',                     benchmarkScore: 25.0,  subjects: 'A00, A05, A06, A11, B00, C02, C05, C08, C17, D07, D12, D21, D22, D23, D24, D25',      quota: 100, trend: 'down' },
-      { code: 'SINHOC',   name: 'Sinh học',                    benchmarkScore: 24.5,  subjects: 'B00, B02, B03, B04, B08, C08, C12, C13, C17, D08, D12, D13, D31, D32, D33, D34, D35',  trend: 'stable' },
-      { code: 'DLULICH',  name: 'Du lịch học',                 benchmarkScore: 25.5,  subjects: 'C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84',      quota: 100, trend: 'stable' },
+      { code: 'CNTT', name: 'Công nghệ thông tin', benchmarkScore: 28.0, subjects: 'A00, A01, D01', quota: 400, trend: 'up' },
+      { code: 'KHMT', name: 'Khoa học máy tính', benchmarkScore: 27.8, subjects: 'A00, A01, D01', quota: 350, trend: 'up' },
+      { code: 'AI', name: 'Trí tuệ nhân tạo', benchmarkScore: 27.3, subjects: 'A00, A01', quota: 100, trend: 'up' },
+      { code: 'ATTT', name: 'An toàn thông tin', benchmarkScore: 27.0, subjects: 'A00, A01, D01', quota: 120, trend: 'up' },
+      { code: 'KHDL', name: 'Khoa học dữ liệu', benchmarkScore: 27.5, subjects: 'A00, A01', quota: 150, trend: 'up' },
+
+      { code: 'QTKD', name: 'Quản trị kinh doanh', benchmarkScore: 27.0, subjects: 'A00, A01, D01', quota: 300, trend: 'up' },
+      { code: 'KTQT', name: 'Kinh tế quốc tế', benchmarkScore: 27.2, subjects: 'A00, A01, D01', quota: 200, trend: 'up' },
+      { code: 'TMDT', name: 'Thương mại điện tử', benchmarkScore: 26.5, subjects: 'A00, A01, D01', quota: 100, trend: 'up' },
+
+      { code: 'QHQT', name: 'Quan hệ quốc tế', benchmarkScore: 27.8, subjects: 'C00, D01', quota: 150, trend: 'up' },
+      { code: 'TTBC', name: 'Báo chí', benchmarkScore: 26.5, subjects: 'C00, D01', quota: 100, trend: 'stable' },
+      { code: 'DLULICH', name: 'Du lịch học', benchmarkScore: 25.5, subjects: 'C00, D01', quota: 100, trend: 'stable' },
+      { code: 'NNA', name: 'Ngôn ngữ Anh', benchmarkScore: 26.5, subjects: 'D01', quota: 250, trend: 'stable' },
+
+      { code: 'TOAN', name: 'Toán học', benchmarkScore: 26.2, subjects: 'A00, A01, D01', quota: 150, trend: 'stable' },
+      { code: 'VATLY', name: 'Vật lý', benchmarkScore: 25.5, subjects: 'A00, A01', quota: 100, trend: 'stable' },
+      { code: 'HOAHOC', name: 'Hóa học', benchmarkScore: 25.0, subjects: 'A00, B00', quota: 100, trend: 'stable' },
+      { code: 'SINHOC', name: 'Sinh học', benchmarkScore: 24.5, subjects: 'B00', quota: 100, trend: 'stable' }
     ]
   },
 
@@ -75,24 +77,19 @@ export const mockUniversities: University[] = [
     location: 'Hà Nội',
     type: 'Công lập',
     ranking: 2,
+    combinations: ['A00', 'A01', 'D01', 'D07', 'D08'],
     majors: [
-      { code: 'CNTT',    name: 'Công nghệ thông tin',                    benchmarkScore: 28.19, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 300, trend: 'up' },
-      { code: 'KHMT',    name: 'Khoa học máy tính',                      benchmarkScore: 27.86, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 200, trend: 'up' },
-      { code: 'AI',      name: 'Trí tuệ nhân tạo',                       benchmarkScore: 27.75, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 100, trend: 'up' },
-      { code: 'TDH',     name: 'Kỹ thuật điều khiển và Tự động hoá',    benchmarkScore: 27.90, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 200, trend: 'up' },
-      { code: 'KHDL',    name: 'Khoa học dữ liệu',                       benchmarkScore: 27.38, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 120, trend: 'up' },
-      { code: 'KTMT',    name: 'Kỹ thuật máy tính',                      benchmarkScore: 27.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 150, trend: 'up' },
-      { code: 'MMT',     name: 'Mạng máy tính và Truyền thông',          benchmarkScore: 26.73, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 150, trend: 'stable' },
-      { code: 'ROBOT',   name: 'Kỹ thuật Robot',                         benchmarkScore: 26.00, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 100, trend: 'stable' },
-      { code: 'CKDT',    name: 'Công nghệ kỹ thuật cơ điện tử',          benchmarkScore: 26.73, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 150, trend: 'stable' },
-      { code: 'KTDT',    name: 'Kỹ thuật điện tử – Viễn thông',         benchmarkScore: 26.63, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 200, trend: 'stable' },
-      { code: 'HTTT',    name: 'Hệ thống thông tin',                     benchmarkScore: 26.38, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 120, trend: 'stable' },
-      { code: 'VATLYKT', name: 'Vật lý kỹ thuật',                       benchmarkScore: 25.20, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 100, trend: 'stable' },
-      { code: 'COKT',    name: 'Cơ kỹ thuật',                           benchmarkScore: 26.15, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 100, trend: 'stable' },
-      { code: 'CNVL',    name: 'Công nghệ vật liệu',                    benchmarkScore: 25.60, subjects: 'A00, A05, A06, A11, B00, C02, C05, C08, C17, D07, D12, D21, D22, D23, D24, D25',      quota: 80,  trend: 'stable' },
-      { code: 'KTNL',    name: 'Kỹ thuật năng lượng',                   benchmarkScore: 24.87, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 80,  trend: 'stable' },
-      { code: 'CNHKVT',  name: 'Công nghệ hàng không vũ trụ',           benchmarkScore: 23.96, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 60,  trend: 'up' },
-      { code: 'TKTN',    name: 'Thiết kế công nghiệp & Đồ họa',         benchmarkScore: 24.20, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55',      quota: 60,  trend: 'stable' },
+      { code: 'CNTT', name: 'Công nghệ thông tin', benchmarkScore: 28.19, subjects: 'A00, A01, D01', quota: 300, trend: 'up' },
+      { code: 'KHMT', name: 'Khoa học máy tính', benchmarkScore: 27.86, subjects: 'A00, A01, D01', quota: 200, trend: 'up' },
+      { code: 'AI', name: 'Trí tuệ nhân tạo', benchmarkScore: 27.75, subjects: 'A00, A01', quota: 100, trend: 'up' },
+      { code: 'KHDL', name: 'Khoa học dữ liệu', benchmarkScore: 27.38, subjects: 'A00, A01', quota: 120, trend: 'up' },
+      { code: 'HTTT', name: 'Hệ thống thông tin', benchmarkScore: 26.38, subjects: 'A00, A01, D01', quota: 120, trend: 'stable' },
+      { code: 'KTMT', name: 'Kỹ thuật máy tính', benchmarkScore: 27.00, subjects: 'A00, A01', quota: 150, trend: 'up' },
+      { code: 'MMT', name: 'Mạng máy tính và Truyền thông', benchmarkScore: 26.73, subjects: 'A00, A01, D01', quota: 150, trend: 'stable' },
+      { code: 'ROBOT', name: 'Kỹ thuật Robot', benchmarkScore: 26.00, subjects: 'A00, A01', quota: 100, trend: 'stable' },
+      { code: 'TDH', name: 'Kỹ thuật điều khiển và Tự động hóa', benchmarkScore: 27.90, subjects: 'A00, A01', quota: 200, trend: 'up' },
+      { code: 'KTDT', name: 'Kỹ thuật điện tử - viễn thông', benchmarkScore: 26.63, subjects: 'A00, A01', quota: 200, trend: 'stable' },
+      { code: 'CNHKVT', name: 'Công nghệ hàng không vũ trụ', benchmarkScore: 23.96, subjects: 'A00, A01', quota: 60, trend: 'up' },
     ]
   },
 
@@ -968,12 +965,12 @@ export const mockUniversities: University[] = [
     type: 'Tư thục',
     ranking: 14,
     majors: [
-      { code: 'CNTT',      name: 'Công nghệ thông tin',           benchmarkScore: 24.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 800, trend: 'up' },
-      { code: 'KHDL',      name: 'Khoa học dữ liệu',              benchmarkScore: 24.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 300, trend: 'up' },
-      { code: 'AI',        name: 'Trí tuệ nhân tạo',              benchmarkScore: 23.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 200, trend: 'up' },
-      { code: 'QTKD',      name: 'Quản trị kinh doanh',           benchmarkScore: 23.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 600, trend: 'stable' },
-      { code: 'MKT',       name: 'Marketing',                      benchmarkScore: 22.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 400, trend: 'up' },
-      { code: 'TMDT',      name: 'Thương mại điện tử',            benchmarkScore: 22.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 250, trend: 'up' },
+      { code: 'CNTT',      name: 'Công nghệ thông tin',           benchmarkScore: 24.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D84', quota: 800, trend: 'up' },
+      { code: 'KHDL',      name: 'Khoa học dữ liệu',              benchmarkScore: 24.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D84', quota: 300, trend: 'up' },
+      { code: 'AI',        name: 'Trí tuệ nhân tạo',              benchmarkScore: 23.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D84', quota: 200, trend: 'up' },
+      { code: 'QTKD',      name: 'Quản trị kinh doanh',           benchmarkScore: 23.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D84', quota: 600, trend: 'stable' },
+      { code: 'MKT',       name: 'Marketing',                      benchmarkScore: 22.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D84', quota: 400, trend: 'up' },
+      { code: 'TMDT',      name: 'Thương mại điện tử',            benchmarkScore: 22.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D84', quota: 250, trend: 'up' },
       { code: 'NNA',       name: 'Ngôn ngữ Anh',                 benchmarkScore: 21.50, subjects: 'D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D66, D84', quota: 300, trend: 'stable' },
       { code: 'NNT',       name: 'Ngôn ngữ Trung Quốc',          benchmarkScore: 21.00, subjects: 'D04, D20, D25, D30, D35, D45, D55, D65, D71', quota: 150, trend: 'stable' },
       { code: 'NNHQ',      name: 'Ngôn ngữ Hàn Quốc',            benchmarkScore: 20.50, subjects: 'D78', quota: 100, trend: 'up' },

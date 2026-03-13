@@ -130,34 +130,6 @@ const blocks: Block[] = [
       { id: 'D71', name: 'D71: Ngữ văn, GDKTPL, Tiếng Trung', subjects: ['Ngữ văn', 'GDKTPL', 'Tiếng Trung'] },
       { id: 'D84', name: 'D84: Toán, Tiếng Anh, GDKTPL', subjects: ['Toán', 'Tiếng Anh', 'GDKTPL'] },
     ]
-  },
-  {
-    id: 'H',
-    name: 'Khối H (Năng Khiếu)',
-    combinations: [
-      { id: 'H01', name: 'H01: Toán, Ngữ Văn, Vẽ Mỹ Thuật', subjects: ['Toán', 'Ngữ văn', 'Vẽ Mỹ thuật'] },
-      { id: 'H02', name: 'H02: Toán, Vẽ Hình Hoạ, Vẽ Màu Trang Trí', subjects: ['Toán', 'Vẽ Hình Hoạ', 'Vẽ Màu Trang Trí'] },
-      { id: 'H04', name: 'H04: Toán, Tiếng Anh, Vẽ Năng Khiếu', subjects: ['Toán', 'Tiếng Anh', 'Vẽ Năng Khiếu'] },
-      { id: 'H06', name: 'H06: Ngữ văn, Tiếng Anh, Vẽ Mỹ Thuật', subjects: ['Ngữ văn', 'Tiếng Anh', 'Vẽ Mỹ Thuật'] },
-      { id: 'H07', name: 'H07: Toán, Hình Họa, Trang Trí', subjects: ['Toán', 'Hình Họa', 'Trang Trí'] },
-      { id: 'H08', name: 'H08: Ngữ văn, Lịch Sử, Vẽ Mỹ Thuật', subjects: ['Ngữ văn', 'Lịch Sử', 'Vẽ Mỹ Thuật'] },
-    ]
-  },
-  {
-    id: 'M',
-    name: 'Khối M (Sư Phạm Mầm Non)',
-    combinations: [
-      { id: 'M00', name: 'M00: Toán, Ngữ Văn, Hát', subjects: ['Toán', 'Ngữ văn', 'Hát'] },
-      { id: 'M01', name: 'M01: Ngữ văn, Lịch sử, Năng khiếu', subjects: ['Ngữ văn', 'Lịch sử', 'Năng khiếu'] },
-      { id: 'M02', name: 'M02: Toán, Năng khiếu 1, Năng khiếu 2', subjects: ['Toán', 'Năng khiếu 1', 'Năng khiếu 2'] },
-      { id: 'M03', name: 'M03: Ngữ văn, Năng khiếu 1, Năng khiếu 2', subjects: ['Ngữ văn', 'Năng khiếu 1', 'Năng khiếu 2'] },
-      { id: 'M04', name: 'M04: Toán, Đọc kể diễn cảm, Hát – Múa', subjects: ['Toán', 'Đọc kể diễn cảm', 'Hát – Múa'] },
-      { id: 'M09', name: 'M09: Toán, Năng khiếu mầm non 1 (Kể chuyện, đọc, diễn cảm), Năng khiếu mầm non 2 (Hát)', subjects: ['Toán', 'Năng khiếu mầm non 1', 'Năng khiếu mầm non 2'] },
-      { id: 'M10', name: 'M10: Toán, Tiếng Anh, Năng khiếu 1', subjects: ['Toán', 'Tiếng Anh', 'Năng khiếu 1'] },
-      { id: 'M11', name: 'M11: Ngữ văn, Năng khiếu báo chí, Tiếng Anh', subjects: ['Ngữ văn', 'Năng khiếu báo chí', 'Tiếng Anh'] },
-      { id: 'M13', name: 'M13: Toán, Sinh học, Năng khiếu', subjects: ['Toán', 'Sinh học', 'Năng khiếu'] },
-      { id: 'M14', name: 'M14: Ngữ văn, Năng khiếu báo chí, Toán', subjects: ['Ngữ văn', 'Năng khiếu báo chí', 'Toán'] },
-    ]
   }
 ];
 
