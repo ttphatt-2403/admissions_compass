@@ -1,6 +1,11 @@
 import { useState, useRef } from 'react';
-import { Calculator, Lightbulb, TrendingUp, AlertCircle, RefreshCw, GraduationCap } from 'lucide-react';
+import { Calculator, Lightbulb, TrendingUp, AlertCircle, RefreshCw, GraduationCap, ArrowLeft } from 'lucide-react';
 import { mockUniversities, University, Major } from './UniversitySearch';
+import { TabType } from '../types';
+
+interface ScoreCalculatorProps {
+  setActiveTab: (tab: TabType) => void;
+}
 
 interface Subject {
   name: string;
@@ -133,7 +138,7 @@ const blocks: Block[] = [
   }
 ];
 
-export function ScoreCalculator() {
+export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
   const suggestionsRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = 5; // items per page
   const [selectedBlock, setSelectedBlock] = useState<Block>(blocks[0]);
@@ -331,13 +336,15 @@ export function ScoreCalculator() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-              <Calculator size={32} />
-            </div>
-            <div>
-              <h2 className="text-4xl font-extrabold">Công Cụ Tính Điểm & Gợi Ý Ngành</h2>
-              <p className="text-green-100 mt-1">Tính điểm thi và nhận gợi ý ngành học từ dữ liệu tuyển sinh năm 2025 mới nhất</p>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                <Calculator size={32} />
+              </div>
+              <div>
+                <h2 className="text-4xl font-extrabold">Công Cụ Tính Điểm & Gợi Ý Ngành</h2>
+                <p className="text-green-100 mt-1">Tính điểm thi và nhận gợi ý ngành học từ dữ liệu tuyển sinh năm 2025 mới nhất</p>
+              </div>
             </div>
           </div>
         </div>
@@ -767,6 +774,18 @@ export function ScoreCalculator() {
             </div>
           </div>
         )}
+      </div>
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => setActiveTab('universities')}
+          className="group bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white px-6 py-4 rounded-2xl font-bold flex items-center gap-3 transition-all duration-300 shadow-2xl hover:shadow-green-500/25 hover:scale-105 animate-bounce"
+        >
+          <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors">
+            <ArrowLeft size={20} />
+          </div>
+          <span className="text-lg">Quay lại Điểm Chuẩn</span>
+          <div className="w-3 h-3 bg-white rounded-full animate-ping"></div>
+        </button>
       </div>
     </div>
   );

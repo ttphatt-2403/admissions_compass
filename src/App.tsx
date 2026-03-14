@@ -4,7 +4,7 @@ import { StatsSection } from './components/StatsSection';
 import { DocumentLibrary } from './components/DocumentLibrary';
 import { UniversitySearch } from './components/UniversitySearch';
 import { ScoreCalculator } from './components/ScoreCalculator';
-import { StudyPath } from './components/StudyPath';
+// import { StudyPath } from './components/StudyPath';
 import { NewsSection } from './components/NewsSection';
 import { UniversityPromotions } from './components/UniversityPromotions';
 import { TabType } from './types';
@@ -85,7 +85,6 @@ import HNUELandingPage from './components/HNUELandingPage';
 import VLULandingPage from './components/VLULandingPage';
 import HSULandingPage from './components/HSULandingPage';
 import UEFLandingPage from './components/UEFLandingPage';
-import HUTECHLandingPage from './components/HUTECHLandingPage';
 import GDULandingPage from './components/GDULandingPage';
 import { CNITAILanding } from './components/CNITAILanding';
 import { MarketingSalesLanding } from './components/MarketingSalesLanding';
@@ -767,7 +766,7 @@ export default function App() {
                   </div>
 
                   {/* Card 4: Study Path */}
-                  <div
+                  {/* <div
                     onClick={() => setActiveTab('studypath')}
                     className="group rounded-[32px] overflow-hidden cursor-pointer border border-slate-100 bg-white p-6 flex flex-col justify-between hover:bg-gradient-to-br hover:from-orange-50 hover:to-amber-50 hover:-translate-y-2 hover:shadow-xl transition-all card-3d"
                   >
@@ -783,7 +782,7 @@ export default function App() {
                       <h3 className="text-lg font-bold text-slate-900 group-hover:text-orange-700 transition-colors">Lộ Trình Ôn Thi</h3>
                       <p className="text-slate-500 text-sm mt-1">Cá nhân hóa theo năng lực của bạn</p>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Card 5: News Ticker (Horizontal Scroll inside Card) */}
                   <div
@@ -1247,9 +1246,9 @@ export default function App() {
         )}
 
         {activeTab === 'documents' && <DocumentLibrary />}
-        {activeTab === 'universities' && <UniversitySearch />}
-        {activeTab === 'calculator' && <ScoreCalculator />}
-        {activeTab === 'studypath' && <StudyPath setActiveTab={setActiveTab} />}
+        {activeTab === 'universities' && <UniversitySearch setActiveTab={setActiveTab} />}
+        {activeTab === 'calculator' && <ScoreCalculator setActiveTab={setActiveTab} />}
+        {/* {activeTab === 'studypath' && <StudyPath setActiveTab={setActiveTab} />} */}
         {activeTab === 'news' && <NewsSection />}
         {activeTab === 'math-roadmap' && <MathRoadmap />}
         {activeTab === 'chemistry-roadmap' && <ChemistryRoadmap />}
@@ -1268,7 +1267,6 @@ export default function App() {
         {activeTab === 'vlu-landing' && <VLULandingPage />}
         {activeTab === 'hsu-landing' && <HSULandingPage />}
         {activeTab === 'uef-landing' && <UEFLandingPage />}
-        {activeTab === 'hutech-landing' && <HUTECHLandingPage />}
         {activeTab === 'gdu-landing' && <GDULandingPage />}
         {activeTab === 'cnit-landing' && <CNITAILanding />}
         {activeTab === 'marketing-sales-landing' && <MarketingSalesLanding />}

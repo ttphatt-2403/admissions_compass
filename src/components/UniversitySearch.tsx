@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Search,
   MapPin,
@@ -7,7 +7,13 @@ import {
   Award,
   ChevronDown,
   ChevronUp,
+  Calculator,
 } from "lucide-react";
+import { TabType } from "../types";
+
+interface UniversitySearchProps {
+  setActiveTab: (tab: TabType) => void;
+}
 
 export interface University {
   id: string;
@@ -1084,7 +1090,7 @@ const allMajors = Array.from(
 ).sort();
 const majors = ["Tất cả ngành", ...allMajors];
 
-export function UniversitySearch() {
+export function UniversitySearch({ setActiveTab }: UniversitySearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] =
     useState("Tất cả");
@@ -1093,6 +1099,14 @@ export function UniversitySearch() {
   const [expandedUniversity, setExpandedUniversity] = useState<
     string | null
   >(null);
+
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    // Reset to first page when filters/search change
+    setCurrentPage(1);
+  }, [searchTerm, selectedRegion, selectedType, selectedMajor]);
 
   const filteredUniversities = mockUniversities.filter(
     (uni) => {
@@ -1116,10 +1130,25 @@ export function UniversitySearch() {
     },
   );
 
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredUniversities.length / itemsPerPage),
+  );
+
+  const paginatedUniversities = filteredUniversities.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
   const toggleUniversity = (id: string) => {
     setExpandedUniversity(
       expandedUniversity === id ? null : id,
     );
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -1149,6 +1178,9 @@ export function UniversitySearch() {
                 toàn quốc
               </p>
             </div>
+          </div>
+          <div className="flex justify-center">
+            {/* Nút tính điểm đã được di chuyển xuống cuối trang */}
           </div>
         </div>
       </div>
@@ -1231,7 +1263,7 @@ export function UniversitySearch() {
 
         {/* Universities List */}
         <div className="space-y-4">
-          {filteredUniversities.map((university) => (
+          {paginatedUniversities.map((university) => (
             <div
               key={university.id}
               className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
@@ -1367,6 +1399,92 @@ export function UniversitySearch() {
           ))}
         </div>
 
+        {filteredUniversities.length > 0 && totalPages > 1 && (
+          <div className="flex flex-col items-center gap-3 mt-8">
+            <div className="text-sm font-medium text-gray-600">
+              Trang <span className="text-purple-600 font-bold">{currentPage}</span> / <span className="font-bold">{totalPages}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-300 text-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                ←
+              </button>
+
+              {(() => {
+                const maxVisiblePages = 5;
+                const pages: (number | string)[] = [];
+
+                if (totalPages <= maxVisiblePages + 2) {
+                  return Array.from({ length: totalPages }, (_, i) => i + 1);
+                }
+
+                pages.push(1);
+
+                let start = Math.max(2, currentPage - 1);
+                let end = Math.min(totalPages - 1, currentPage + 1);
+
+                if (currentPage <= 3) {
+                  start = 2;
+                  end = 4;
+                }
+
+                if (currentPage >= totalPages - 2) {
+                  start = totalPages - 3;
+                  end = totalPages - 1;
+                }
+
+                if (start > 2) {
+                  pages.push("...");
+                }
+
+                for (let i = start; i <= end; i++) {
+                  pages.push(i);
+                }
+
+                if (end < totalPages - 1) {
+                  pages.push("...");
+                }
+
+                pages.push(totalPages);
+
+                return pages;
+              })().map((page, index) =>
+                page === "..." ? (
+                  <span
+                    key={index}
+                    className="w-10 h-10 flex items-center justify-center text-gray-400 font-semibold"
+                  >
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(page as number)}
+                    className={`w-10 h-10 flex items-center justify-center rounded-full font-semibold text-sm transition-all duration-200 ${
+                      currentPage === page
+                        ? "bg-gradient-to-r from-purple-600 to-purple-600 text-white shadow-lg scale-110"
+                        : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 hover:shadow-md"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ),
+              )}
+
+              <button
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-300 text-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                →
+              </button>
+            </div>
+          </div>
+        )}
+
         {filteredUniversities.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500">
@@ -1374,6 +1492,20 @@ export function UniversitySearch() {
             </p>
           </div>
         )}
+      </div>
+
+      {/* Floating Button - Tính Điểm Dự Đoán */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => setActiveTab('calculator')}
+          className="group bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-800 hover:from-purple-700 hover:to-indigo-800 text-white px-6 py-4 rounded-2xl font-bold flex items-center gap-3 transition-all duration-300 shadow-2xl hover:shadow-green-500/25 hover:scale-105 animate-bounce"
+        >
+          <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors">
+            <Calculator size={20} />
+          </div>
+          <span className="text-lg">Tính Điểm Dự Đoán</span>
+          <div className="w-3 h-3 bg-white rounded-full animate-ping"></div>
+        </button>
       </div>
     </div>
   );
