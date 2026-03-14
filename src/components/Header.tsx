@@ -21,7 +21,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: 'universities' as TabType, label: 'Điểm Chuẩn' },
     // { id: 'calculator' as TabType, label: 'Tính Điểm' },
     // { id: 'studypath' as TabType, label: 'Lộ Trình' },
-    { id: 'news' as TabType, label: 'Tin Tức' },
+    // { id: 'news' as TabType, label: 'Tin Tức' },
     // the chatbot item is kept here for reference but filtered out below when
     // the feature is disabled
     { id: 'chatbot' as TabType, label: 'AI Tư Vấn' },
