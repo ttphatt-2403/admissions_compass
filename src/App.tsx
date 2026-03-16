@@ -86,6 +86,13 @@ import VLULandingPage from './components/VLULandingPage';
 import HSULandingPage from './components/HSULandingPage';
 import UEFLandingPage from './components/UEFLandingPage';
 import GDULandingPage from './components/GDULandingPage';
+import AJCLandingPage from './components/AJCLandingPage';
+import PTITLandingPage from './components/PTITLandingPage';
+import HAUILandingPage from './components/HAUILandingPage';
+import UTCLandingPage from './components/UTCLandingPage';
+import NUCELandingPage from './components/NUCELandingPage';
+import HUMGLandingPage from './components/HUMGLandingPage';
+import HOULandingPage from './components/HOULandingPage';
 import { CNITAILanding } from './components/CNITAILanding';
 import { MarketingSalesLanding } from './components/MarketingSalesLanding';
 import { LogisticsSupplyChainLanding } from './components/LogisticsSupplyChainLanding';
@@ -225,7 +232,39 @@ const universities = [
   { id: 'uef', name: 'UEF', logo: 'U', color: 'bg-red-600', tab: 'uef-landing' },
   { id: 'hutech', name: 'HUTECH', logo: 'H', color: 'bg-blue-600', tab: 'hutech-landing' },
   { id: 'gdu', name: 'Gia Định', logo: 'G', color: 'bg-green-600', tab: 'gdu-landing' },
+  { id: 'ajc', name: 'HV Báo chí & Tuyên truyền', shortName: 'HV Báo chí & TT', logo: 'A', color: 'bg-rose-700', tab: 'ajc-landing' },
+  { id: 'ptit', name: 'HV Công nghệ BCVT', shortName: 'PTIT', logo: 'P', color: 'bg-red-600', tab: 'ptit-landing' },
+  { id: 'haui', name: 'ĐH Công nghiệp Hà Nội', shortName: 'HAUI', logo: 'H', color: 'bg-cyan-600', tab: 'haui-landing' },
+  { id: 'utc', name: 'ĐH Giao thông Vận tải', shortName: 'UTC', logo: 'U', color: 'bg-blue-700', tab: 'utc-landing' },
+  { id: 'nuce', name: 'ĐH Xây dựng Hà Nội', shortName: 'NUCE', logo: 'N', color: 'bg-orange-600', tab: 'nuce-landing' },
+  { id: 'humg', name: 'ĐH Mỏ – Địa chất', shortName: 'HUMG', logo: 'M', color: 'bg-green-700', tab: 'humg-landing' },
+  { id: 'hou', name: 'ĐH Mở Hà Nội', shortName: 'HOU', logo: 'O', color: 'bg-blue-500', tab: 'hou-landing' },
 ];
+
+const getUniversityLogoBg = (id: string) => {
+  switch (id) {
+    case 'hutech':
+      return 'bg-blue-600';
+    case 'gdu':
+      return 'bg-green-600';
+    case 'ajc':
+      return 'bg-rose-700';
+    case 'ptit':
+      return 'bg-red-600';
+    case 'haui':
+      return 'bg-cyan-600';
+    case 'utc':
+      return 'bg-blue-700';
+    case 'nuce':
+      return 'bg-orange-600';
+    case 'humg':
+      return 'bg-green-700';
+    case 'hou':
+      return 'bg-blue-500';
+    default:
+      return 'bg-slate-700';
+  }
+};
 
 const documents = [
   { id: 1, title: 'Đề thi thử Toán THPTQG 2026 - Lần 1', downloads: '1.2k', tag: 'Mới' },
@@ -1132,23 +1171,23 @@ export default function App() {
                             onClick={() => setActiveTab(uni.tab as TabType)}
                             className="group/card cursor-pointer"
                           >
-                            <div className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 hover:border-purple-400/50 transition-all duration-300 h-full shadow-lg hover:shadow-2xl transform hover:-translate-y-3 group-hover/card:shadow-purple-500/30">
+                            <div className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 hover:border-purple-400/50 transition-all duration-300 h-[250px] shadow-lg hover:shadow-2xl transform hover:-translate-y-3 group-hover/card:shadow-purple-500/30">
                               {/* Gradient overlay on hover */}
                               <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-600/0 via-purple-600/0 to-pink-600/0 group-hover/card:from-purple-600/10 group-hover/card:via-purple-600/5 group-hover/card:to-pink-600/10 transition-all"></div>
 
-                              <div className="relative z-10">
+                              <div className="relative z-10 flex h-full flex-col">
                                 {/* Logo */}
-                                <div className={`w-20 h-20 ${uni.color} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover/card:scale-125 group-hover/card:rotate-6 transition-all duration-300`}>
+                                <div className={`w-20 h-20 ${getUniversityLogoBg(uni.id)} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover/card:scale-125 group-hover/card:rotate-6 transition-all duration-300`}>
                                   {uni.logo}
                                 </div>
 
                                 {/* Content */}
-                                <h3 className="font-bold text-lg mt-4 text-slate-900 group-hover/card:text-purple-600 transition-colors">
-                                  {uni.name}
+                                <h3 className="font-bold text-lg mt-4 text-slate-900 group-hover/card:text-purple-600 transition-colors line-clamp-1 min-h-[28px]">
+                                  {uni.shortName || uni.name}
                                 </h3>
 
                                 {/* CTA */}
-                                <div className="mt-4 flex items-center gap-2 text-purple-600 font-bold text-sm opacity-0 group-hover/card:opacity-100 transition-all duration-300 translate-y-2 group-hover/card:translate-y-0">
+                                <div className="mt-auto flex items-center gap-2 text-purple-600 font-bold text-sm opacity-0 group-hover/card:opacity-100 transition-all duration-300 translate-y-2 group-hover/card:translate-y-0">
                                   Tìm hiểu <ArrowRight size={14} className="group-hover/card:translate-x-1 transition-transform" />
                                 </div>
                               </div>
@@ -1268,6 +1307,13 @@ export default function App() {
         {activeTab === 'hsu-landing' && <HSULandingPage />}
         {activeTab === 'uef-landing' && <UEFLandingPage />}
         {activeTab === 'gdu-landing' && <GDULandingPage />}
+        {activeTab === 'ajc-landing' && <AJCLandingPage />}
+        {activeTab === 'ptit-landing' && <PTITLandingPage />}
+        {activeTab === 'haui-landing' && <HAUILandingPage />}
+        {activeTab === 'utc-landing' && <UTCLandingPage />}
+        {activeTab === 'nuce-landing' && <NUCELandingPage />}
+        {activeTab === 'humg-landing' && <HUMGLandingPage />}
+        {activeTab === 'hou-landing' && <HOULandingPage />}
         {activeTab === 'cnit-landing' && <CNITAILanding />}
         {activeTab === 'marketing-sales-landing' && <MarketingSalesLanding />}
         {activeTab === 'logistics-supply-chain-landing' && <LogisticsSupplyChainLanding />}

@@ -52,6 +52,33 @@
     build: {
       target: 'esnext',
       outDir: 'build',
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) {
+              return;
+            }
+
+            if (id.includes('node_modules/firebase')) {
+              return 'vendor-firebase';
+            }
+
+            if (id.includes('node_modules/recharts')) {
+              return 'vendor-recharts';
+            }
+
+            if (id.includes('node_modules/@google/genai')) {
+              return 'vendor-genai';
+            }
+
+            if (id.includes('node_modules/@radix-ui')) {
+              return 'vendor-radix';
+            }
+
+            return 'vendor';
+          },
+        },
+      },
     },
     server: {
       port: 3000,
