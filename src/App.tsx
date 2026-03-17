@@ -232,7 +232,7 @@ const universities = [
   { id: 'uef', name: 'UEF', logo: 'U', color: 'bg-red-600', tab: 'uef-landing' },
   { id: 'hutech', name: 'HUTECH', logo: 'H', color: 'bg-blue-600', tab: 'hutech-landing' },
   { id: 'gdu', name: 'Gia Định', logo: 'G', color: 'bg-green-600', tab: 'gdu-landing' },
-  { id: 'ajc', name: 'HV Báo chí & Tuyên truyền', shortName: 'HV Báo chí & TT', logo: 'A', color: 'bg-rose-700', tab: 'ajc-landing' },
+  { id: 'ajc', name: 'HV Báo chí & Tuyên truyền', shortName: 'HV Báo chí & TT', logo: 'A', color: 'bg-red-700', tab: 'ajc-landing' },
   { id: 'ptit', name: 'HV Công nghệ BCVT', shortName: 'PTIT', logo: 'P', color: 'bg-red-600', tab: 'ptit-landing' },
   { id: 'haui', name: 'ĐH Công nghiệp Hà Nội', shortName: 'HAUI', logo: 'H', color: 'bg-cyan-600', tab: 'haui-landing' },
   { id: 'utc', name: 'ĐH Giao thông Vận tải', shortName: 'UTC', logo: 'U', color: 'bg-blue-700', tab: 'utc-landing' },
@@ -248,7 +248,7 @@ const getUniversityLogoBg = (id: string) => {
     case 'gdu':
       return 'bg-green-600';
     case 'ajc':
-      return 'bg-rose-700';
+      return 'bg-red-700';
     case 'ptit':
       return 'bg-red-600';
     case 'haui':
@@ -1177,7 +1177,7 @@ export default function App() {
 
                               <div className="relative z-10 flex h-full flex-col">
                                 {/* Logo */}
-                                <div className={`w-20 h-20 ${getUniversityLogoBg(uni.id)} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover/card:scale-125 group-hover/card:rotate-6 transition-all duration-300`}>
+                                <div className={`w-20 h-20 ${uni.color} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover/card:scale-125 group-hover/card:rotate-6 transition-all duration-300`}>
                                   {uni.logo}
                                 </div>
 
