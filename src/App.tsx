@@ -73,26 +73,55 @@ function AnimatedSection({ children, className = "", delay = 0, id }: { children
     </div>
   );
 }
-import FPTLandingPage from './components/FPTLandingPage';
-import VNULandingPage from './components/VNULandingPage';
-import RMITLandingPage from './components/RMITLandingPage';
-import HUSTLandingPage from './components/HUSTLandingPage';
-import NEULandingPage from './components/NEULandingPage';
-import UITLandingPage from './components/UITLandingPage';
-import FTULandingPage from './components/FTULandingPage';
-import HMULandingPage from './components/HMULandingPage';
-import HNUELandingPage from './components/HNUELandingPage';
-import VLULandingPage from './components/VLULandingPage';
-import HSULandingPage from './components/HSULandingPage';
-import UEFLandingPage from './components/UEFLandingPage';
-import GDULandingPage from './components/GDULandingPage';
-import AJCLandingPage from './components/AJCLandingPage';
-import PTITLandingPage from './components/PTITLandingPage';
-import HAUILandingPage from './components/HAUILandingPage';
-import UTCLandingPage from './components/UTCLandingPage';
-import NUCELandingPage from './components/NUCELandingPage';
-import HUMGLandingPage from './components/HUMGLandingPage';
-import HOULandingPage from './components/HOULandingPage';
+// Landing Pages - Hà Nội
+import FPTLandingPage from './components/LandingPages/HaNoi/FPTLandingPage';
+import VNULandingPage from './components/LandingPages/HaNoi/VNULandingPage';
+import HUSTLandingPage from './components/LandingPages/HaNoi/HUSTLandingPage';
+import NEULandingPage from './components/LandingPages/HaNoi/NEULandingPage';
+import FTULandingPage from './components/LandingPages/HaNoi/FTULandingPage';
+import HMULandingPage from './components/LandingPages/HaNoi/HMULandingPage';
+import HNUELandingPage from './components/LandingPages/HaNoi/HNUELandingPage';
+import AJCLandingPage from './components/LandingPages/HaNoi/AJCLandingPage';
+import PTITLandingPage from './components/LandingPages/HaNoi/PTITLandingPage';
+import HAUILandingPage from './components/LandingPages/HaNoi/HAUILandingPage';
+import UTCLandingPage from './components/LandingPages/HaNoi/UTCLandingPage';
+import NUCELandingPage from './components/LandingPages/HaNoi/NUCELandingPage';
+import HUMGLandingPage from './components/LandingPages/HaNoi/HUMGLandingPage';
+import HOULandingPage from './components/LandingPages/HaNoi/HOULandingPage';
+import UETLandingPage from './components/LandingPages/HaNoi/UETLandingPage';
+import USSHLandingPage from './components/LandingPages/HaNoi/USSHLandingPage';
+import ULISLandingPage from './components/LandingPages/HaNoi/ULISLandingPage';
+import HUPLandingPage from './components/LandingPages/HaNoi/HUPLandingPage';
+import DAVLandingPage from './components/LandingPages/HaNoi/DAVLandingPage';
+import AOFLandingPage from './components/LandingPages/HaNoi/AOFLandingPage';
+import TMULandingPage from './components/LandingPages/HaNoi/TMULandingPage';
+import HUALandingPage from './components/LandingPages/HaNoi/HUALandingPage';
+// Landing Pages - Hồ Chí Minh
+import RMITLandingPage from './components/LandingPages/HoChiMinh/RMITLandingPage';
+import UITLandingPage from './components/LandingPages/HoChiMinh/UITLandingPage';
+import VLULandingPage from './components/LandingPages/HoChiMinh/VLULandingPage';
+import HSULandingPage from './components/LandingPages/HoChiMinh/HSULandingPage';
+import UEFLandingPage from './components/LandingPages/HoChiMinh/UEFLandingPage';
+import GDULandingPage from './components/LandingPages/HoChiMinh/GDULandingPage';
+import HUTECHLandingPage from './components/LandingPages/HoChiMinh/HUTECHLandingPage';
+import HCMUTLandingPage from './components/LandingPages/HoChiMinh/HCMUTLandingPage';
+import UEHLandingPage from './components/LandingPages/HoChiMinh/UEHLandingPage';
+import UELLandingPage from './components/LandingPages/HoChiMinh/UELLandingPage';
+import HCMUSLandingPage from './components/LandingPages/HoChiMinh/HCMUSLandingPage';
+import UMPLandingPage from './components/LandingPages/HoChiMinh/UMPLandingPage';
+import PNTLandingPage from './components/LandingPages/HoChiMinh/PNTLandingPage';
+import HCMULLandingPage from './components/LandingPages/HoChiMinh/HCMULLandingPage';
+import HCMUELandingPage from './components/LandingPages/HoChiMinh/HCMUELandingPage';
+import HUBLandingPage from './components/LandingPages/HoChiMinh/HUBLandingPage';
+import NLULandingPage from './components/LandingPages/HoChiMinh/NLULandingPage';
+import TDTULandingPage from './components/LandingPages/HoChiMinh/TDTULandingPage';
+import HUITLandingPage from './components/LandingPages/HoChiMinh/HUITLandingPage';
+// Landing Pages - Khác
+import HueUniLandingPage from './components/LandingPages/Khac/HueUniLandingPage';
+import DUTLandingPage from './components/LandingPages/Khac/DUTLandingPage';
+import DUELandingPage from './components/LandingPages/Khac/DUELandingPage';
+import DTULandingPage from './components/LandingPages/Khac/DTULandingPage';
+import CTULandingPage from './components/LandingPages/Khac/CTULandingPage';
 import { CNITAILanding } from './components/CNITAILanding';
 import { MarketingSalesLanding } from './components/MarketingSalesLanding';
 import { LogisticsSupplyChainLanding } from './components/LogisticsSupplyChainLanding';
@@ -1314,6 +1343,35 @@ export default function App() {
         {activeTab === 'nuce-landing' && <NUCELandingPage />}
         {activeTab === 'humg-landing' && <HUMGLandingPage />}
         {activeTab === 'hou-landing' && <HOULandingPage />}
+        {activeTab === 'hutech-landing' && <HUTECHLandingPage />}
+        {/* Landing Pages - Hà Nội (mới) */}
+        {activeTab === 'uet-landing' && <UETLandingPage />}
+        {activeTab === 'ussh-landing' && <USSHLandingPage />}
+        {activeTab === 'ulis-landing' && <ULISLandingPage />}
+        {activeTab === 'hup-landing' && <HUPLandingPage />}
+        {activeTab === 'dav-landing' && <DAVLandingPage />}
+        {activeTab === 'aof-landing' && <AOFLandingPage />}
+        {activeTab === 'tmu-landing' && <TMULandingPage />}
+        {activeTab === 'hua-landing' && <HUALandingPage />}
+        {/* Landing Pages - Hồ Chí Minh (mới) */}
+        {activeTab === 'hcmut-landing' && <HCMUTLandingPage />}
+        {activeTab === 'ueh-landing' && <UEHLandingPage />}
+        {activeTab === 'uel-landing' && <UELLandingPage />}
+        {activeTab === 'hcmus-landing' && <HCMUSLandingPage />}
+        {activeTab === 'ump-landing' && <UMPLandingPage />}
+        {activeTab === 'pnt-landing' && <PNTLandingPage />}
+        {activeTab === 'hcmul-landing' && <HCMULLandingPage />}
+        {activeTab === 'hcmue-landing' && <HCMUELandingPage />}
+        {activeTab === 'hub-landing' && <HUBLandingPage />}
+        {activeTab === 'nlu-landing' && <NLULandingPage />}
+        {activeTab === 'tdtu-landing' && <TDTULandingPage />}
+        {activeTab === 'huit-landing' && <HUITLandingPage />}
+        {/* Landing Pages - Khác */}
+        {activeTab === 'hueuni-landing' && <HueUniLandingPage />}
+        {activeTab === 'dut-landing' && <DUTLandingPage />}
+        {activeTab === 'due-landing' && <DUELandingPage />}
+        {activeTab === 'dtu-landing' && <DTULandingPage />}
+        {activeTab === 'ctu-landing' && <CTULandingPage />}
         {activeTab === 'cnit-landing' && <CNITAILanding />}
         {activeTab === 'marketing-sales-landing' && <MarketingSalesLanding />}
         {activeTab === 'logistics-supply-chain-landing' && <LogisticsSupplyChainLanding />}

@@ -1026,51 +1026,153 @@ export const mockUniversities: University[] = [
     ]
   },
 
+  // ╔══════════════════════════════════════════╗
+  // ║         CÁC TRƯỜNG TƯ THỤC TP.HCM       ║
+  // ╚══════════════════════════════════════════╝
+
   {
-    id: 'ued',
-    name: 'Đại học Kinh tế - Luật - ĐHQG TP.HCM',
-    shortName: 'UEL',
+    id: 'hsu',
+    name: 'Đại học Hoa Sen',
+    shortName: 'HSU',
     location: 'TP. Hồ Chí Minh',
-    type: 'Công lập',
-    ranking: 17,
+    type: 'Tư thục',
+    ranking: 1,
     majors: [
-      { code: 'LOG',       name: 'Kinh doanh QT & Logistics',     benchmarkScore: 28.08, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 150, trend: 'up' },
-      { code: 'MKT',       name: 'Marketing',                      benchmarkScore: 27.32, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 200, trend: 'up' },
-      { code: 'KTQT',      name: 'Kinh tế quốc tế',               benchmarkScore: 27.28, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 200, trend: 'up' },
-      { code: 'QTKD',      name: 'Quản trị kinh doanh',           benchmarkScore: 26.59, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, B00, B02, B03, B04, B08, C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 350, trend: 'stable' },
-      { code: 'LUATKT',    name: 'Luật kinh tế – TM quốc tế',     benchmarkScore: 26.59, subjects: 'C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 200, trend: 'up' },
-      { code: 'KINHTE',    name: 'Kinh tế học',                   benchmarkScore: 25.42, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 200, trend: 'stable' },
-      { code: 'LUAT',      name: 'Luật dân sự',                   benchmarkScore: 24.75, subjects: 'C00, C01, C02, C03, C04, C05, C08, C12, C13, C14, C17, C19, C20, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D42, D43, D44, D45, D55, D63, D64, D65, D66, D68, D70, D71, D84', quota: 150, trend: 'stable' },
-      { code: 'TCNH',      name: 'Tài chính – Ngân hàng',         benchmarkScore: 25.80, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 250, trend: 'stable' },
-      { code: 'KETOAN',    name: 'Kế toán – Kiểm toán',          benchmarkScore: 25.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 200, trend: 'stable' },
-      { code: 'KHDL',      name: 'Khoa học dữ liệu',              benchmarkScore: 26.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 80, trend: 'up' },
+      { code: 'KDQT',   name: 'Kinh doanh quốc tế',       benchmarkScore: 22.50, subjects: 'A00, A01, D01', quota: 300, trend: 'up' },
+      { code: 'MKT',    name: 'Marketing',                 benchmarkScore: 22.00, subjects: 'A00, A01, D01', quota: 250, trend: 'up' },
+      { code: 'QTKD',   name: 'Quản trị kinh doanh',      benchmarkScore: 21.50, subjects: 'A00, A01, D01', quota: 350, trend: 'stable' },
+      { code: 'CNTT',   name: 'Công nghệ thông tin',      benchmarkScore: 21.00, subjects: 'A00, A01',      quota: 200, trend: 'up' },
+      { code: 'NNA',    name: 'Ngôn ngữ Anh',             benchmarkScore: 22.00, subjects: 'D01',           quota: 300, trend: 'up' },
+      { code: 'TTDPT',  name: 'Truyền thông đa phương tiện', benchmarkScore: 21.50, subjects: 'C00, D01',  quota: 150, trend: 'up' },
+      { code: 'DULICH', name: 'Quản trị dịch vụ du lịch', benchmarkScore: 20.50, subjects: 'C00, D01',     quota: 150, trend: 'stable' },
+      { code: 'TKDH',   name: 'Thiết kế đồ họa',          benchmarkScore: 20.00, subjects: 'C00, D01',     quota: 120, trend: 'stable' },
+      { code: 'TKTT',   name: 'Thiết kế thời trang',      benchmarkScore: 19.50, subjects: 'C00',          quota: 80,  trend: 'stable' },
+      { code: 'KETOAN', name: 'Kế toán',                  benchmarkScore: 20.50, subjects: 'A00, D01',     quota: 200, trend: 'down' },
+      { code: 'TCNH',   name: 'Tài chính – Ngân hàng',   benchmarkScore: 20.00, subjects: 'A00, D01',     quota: 150, trend: 'stable' },
     ]
   },
 
   {
-    id: 'hcmus',
-    name: 'Đại học Khoa học Tự nhiên - ĐHQG TP.HCM',
-    shortName: 'HCMUS',
+    id: 'uef',
+    name: 'Đại học Kinh tế Tài chính TP.HCM',
+    shortName: 'UEF',
     location: 'TP. Hồ Chí Minh',
-    type: 'Công lập',
-    ranking: 18,
+    type: 'Tư thục',
+    ranking: 2,
     majors: [
-      { code: 'KHMT',      name: 'Khoa học máy tính',            benchmarkScore: 27.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 400, trend: 'up' },
-      { code: 'CNTT',      name: 'Công nghệ thông tin',          benchmarkScore: 27.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 450, trend: 'stable' },
-      { code: 'KHDL',      name: 'Khoa học dữ liệu',             benchmarkScore: 26.80, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 100, trend: 'up' },
-      { code: 'AI',        name: 'Trí tuệ nhân tạo',             benchmarkScore: 26.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 80, trend: 'up' },
-      { code: 'TOANTIN',   name: 'Toán tin',                     benchmarkScore: 25.20, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 250, trend: 'up' },
-      { code: 'ATTT',      name: 'An toàn thông tin',            benchmarkScore: 26.50, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, D01, D07, D08, D09, D10, D11, D12, D13, D14, D15, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 80, trend: 'up' },
-      { code: 'CNSH',      name: 'Công nghệ sinh học',           benchmarkScore: 25.50, subjects: 'B00, B02, B03, B04, B08, C08, C12, C13, C17, D08, D12, D13, D31, D32, D33, D34, D35', quota: 300, trend: 'stable' },
-      { code: 'HOA',       name: 'Hóa học',                      benchmarkScore: 24.80, subjects: 'A00, A05, A06, A11, B00, C02, C05, C08, C17, D07, D12, D21, D22, D23, D24, D25', quota: 350, trend: 'down' },
-      { code: 'VATLY',     name: 'Vật lý học',                   benchmarkScore: 24.50, subjects: 'A00, A01, A02, A03, A04, A10, C01, C05, D11, D26, D27, D28, D29, D30, D55', quota: 200, trend: 'stable' },
-      { code: 'TOAN',      name: 'Toán học',                     benchmarkScore: 24.00, subjects: 'A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, C01, C02, C03, C04, C14, D01, D02, D03, D04, D05, D06, D07, D08, D09, D10, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31, D32, D33, D34, D35, D84', quota: 200, trend: 'stable' },
-      { code: 'DIACHAT',   name: 'Địa chất học',                 benchmarkScore: 22.80, subjects: 'A00, A04, A06, A09, C04, C13, C20, D10, D20, D42, D43, D44, D45', quota: 100, trend: 'stable' },
-      { code: 'KHMT-MT',   name: 'Khoa học môi trường',          benchmarkScore: 23.50, subjects: 'A00, A04, A06, A09, B00, B02, B04, C04, C13, C20, D10, D20, D42, D43, D44, D45', quota: 150, trend: 'down' },
+      { code: 'KDQT',   name: 'Kinh doanh quốc tế',      benchmarkScore: 22.00, subjects: 'A00, A01, D01', quota: 400, trend: 'up' },
+      { code: 'MKT',    name: 'Marketing',                benchmarkScore: 21.50, subjects: 'A00, A01, D01', quota: 300, trend: 'up' },
+      { code: 'QTKD',   name: 'Quản trị kinh doanh',     benchmarkScore: 21.00, subjects: 'A00, A01, D01', quota: 400, trend: 'stable' },
+      { code: 'TCNH',   name: 'Tài chính – Ngân hàng',  benchmarkScore: 21.00, subjects: 'A00, A01, D01',  quota: 350, trend: 'stable' },
+      { code: 'KETOAN', name: 'Kế toán',                 benchmarkScore: 20.50, subjects: 'A00, A01, D01',  quota: 250, trend: 'down' },
+      { code: 'NNA',    name: 'Ngôn ngữ Anh',            benchmarkScore: 21.50, subjects: 'D01',           quota: 300, trend: 'up' },
+      { code: 'NNT',    name: 'Ngôn ngữ Trung Quốc',    benchmarkScore: 20.50, subjects: 'D04',            quota: 150, trend: 'stable' },
+      { code: 'CNTT',   name: 'Công nghệ thông tin',     benchmarkScore: 20.50, subjects: 'A00, A01',      quota: 200, trend: 'up' },
+      { code: 'TMDT',   name: 'Thương mại điện tử',      benchmarkScore: 21.00, subjects: 'A00, A01',      quota: 150, trend: 'up' },
+      { code: 'LOG',    name: 'Logistics & Supply Chain', benchmarkScore: 21.00, subjects: 'A00, A01',     quota: 150, trend: 'up' },
+      { code: 'LUATKT', name: 'Luật kinh tế',            benchmarkScore: 20.50, subjects: 'C00, D01',      quota: 150, trend: 'stable' },
+    ]
+  },
+
+  {
+    id: 'hutech',
+    name: 'Đại học Công nghệ TP.HCM',
+    shortName: 'HUTECH',
+    location: 'TP. Hồ Chí Minh',
+    type: 'Tư thục',
+    ranking: 3,
+    majors: [
+      { code: 'CNTT',    name: 'Công nghệ thông tin',        benchmarkScore: 21.50, subjects: 'A00, A01',      quota: 600, trend: 'up' },
+      { code: 'AI',      name: 'Trí tuệ nhân tạo',          benchmarkScore: 21.50, subjects: 'A00, A01',      quota: 150, trend: 'up' },
+      { code: 'CNPM',    name: 'Công nghệ phần mềm',         benchmarkScore: 21.00, subjects: 'A00, A01',      quota: 300, trend: 'up' },
+      { code: 'KHDL',    name: 'Khoa học dữ liệu',           benchmarkScore: 21.00, subjects: 'A00, A01',      quota: 150, trend: 'up' },
+      { code: 'QTKD',    name: 'Quản trị kinh doanh',        benchmarkScore: 20.50, subjects: 'A00, A01, D01', quota: 500, trend: 'stable' },
+      { code: 'MKT',     name: 'Marketing',                  benchmarkScore: 20.50, subjects: 'A00, A01, D01', quota: 300, trend: 'up' },
+      { code: 'KETOAN',  name: 'Kế toán',                    benchmarkScore: 19.50, subjects: 'A00, A01, D01', quota: 350, trend: 'down' },
+      { code: 'KIEN',    name: 'Kiến trúc',                  benchmarkScore: 20.00, subjects: 'A00, V00',      quota: 150, trend: 'stable' },
+      { code: 'TKDH',    name: 'Thiết kế đồ họa',            benchmarkScore: 19.50, subjects: 'C00, D01',     quota: 150, trend: 'stable' },
+      { code: 'DIEUDUONG',name: 'Điều dưỡng',               benchmarkScore: 19.00, subjects: 'B00',           quota: 200, trend: 'stable' },
+      { code: 'DULICH',  name: 'Du lịch',                    benchmarkScore: 18.50, subjects: 'C00, D01',     quota: 150, trend: 'stable' },
+      { code: 'NNA',     name: 'Ngôn ngữ Anh',              benchmarkScore: 20.00, subjects: 'D01',           quota: 200, trend: 'up' },
+      { code: 'LOG',     name: 'Logistics & Supply Chain',   benchmarkScore: 20.00, subjects: 'A00, A01',     quota: 150, trend: 'up' },
+    ]
+  },
+
+  {
+    id: 'gdu',
+    name: 'Đại học Gia Định',
+    shortName: 'GDU',
+    location: 'TP. Hồ Chí Minh',
+    type: 'Tư thục',
+    ranking: 4,
+    majors: [
+      { code: 'CNTT',    name: 'Công nghệ thông tin',      benchmarkScore: 18.00, subjects: 'A00, A01',      quota: 300, trend: 'up' },
+      { code: 'QTKD',    name: 'Quản trị kinh doanh',      benchmarkScore: 17.50, subjects: 'A00, A01, D01', quota: 400, trend: 'stable' },
+      { code: 'KETOAN',  name: 'Kế toán',                  benchmarkScore: 17.00, subjects: 'A00, A01, D01', quota: 300, trend: 'stable' },
+      { code: 'MKT',     name: 'Marketing',                benchmarkScore: 17.50, subjects: 'A00, A01, D01', quota: 200, trend: 'up' },
+      { code: 'TKDH',    name: 'Thiết kế đồ họa',          benchmarkScore: 17.00, subjects: 'C00, D01',     quota: 150, trend: 'stable' },
+      { code: 'DIEUDUONG',name: 'Điều dưỡng',             benchmarkScore: 18.00, subjects: 'B00',           quota: 200, trend: 'up' },
+      { code: 'NNA',     name: 'Ngôn ngữ Anh',            benchmarkScore: 17.50, subjects: 'D01',           quota: 200, trend: 'up' },
+      { code: 'DULICH',  name: 'Du lịch',                  benchmarkScore: 16.50, subjects: 'C00, D01',     quota: 150, trend: 'stable' },
+      { code: 'XDDT',    name: 'Xây dựng dân dụng',       benchmarkScore: 16.00, subjects: 'A00',           quota: 150, trend: 'down' },
+      { code: 'CNOTO',   name: 'Công nghệ kỹ thuật ô tô', benchmarkScore: 16.00, subjects: 'A00',           quota: 100, trend: 'stable' },
     ]
   },
 
 ];
+// Mapping từ university ID → tab landing page
+const universityLandingTab: Record<string, string> = {
+  // Hà Nội
+  'vnu-hn':        'vnu-landing',
+  'hust':          'hust-landing',
+  'neu':           'neu-landing',
+  'hmu':           'hmu-landing',
+  'ftu':           'ftu-landing',
+  'hnue':          'hnue-landing',
+  'ptit':          'ptit-landing',
+  'haui':          'haui-landing',
+  'utc':           'utc-landing',
+  'huce':          'nuce-landing',
+  'humg':          'humg-landing',
+  'hou':           'hou-landing',
+  'hvbc':          'ajc-landing',
+  'fpt-university':'fpt-landing',
+  'uet':           'uet-landing',
+  'ussh-hn':       'ussh-landing',
+  'ulis':          'ulis-landing',
+  'hup':           'hup-landing',
+  'dav':           'dav-landing',
+  'aof':           'aof-landing',
+  'tmu':           'tmu-landing',
+  'hua':           'hua-landing',
+  // Hồ Chí Minh
+  'rmit-vietnam':  'rmit-landing',
+  'uit':           'uit-landing',
+  'vlu':           'vlu-landing',
+  'hsu':           'hsu-landing',
+  'uef':           'uef-landing',
+  'hutech':        'hutech-landing',
+  'gdu':           'gdu-landing',
+  'hcmut':         'hcmut-landing',
+  'ueh':           'ueh-landing',
+  'uel':           'uel-landing',
+  'hcmus':         'hcmus-landing',
+  'ump':           'ump-landing',
+  'pnt':           'pnt-landing',
+  'hcmul':         'hcmul-landing',
+  'hcmue':         'hcmue-landing',
+  'hub':           'hub-landing',
+  'nlu':           'nlu-landing',
+  'tdtu':          'tdtu-landing',
+  'huit':          'huit-landing',
+  // Khác
+  'hue-uni':       'hueuni-landing',
+  'dut':           'dut-landing',
+  'due':           'due-landing',
+  'duy-tan':       'dtu-landing',
+  'ctu':           'ctu-landing',
+};
+
 const regions = [
   "Tất cả",
   "Hà Nội",
@@ -1318,19 +1420,32 @@ export function UniversitySearch({ setActiveTab }: UniversitySearchProps) {
                       </div>
                     </div>
                   </div>
-                  <button className="ml-4 p-2 hover:bg-white rounded-lg transition-colors">
-                    {expandedUniversity === university.id ? (
-                      <ChevronUp
-                        className="text-gray-400"
-                        size={24}
-                      />
-                    ) : (
-                      <ChevronDown
-                        className="text-gray-400"
-                        size={24}
-                      />
+                  <div className="flex items-center gap-2 ml-4">
+                    {universityLandingTab[university.id] && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveTab(universityLandingTab[university.id] as TabType);
+                        }}
+                        className="px-3 py-1.5 text-sm font-semibold bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-md hover:scale-105 transition-all whitespace-nowrap"
+                      >
+                        Xem trang trường
+                      </button>
                     )}
-                  </button>
+                    <button className="p-2 hover:bg-white rounded-lg transition-colors">
+                      {expandedUniversity === university.id ? (
+                        <ChevronUp
+                          className="text-gray-400"
+                          size={24}
+                        />
+                      ) : (
+                        <ChevronDown
+                          className="text-gray-400"
+                          size={24}
+                        />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
 

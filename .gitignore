@@ -7,3 +7,6 @@ build/
 .DS_Store
 .vercel
 .env*.local
+
+# Claude Code
+.claude/
