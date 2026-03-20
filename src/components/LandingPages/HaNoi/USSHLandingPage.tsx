@@ -26,7 +26,7 @@ const USSHLandingPage = () => {
   return (
     <div className="font-sans text-slate-900 bg-white">
       {/* Top Bar */}
-      <div className="bg-[#8B0000] text-white py-1 px-4 text-xs font-medium hidden md:block">
+      <div className="bg-[#8B0000] text-black py-1 px-4 text-xs font-medium hidden md:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex space-x-4"><span>Sinh viên</span><span>Cựu sinh viên</span><span>Cán bộ - Giảng viên</span></div>
           <div className="flex space-x-4"><span className="flex items-center gap-1"><Globe size={12} /> EN</span><span>Cổng thông tin đào tạo</span></div>
@@ -34,12 +34,16 @@ const USSHLandingPage = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      <nav className="sticky top-0 z-50 border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#8B0000] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md border-2 border-[#DAA520]">
-                USSH
+              <div className="w-25 h-14 overflow-hidden rounded-lg bg-white shadow-md border border-white/20">
+                <img
+                  src="https://th.bing.com/th/id/OIP.GjGe6_DsoQutKUj_VUaITQHaFF?w=240&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  alt="ULIS Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-[#8B0000] font-bold text-lg leading-none uppercase">ĐH Khoa học Xã hội và Nhân văn</span>
@@ -50,7 +54,7 @@ const USSHLandingPage = () => {
               {['Giới thiệu', 'Tuyển sinh', 'Đào tạo', 'Nghiên cứu', 'Hợp tác'].map((item) => (
                 <a key={item} href="#" className="text-slate-700 hover:text-[#8B0000] font-semibold transition-colors uppercase text-sm">{item}</a>
               ))}
-              <button onClick={() => document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' })} className="bg-[#8B0000] text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-colors shadow-lg">Đăng ký xét tuyển</button>
+              <button onClick={() => document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' })} className="bg-gradient-to-br from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-colors shadow-lg">Đăng ký xét tuyển</button>
             </div>
             <div className="lg:hidden"><button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#8B0000]">{isMenuOpen ? <X size={28} /> : <Menu size={28} />}</button></div>
           </div>
@@ -61,7 +65,7 @@ const USSHLandingPage = () => {
               {['Giới thiệu', 'Tuyển sinh', 'Đào tạo', 'Nghiên cứu', 'Hợp tác'].map((item) => (
                 <a key={item} href="#" className="block px-3 py-3 text-base font-medium text-slate-800 hover:bg-slate-50 border-b border-slate-100 last:border-0">{item}</a>
               ))}
-              <div className="pt-4 pb-2"><button onClick={() => { document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' }); setIsMenuOpen(false); }} className="w-full bg-[#8B0000] text-white py-3 rounded font-bold">Đăng ký tư vấn</button></div>
+              <div className="pt-4 pb-2"><button onClick={() => { document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' }); setIsMenuOpen(false); }} className="w-full bg-[#8B0000] text-black py-3 rounded font-bold">Đăng ký tư vấn</button></div>
             </div>
           </div>
         )}
@@ -71,7 +75,10 @@ const USSHLandingPage = () => {
       <section className="relative h-[650px] md:h-[750px] overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800" alt="Hero" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#8B0000]/90 via-[#8B0000]/70 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/40"></div>
+
+          {/* gradient tạo chiều sâu */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0f2f44]/95 via-[#1A5276]/80 to-transparent"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
@@ -135,7 +142,7 @@ const USSHLandingPage = () => {
       </section>
 
       {/* Why Choose */}
-      <section className="py-24 bg-[#8B0000] text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-yellow-400 to-teal-600 relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full border-2 border-white/10"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full border-2 border-white/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -147,11 +154,11 @@ const USSHLandingPage = () => {
               <div className="space-y-6">
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center shrink-0"><Users className="text-[#DAA520]" size={24} /></div>
-                  <div><h4 className="text-xl font-bold mb-1">Giảng viên đầu ngành</h4><p className="text-slate-400 text-sm">Đội ngũ giáo sư, tiến sĩ uy tín trong nhiều lĩnh vực khoa học xã hội, có công bố quốc tế và tham gia các diễn đàn học thuật toàn cầu.</p></div>
+                  <div><h4 className="text-xl font-bold mb-1">Giảng viên đầu ngành</h4><p className="text-black text-sm">Đội ngũ giáo sư, tiến sĩ uy tín trong nhiều lĩnh vực khoa học xã hội, có công bố quốc tế và tham gia các diễn đàn học thuật toàn cầu.</p></div>
                 </div>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center shrink-0"><Briefcase className="text-[#DAA520]" size={24} /></div>
-                  <div><h4 className="text-xl font-bold mb-1">Cơ hội nghề nghiệp đa dạng</h4><p className="text-slate-400 text-sm">Sinh viên tốt nghiệp làm việc tại các cơ quan nhà nước, tổ chức quốc tế, truyền thông, giáo dục và doanh nghiệp trong nước và ngoài nước.</p></div>
+                  <div><h4 className="text-xl font-bold mb-1">Cơ hội nghề nghiệp đa dạng</h4><p className="text-black text-sm">Sinh viên tốt nghiệp làm việc tại các cơ quan nhà nước, tổ chức quốc tế, truyền thông, giáo dục và doanh nghiệp trong nước và ngoài nước.</p></div>
                 </div>
               </div>
             </div>
@@ -170,6 +177,7 @@ const USSHLandingPage = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-slate-100">
             <div className="md:w-5/12 p-10 bg-[#8B0000] text-white flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute inset-0 bg-black bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')]" />
               <div className="relative z-10">
                 <h3 className="text-3xl font-bold mb-4">Đăng ký Tư vấn</h3>
                 <p className="text-red-100 mb-8">Để lại thông tin, đội ngũ tư vấn sẽ liên hệ ngay.</p>
@@ -201,7 +209,7 @@ const USSHLandingPage = () => {
                   </select>
                 </div>
                 <div><label className="block text-sm font-bold text-[#8B0000] mb-2">Câu hỏi</label><textarea className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded focus:border-[#8B0000] outline-none h-24 resize-none" placeholder="Bạn cần tư vấn về điều gì?"></textarea></div>
-                <button type="submit" className="w-full bg-[#8B0000] hover:opacity-90 text-white font-bold py-4 rounded shadow-lg transition-all uppercase tracking-wide">Đăng ký ngay</button>
+                <button type="submit" className="w-full bg-[#8B0000] hover:opacity-90 text-black font-bold py-4 rounded shadow-lg transition-all uppercase tracking-wide">Đăng ký ngay</button>
               </form>
             </div>
           </div>

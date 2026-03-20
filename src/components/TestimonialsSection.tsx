@@ -96,9 +96,9 @@ export function TestimonialsSection() {
   const { ref: gridRef, isInView: gridInView } = useInView();
 
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section className="py-15 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
       {/* Enhanced Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 mix-blend-overlay pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
       <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-purple-300 rounded-full blur-[150px] -translate-x-1/2 opacity-40 animate-pulse" style={{ animationDuration: '4s' }}></div>
       <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-blue-300 rounded-full blur-[150px] translate-x-1/2 opacity-40 animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-pink-100/30 to-blue-100/30 rounded-full blur-[200px] opacity-50"></div>
@@ -116,7 +116,8 @@ export function TestimonialsSection() {
           ref={headerRef}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-600 font-bold text-xs uppercase tracking-wider mb-4 shadow-lg shadow-orange-100/50 border border-orange-200/50">
+          <div className="absolute top-5 left-5 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 text-orange-600 font-bold text-xs uppercase tracking-wider mb-4 shadow-lg shadow-orange-100/50 border border-orange-200/50">
             <Heart className="w-4 h-4 animate-pulse" fill="currentColor" /> Wall of Love
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { 
-  Menu, X, Search, ChevronRight, Beaker, Cpu, 
-  Code, Cog, Users, Trophy, BookOpen, MapPin, 
+import {
+  Menu, X, Search, ChevronRight, Beaker, Cpu,
+  Code, Cog, Users, Trophy, BookOpen, MapPin,
   Phone, Mail, Facebook, Linkedin, Youtube, Globe,
   ArrowRight, Award, Zap
 } from 'lucide-react';
@@ -63,7 +63,7 @@ const HUSTLandingPage = () => {
             <span>Cán bộ</span>
           </div>
           <div className="flex space-x-4">
-            <span className="flex items-center gap-1"><Globe size={12}/> EN</span>
+            <span className="flex items-center gap-1"><Globe size={12} /> EN</span>
             <span>Liên hệ</span>
           </div>
         </div>
@@ -75,8 +75,15 @@ const HUSTLandingPage = () => {
           <div className="flex justify-between items-center h-20">
             {/* Logo Area */}
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#B90000] rounded flex items-center justify-center text-white font-bold text-xl shadow-md">
-                BK
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 overflow-hidden rounded-lg bg-white shadow-md border border-white/20">
+                  <img
+                    src="https://th.bing.com/th/id/OIP.4T34kjDeYNWtgzmi35h1FAHaLI?w=115&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                    alt="ULIS"
+                    className="w-full h-full object-contain p-1"
+                  />
+                </div>
+                <span className="font-bold text-[#1A5276]">ULIS</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[#B90000] font-bold text-lg leading-none">ĐẠI HỌC BÁCH KHOA HÀ NỘI</span>
@@ -92,8 +99,8 @@ const HUSTLandingPage = () => {
                 </a>
               ))}
               <Search className="w-5 h-5 text-slate-500 cursor-pointer hover:text-[#B90000]" />
-              <button 
-                onClick={() => document.getElementById('consultation-form')?.scrollIntoView({behavior: 'smooth'})}
+              <button
+                onClick={() => document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' })}
                 className="bg-[#B90000] text-white px-5 py-2 rounded font-bold hover:bg-red-800 transition-colors shadow-lg shadow-red-900/20"
               >
                 Đăng ký ngay
@@ -119,9 +126,9 @@ const HUSTLandingPage = () => {
                 </a>
               ))}
               <div className="pt-4 pb-2">
-                <button 
+                <button
                   onClick={() => {
-                    document.getElementById('consultation-form')?.scrollIntoView({behavior: 'smooth'});
+                    document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' });
                     setIsMenuOpen(false);
                   }}
                   className="w-full bg-[#B90000] text-white py-3 rounded font-bold"
@@ -138,13 +145,13 @@ const HUSTLandingPage = () => {
       <section className="relative h-[600px] md:h-[700px] overflow-hidden flex items-center">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <img
             src="https://images.unsplash.com/photo-1620205048559-a32b47f42e97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5vaSUyMHVuaXZlcnNpdHklMjBvZiUyMHNjaWVuY2UlMjBhbmQlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc3MTQ3ODkyMXww&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="HUST Campus" 
+            alt="HUST Campus"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-transparent"></div>
-          
+
           {/* Decorative tech grid overlay */}
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-10"></div>
         </div>
@@ -156,7 +163,7 @@ const HUSTLandingPage = () => {
               Tuyển sinh Đại học chính quy 2026
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6 uppercase tracking-tight">
-              Ngôi nhà của những <br/>
+              Ngôi nhà của những <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B90000] to-orange-500 bg-white">
                 Kỹ sư tương lai
               </span>
@@ -165,8 +172,8 @@ const HUSTLandingPage = () => {
               Đại học Bách khoa Hà Nội - Tiên phong trong đào tạo, nghiên cứu khoa học và chuyển giao công nghệ, nơi khởi nguồn của những đổi mới sáng tạo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button 
-                onClick={() => document.getElementById('programs')?.scrollIntoView({behavior: 'smooth'})}
+              <button
+                onClick={() => document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' })}
                 className="px-8 py-4 bg-[#B90000] hover:bg-red-800 text-white font-bold rounded shadow-lg shadow-red-900/40 transition-all flex items-center justify-center gap-2"
               >
                 Khám phá Ngành học <ArrowRight size={20} />
@@ -233,7 +240,7 @@ const HUSTLandingPage = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-12 text-center">
             <a href="#" className="inline-block px-8 py-3 border-2 border-slate-900 text-slate-900 font-bold hover:bg-slate-900 hover:text-white transition-colors rounded uppercase tracking-wide text-sm">
               Xem toàn bộ 60+ Ngành học
@@ -245,16 +252,16 @@ const HUSTLandingPage = () => {
       {/* Innovation & Research */}
       <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row items-center gap-16">
             <div className="md:w-1/2">
               <div className="inline-block px-3 py-1 bg-[#B90000] text-xs font-bold uppercase tracking-wider mb-4 rounded">Nghiên cứu & Sáng tạo</div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">Tiên phong công nghệ <br/> Kiến tạo tương lai</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">Tiên phong công nghệ <br /> Kiến tạo tương lai</h2>
               <p className="text-slate-400 text-lg mb-8 leading-relaxed">
                 Tại Bách Khoa, sinh viên được tham gia các dự án nghiên cứu thực tế ngay từ năm thứ 2. Hệ thống phòng thí nghiệm trọng điểm và trung tâm đổi mới sáng tạo BK-Holdings là nơi ươm mầm cho những startup công nghệ hàng đầu.
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="bg-slate-800 p-6 rounded border border-slate-700 hover:border-[#B90000] transition-colors">
                   <Cpu className="text-[#B90000] mb-4" size={32} />
@@ -268,12 +275,12 @@ const HUSTLandingPage = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="md:w-1/2 relative">
               <div className="absolute -inset-4 bg-[#B90000]/20 rounded-full blur-3xl"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1562758778-e5638b5b6607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwcm9ib3RpY3MlMjBjb21wZXRpdGlvbiUyMHN0dWRlbnRzfGVufDF8fHx8MTc3MTQ3ODkyMXww&ixlib=rb-4.1.0&q=80&w=1080" 
-                alt="Robot Research" 
+              <img
+                src="https://images.unsplash.com/photo-1562758778-e5638b5b6607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwcm9ib3RpY3MlMjBjb21wZXRpdGlvbiUyMHN0dWRlbnRzfGVufDF8fHx8MTc3MTQ3ODkyMXww&ixlib=rb-4.1.0&q=80&w=1080"
+                alt="Robot Research"
                 className="relative rounded-lg shadow-2xl border border-slate-700"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded shadow-lg text-slate-900 max-w-xs hidden sm:block">
@@ -296,7 +303,7 @@ const HUSTLandingPage = () => {
               Sức trẻ <span className="text-[#B90000]">Bách Khoa</span>
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="relative group overflow-hidden rounded-lg h-64 md:h-80">
               <img src="https://images.unsplash.com/photo-1743327584769-d5d13093b624?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtJTIwdW5pdmVyc2l0eSUyMHN0dWRlbnRzJTIwZ3JhZHVhdGlvbnxlbnwxfHx8fDE3NzE0Nzg5Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Graduation" />
@@ -328,30 +335,30 @@ const HUSTLandingPage = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-slate-900 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
             <div className="md:w-5/12 p-10 bg-[#B90000] text-white flex flex-col justify-between relative overflow-hidden">
-               {/* Pattern overlay */}
-               <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')]"></div>
-               
-               <div className="relative z-10">
-                 <h3 className="text-3xl font-bold mb-4">Tư vấn Tuyển sinh</h3>
-                 <p className="text-red-100 mb-8">Để lại thông tin để được các chuyên gia tư vấn về ngành học, điểm chuẩn và quy chế tuyển sinh mới nhất.</p>
-                 
-                 <div className="space-y-4">
-                   <div className="flex items-center gap-3">
-                     <Phone size={20} className="text-red-200"/>
-                     <span className="font-medium">024 3869 4242</span>
-                   </div>
-                   <div className="flex items-center gap-3">
-                     <Mail size={20} className="text-red-200"/>
-                     <span className="font-medium">tuyensinh@hust.edu.vn</span>
-                   </div>
-                   <div className="flex items-center gap-3">
-                     <MapPin size={20} className="text-red-200"/>
-                     <span className="font-medium">Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</span>
-                   </div>
-                 </div>
-               </div>
+              {/* Pattern overlay */}
+              <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')]"></div>
+
+              <div className="relative z-10">
+                <h3 className="text-3xl font-bold mb-4">Tư vấn Tuyển sinh</h3>
+                <p className="text-red-100 mb-8">Để lại thông tin để được các chuyên gia tư vấn về ngành học, điểm chuẩn và quy chế tuyển sinh mới nhất.</p>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <Phone size={20} className="text-red-200" />
+                    <span className="font-medium">024 3869 4242</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Mail size={20} className="text-red-200" />
+                    <span className="font-medium">tuyensinh@hust.edu.vn</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <MapPin size={20} className="text-red-200" />
+                    <span className="font-medium">Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            
+
             <div className="md:w-7/12 p-10 bg-white">
               <form className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

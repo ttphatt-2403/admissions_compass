@@ -892,7 +892,7 @@ export default function App() {
             </div>
 
             {/* 3. TRENDING MAJORS (Professional Enhanced) */}
-            <div className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+            <div className="py-16 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
               {/* Background decorations */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-[100px] pointer-events-none"></div>
               <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-100/30 rounded-full blur-[100px] pointer-events-none"></div>
@@ -1082,7 +1082,7 @@ export default function App() {
             </div>
 
             {/* 4. TOP PARTNERS SECTION (Professional) */}
-            <AnimatedSection id="partners-section" className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+            <AnimatedSection id="partners-section" className="py-15 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-[100px] pointer-events-none"></div>
               <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-100/30 rounded-full blur-[100px] pointer-events-none"></div>

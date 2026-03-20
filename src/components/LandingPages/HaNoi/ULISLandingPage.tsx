@@ -26,7 +26,7 @@ const ULISLandingPage = () => {
   return (
     <div className="font-sans text-slate-900 bg-white">
       {/* Top Bar */}
-      <div className="bg-[#1A5276] text-white py-1 px-4 text-xs font-medium hidden md:block">
+      <div className="bg-[#1A5276] text-black py-1 px-4 text-xs font-medium hidden md:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex space-x-4"><span>Sinh viên</span><span>Cựu sinh viên</span><span>Cán bộ - Giảng viên</span></div>
           <div className="flex space-x-4"><span className="flex items-center gap-1"><Globe size={12} /> EN</span><span>Cổng thông tin đào tạo</span></div>
@@ -34,12 +34,16 @@ const ULISLandingPage = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      <nav className="sticky top-0 z-50 border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#1A5276] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md border-2 border-[#F39C12]">
-                ULIS
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#F39C12] shadow-md bg-white">
+                <img
+                  src="https://student.ulis.vnu.edu.vn/files/uploads/2025/06/ULIS-logo-2023-300x300.png"
+                  alt="ULIS Logo"
+                  className="w-full h-full object-contain p-1"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-[#1A5276] font-bold text-lg leading-none uppercase">Đại học Ngoại ngữ</span>
@@ -50,7 +54,7 @@ const ULISLandingPage = () => {
               {['Giới thiệu', 'Tuyển sinh', 'Đào tạo', 'Nghiên cứu', 'Hợp tác'].map((item) => (
                 <a key={item} href="#" className="text-slate-700 hover:text-[#1A5276] font-semibold transition-colors uppercase text-sm">{item}</a>
               ))}
-              <button onClick={() => document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' })} className="bg-[#1A5276] text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-colors shadow-lg">Đăng ký xét tuyển</button>
+              <button onClick={() => document.getElementById('consultation-form')?.scrollIntoView({ behavior: 'smooth' })} className="bg-gradient-to-br from-blue-500 to-blue-700 text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-colors shadow-lg">Đăng ký xét tuyển</button>
             </div>
             <div className="lg:hidden"><button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#1A5276]">{isMenuOpen ? <X size={28} /> : <Menu size={28} />}</button></div>
           </div>
@@ -70,8 +74,8 @@ const ULISLandingPage = () => {
       {/* Hero */}
       <section className="relative h-[650px] md:h-[750px] overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800" alt="Hero" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1A5276]/90 via-[#1A5276]/70 to-transparent"></div>
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800" alt="Hero" className="w-full h-full object-cover scale-105 blur-[3px]" />
+          <div className="absolute inset-0 bg-black/40"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
@@ -135,7 +139,7 @@ const ULISLandingPage = () => {
       </section>
 
       {/* Why Choose */}
-      <section className="py-24 bg-[#1A5276] text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-yellow-400 to-teal-600 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full border-2 border-white/10"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full border-2 border-white/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -147,11 +151,11 @@ const ULISLandingPage = () => {
               <div className="space-y-6">
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center shrink-0"><Users className="text-[#F39C12]" size={24} /></div>
-                  <div><h4 className="text-xl font-bold mb-1">Giảng viên bản ngữ và quốc tế</h4><p className="text-slate-400 text-sm">Đội ngũ giảng viên giàu kinh nghiệm, nhiều người là người bản ngữ hoặc được đào tạo tại các nước sử dụng ngôn ngữ đó.</p></div>
+                  <div><h4 className="text-xl font-bold mb-1">Giảng viên bản ngữ và quốc tế</h4><p className="text-black text-sm">Đội ngũ giảng viên giàu kinh nghiệm, nhiều người là người bản ngữ hoặc được đào tạo tại các nước sử dụng ngôn ngữ đó.</p></div>
                 </div>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center shrink-0"><Briefcase className="text-[#F39C12]" size={24} /></div>
-                  <div><h4 className="text-xl font-bold mb-1">Cơ hội học bổng toàn cầu</h4><p className="text-slate-400 text-sm">Hơn 100 đối tác đại học quốc tế, học bổng trao đổi và học bổng toàn phần tại Hàn Quốc, Nhật Bản, Trung Quốc, Pháp, Đức và nhiều nước khác.</p></div>
+                  <div><h4 className="text-xl font-bold mb-1">Cơ hội học bổng toàn cầu</h4><p className="text-black text-sm">Hơn 100 đối tác đại học quốc tế, học bổng trao đổi và học bổng toàn phần tại Hàn Quốc, Nhật Bản, Trung Quốc, Pháp, Đức và nhiều nước khác.</p></div>
                 </div>
               </div>
             </div>
@@ -170,6 +174,7 @@ const ULISLandingPage = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-slate-100">
             <div className="md:w-5/12 p-10 bg-[#1A5276] text-white flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute inset-0 bg-black bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')]" />
               <div className="relative z-10">
                 <h3 className="text-3xl font-bold mb-4">Đăng ký Tư vấn</h3>
                 <p className="text-blue-100 mb-8">Để lại thông tin, đội ngũ tư vấn sẽ liên hệ ngay.</p>
@@ -201,7 +206,7 @@ const ULISLandingPage = () => {
                   </select>
                 </div>
                 <div><label className="block text-sm font-bold text-[#1A5276] mb-2">Câu hỏi</label><textarea className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded focus:border-[#1A5276] outline-none h-24 resize-none" placeholder="Bạn cần tư vấn về điều gì?"></textarea></div>
-                <button type="submit" className="w-full bg-[#1A5276] hover:opacity-90 text-white font-bold py-4 rounded shadow-lg transition-all uppercase tracking-wide">Đăng ký ngay</button>
+                <button type="submit" className="w-full bg-[#1A5276] hover:opacity-90 text-black font-bold py-4 rounded shadow-lg transition-all uppercase tracking-wide">Đăng ký ngay</button>
               </form>
             </div>
           </div>
