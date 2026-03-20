@@ -567,7 +567,7 @@ export default function App() {
         {activeTab === 'home' && (
           <>
             {/* 1. PROFESSIONAL HERO SECTION (Split Layout) */}
-            <div className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden bg-slate-50">
+            <div className="relative pt-12 pb-20 lg:pt-22 lg:pb-35 overflow-hidden bg-slate-50">
               {/* Background Elements - Enhanced */}
               <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-bl from-blue-50 via-purple-50/30 to-transparent rounded-bl-[100px] -z-10 hidden lg:block"></div>
               <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
@@ -580,9 +580,9 @@ export default function App() {
               <div className="absolute bottom-40 right-1/3 w-2 h-2 bg-pink-500 rounded-full animate-bounce-soft animation-delay-700 opacity-60"></div>
 
               {/* Grid pattern overlay */}
-              <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+              <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
 
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-7 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   {/* Left: Content */}
                   <AnimatedSection className="text-left space-y-8">
@@ -706,7 +706,7 @@ export default function App() {
             </div>
 
             {/* 2. LIVE BENTO GRID - AUTO SCROLLING COMPONENTS */}
-            <div className="py-24 bg-white relative overflow-hidden">
+            <div className="py-22 bg-white relative overflow-hidden">
               {/* Background decorations */}
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
               <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
