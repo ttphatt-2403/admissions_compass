@@ -10,6 +10,7 @@ import {
   Calculator,
 } from "lucide-react";
 import { TabType } from "../types";
+import { getUniversityLogo } from "../data/universityLogos";
 
 interface UniversitySearchProps {
   setActiveTab: (tab: TabType) => void;
@@ -1377,8 +1378,16 @@ export function UniversitySearch({ setActiveTab }: UniversitySearchProps) {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md">
-                        {university.shortName.charAt(0)}
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md overflow-hidden">
+                        {getUniversityLogo(university.id, university.shortName) ? (
+                          <img
+                            src={getUniversityLogo(university.id, university.shortName)}
+                            alt={`${university.name} logo`}
+                            className="w-full h-full object-contain bg-white p-1"
+                          />
+                        ) : (
+                          university.shortName.charAt(0)
+                        )}
                       </div>
                       <div>
                         <h3 className="font-bold text-xl text-gray-900">

@@ -43,7 +43,6 @@ const USSHLandingPage = () => {
               <div className="w-25 h-14 overflow-hidden rounded-lg bg-white shadow-md border border-white/20">
                 <img
                   src="https://th.bing.com/th/id/OIP.GjGe6_DsoQutKUj_VUaITQHaFF?w=240&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
-                  alt="ULIS Logo"
                   className="w-full h-full object-contain"
                 />
               </div>

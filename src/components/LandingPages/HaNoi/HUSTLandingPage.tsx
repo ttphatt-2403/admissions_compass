@@ -79,7 +79,6 @@ const HUSTLandingPage = () => {
                 <div className="w-12 h-12 overflow-hidden rounded-lg bg-white shadow-md border border-white/20">
                   <img
                     src="https://th.bing.com/th/id/OIP.4T34kjDeYNWtgzmi35h1FAHaLI?w=115&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
-                    alt="ULIS"
                     className="w-full h-full object-contain p-1"
                   />
                 </div>
