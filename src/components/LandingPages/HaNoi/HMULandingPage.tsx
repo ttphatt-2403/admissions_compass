@@ -103,12 +103,11 @@ const HMULandingPage = () => {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 flex items-center justify-center">
-                 {/* Placeholder for HMU Logo - Using a specialized icon composition */}
-                 <div className="relative w-10 h-10">
-                    <div className="absolute inset-0 bg-sky-700 rounded-full opacity-10"></div>
-                    <Stethoscope className="w-10 h-10 text-sky-700 p-1" />
-                 </div>
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#F39C12] shadow-md bg-white">
+                <img
+                  src="https://th.bing.com/th/id/OIP.2JLtV2kkmGq80LLEiLeBOAHaJH?w=141&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  className="w-full h-full object-contain p-1"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-sky-800 font-bold text-lg leading-none uppercase tracking-wide">Đại học Y Hà Nội</span>

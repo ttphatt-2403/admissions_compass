@@ -103,7 +103,6 @@ const UETLandingPage = () => {
               <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#F39C12] shadow-md bg-white">
                 <img
                   src="https://th.bing.com/th/id/OIP.laH_JcHGDoH2eyEeqBrByAHaHa?w=162&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
-                  alt="ULIS Logo"
                   className="w-full h-full object-contain p-1"
                 />
               </div>

@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Calculator, Lightbulb, TrendingUp, AlertCircle, RefreshCw, GraduationCap, ArrowLeft } from 'lucide-react';
 import { mockUniversities, University, Major } from './UniversitySearch';
 import { TabType } from '../types';
+import { getUniversityLogo } from '../data/universityLogos';
 
 interface ScoreCalculatorProps {
   setActiveTab: (tab: TabType) => void;
@@ -588,8 +589,16 @@ export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
                           <div className="flex-1">
                             <div className="flex items-start justify-between mb-2">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center font-bold text-gray-600 text-sm">
-                                  {suggestion.universityShortName.charAt(0)}
+                                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center font-bold text-gray-600 text-sm overflow-hidden">
+                                  {getUniversityLogo(suggestion.universityId, suggestion.universityShortName) ? (
+                                    <img
+                                      src={getUniversityLogo(suggestion.universityId, suggestion.universityShortName)}
+                                      alt={`${suggestion.university} logo`}
+                                      className="w-full h-full object-contain bg-white p-1"
+                                    />
+                                  ) : (
+                                    suggestion.universityShortName.charAt(0)
+                                  )}
                                 </div>
                                 <div>
                                   <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">

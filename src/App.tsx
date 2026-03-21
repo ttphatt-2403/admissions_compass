@@ -158,6 +158,7 @@ import {
 
 import { MathRoadmap } from './components/MathRoadmap';
 import { ChemistryRoadmap } from './components/ChemistryRoadmap';
+import { getUniversityLogo } from './data/universityLogos';
 
 const homeNews = [
   {
@@ -247,9 +248,9 @@ const homeNews = [
 ];
 
 const universities = [
-  { id: 'fpt', name: 'Đại học FPT', logo: 'F', color: 'bg-orange-500', tab: 'fpt-landing' },
-  { id: 'vnu', name: 'ĐHQG Hà Nội', logo: 'V', color: 'bg-blue-600', tab: 'vnu-landing' },
-  { id: 'rmit', name: 'RMIT Vietnam', logo: 'R', color: 'bg-red-600', tab: 'rmit-landing' },
+  { id: 'fpt', logoId: 'fpt-university', name: 'Đại học FPT', logo: 'F', color: 'bg-orange-500', tab: 'fpt-landing' },
+  { id: 'vnu', logoId: 'vnu-hn', name: 'ĐHQG Hà Nội', logo: 'V', color: 'bg-blue-600', tab: 'vnu-landing' },
+  { id: 'rmit', logoId: 'rmit-vietnam', name: 'RMIT Vietnam', logo: 'R', color: 'bg-red-600', tab: 'rmit-landing' },
   { id: 'hust', name: 'ĐH Bách Khoa', logo: 'B', color: 'bg-red-700', tab: 'hust-landing' },
   { id: 'neu', name: 'KTQD (NEU)', logo: 'N', color: 'bg-blue-800', tab: 'neu-landing' },
   { id: 'uit', name: 'ĐH CNTT', logo: 'U', color: 'bg-cyan-600', tab: 'uit-landing' },
@@ -261,11 +262,11 @@ const universities = [
   { id: 'uef', name: 'UEF', logo: 'U', color: 'bg-red-600', tab: 'uef-landing' },
   { id: 'hutech', name: 'HUTECH', logo: 'H', color: 'bg-blue-600', tab: 'hutech-landing' },
   { id: 'gdu', name: 'Gia Định', logo: 'G', color: 'bg-green-600', tab: 'gdu-landing' },
-  { id: 'ajc', name: 'HV Báo chí & Tuyên truyền', shortName: 'HV Báo chí & TT', logo: 'A', color: 'bg-red-700', tab: 'ajc-landing' },
+  { id: 'ajc', logoId: 'hvbc', name: 'HV Báo chí & Tuyên truyền', shortName: 'HV Báo chí & TT', logo: 'A', color: 'bg-red-700', tab: 'ajc-landing' },
   { id: 'ptit', name: 'HV Công nghệ BCVT', shortName: 'PTIT', logo: 'P', color: 'bg-red-600', tab: 'ptit-landing' },
   { id: 'haui', name: 'ĐH Công nghiệp Hà Nội', shortName: 'HAUI', logo: 'H', color: 'bg-cyan-600', tab: 'haui-landing' },
   { id: 'utc', name: 'ĐH Giao thông Vận tải', shortName: 'UTC', logo: 'U', color: 'bg-blue-700', tab: 'utc-landing' },
-  { id: 'nuce', name: 'ĐH Xây dựng Hà Nội', shortName: 'NUCE', logo: 'N', color: 'bg-orange-600', tab: 'nuce-landing' },
+  { id: 'nuce', logoId: 'huce', name: 'ĐH Xây dựng Hà Nội', shortName: 'NUCE', logo: 'N', color: 'bg-orange-600', tab: 'nuce-landing' },
   { id: 'humg', name: 'ĐH Mỏ – Địa chất', shortName: 'HUMG', logo: 'M', color: 'bg-green-700', tab: 'humg-landing' },
   { id: 'hou', name: 'ĐH Mở Hà Nội', shortName: 'HOU', logo: 'O', color: 'bg-blue-500', tab: 'hou-landing' },
 ];
@@ -897,8 +898,16 @@ export default function App() {
                         <div className="space-y-3 absolute w-full animate-scroll-up hover:[animation-play-state:paused]">
                           {[...universities, ...universities, ...universities].map((uni, i) => (
                             <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-md transition-all group/item">
-                              <div className={`w-10 h-10 rounded-full ${uni.color} text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0`}>
-                                {uni.logo}
+                              <div className={`w-10 h-10 rounded-full ${uni.color} text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0 overflow-hidden`}>
+                                {getUniversityLogo(uni.logoId || uni.id) ? (
+                                  <img
+                                    src={getUniversityLogo(uni.logoId || uni.id)}
+                                    alt={`${uni.name} logo`}
+                                    className="w-full h-full object-contain bg-white p-1"
+                                  />
+                                ) : (
+                                  uni.logo
+                                )}
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-bold text-slate-800 truncate group-hover/item:text-blue-600 transition-colors">{uni.name}</div>
@@ -1231,8 +1240,16 @@ export default function App() {
 
                         <div className="relative z-10">
                           {/* Logo */}
-                          <div className={`w-20 h-20 ${uni.color} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover:scale-125 group-hover:rotate-6 transition-all duration-300`}>
-                            {uni.logo}
+                          <div className={`w-20 h-20 ${uni.color} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover:scale-125 group-hover:rotate-6 transition-all duration-300 overflow-hidden`}>
+                            {getUniversityLogo(uni.logoId || uni.id) ? (
+                              <img
+                                src={getUniversityLogo(uni.logoId || uni.id)}
+                                alt={`${uni.name} logo`}
+                                className="w-full h-full object-contain bg-white p-2"
+                              />
+                            ) : (
+                              uni.logo
+                            )}
                           </div>
 
                           {/* Content */}
@@ -1305,8 +1322,16 @@ export default function App() {
 
                               <div className="relative z-10 flex h-full flex-col">
                                 {/* Logo */}
-                                <div className={`w-20 h-20 ${uni.color} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover/card:scale-125 group-hover/card:rotate-6 transition-all duration-300`}>
-                                  {uni.logo}
+                                <div className={`w-20 h-20 ${uni.color} rounded-2xl text-white flex items-center justify-center font-black text-3xl shadow-lg group-hover/card:scale-125 group-hover/card:rotate-6 transition-all duration-300 overflow-hidden`}>
+                                  {getUniversityLogo(uni.logoId || uni.id) ? (
+                                    <img
+                                      src={getUniversityLogo(uni.logoId || uni.id)}
+                                      alt={`${uni.name} logo`}
+                                      className="w-full h-full object-contain bg-white p-2"
+                                    />
+                                  ) : (
+                                    uni.logo
+                                  )}
                                 </div>
 
                                 {/* Content */}

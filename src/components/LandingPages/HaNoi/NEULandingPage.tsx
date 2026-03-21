@@ -76,8 +76,11 @@ const NEULandingPage = () => {
           <div className="flex justify-between items-center h-20">
             {/* Logo Area */}
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#003366] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md border-2 border-[#C5A065]">
-                NEU
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#F39C12] shadow-md bg-white">
+                <img
+                  src="https://th.bing.com/th/id/OIP.fFNMPuhjMV7o1PuqWMpc0gHaHa?w=178&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  className="w-full h-full object-contain p-1"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-[#003366] font-bold text-lg leading-none uppercase">Đại học Kinh tế Quốc dân</span>
@@ -144,6 +147,7 @@ const NEULandingPage = () => {
             alt="NEU Lecture Hall" 
             className="w-full h-full object-cover"
           />
+          
           <div className="absolute inset-0 bg-gradient-to-r from-[#003366]/90 via-[#003366]/70 to-transparent"></div>
         </div>
 
