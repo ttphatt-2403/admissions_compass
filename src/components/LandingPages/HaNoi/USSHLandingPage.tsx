@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   Menu, X, Search, ChevronRight, TrendingUp, DollarSign,
   BarChart, Briefcase, Users, Globe, Award, BookOpen,
@@ -7,6 +8,7 @@ import {
 } from 'lucide-react';
 
 const USSHLandingPage = () => {
+  usePageAnalytics('USSH', 'Đại học Khoa học Xã hội và Nhân văn HN');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const majors = [

@@ -309,6 +309,53 @@ export default function App() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const otherUniversities = universities.slice(8);
 
+  const [heroSlide, setHeroSlide] = useState(0);
+  const heroSlides: { image: string; bgColor: string; school: string; tag: string; tagGradient: string; stat: string; statLabel: string; tab: TabType }[] = [
+    {
+      image: '/image/Banner/FPT.jpg',
+      bgColor: '#ea580c',
+      school: 'Đại học FPT',
+      tag: 'ĐANG TUYỂN SINH',
+      tagGradient: 'linear-gradient(to right, #fb923c, #ea580c)',
+      stat: '100%', statLabel: 'Cam kết việc làm',
+      tab: 'fpt-landing',
+    },
+    {
+      image: '/image/Banner/Rmit.jpg',
+      bgColor: '#991b1b',
+      school: 'RMIT Vietnam',
+      tag: 'HỌC BỔNG 2026',
+      tagGradient: 'linear-gradient(to right, #ef4444, #b91c1c)',
+      stat: '50+', statLabel: 'Quốc tịch sinh viên',
+      tab: 'rmit-landing',
+    },
+    {
+      image: '/image/Banner/FTU.jpg',
+      bgColor: '#1e40af',
+      school: 'ĐH Ngoại Thương',
+      tag: 'TUYỂN SINH 2026',
+      tagGradient: 'linear-gradient(to right, #3b82f6, #1d4ed8)',
+      stat: '28.5+', statLabel: 'Điểm chuẩn 2025',
+      tab: 'ftu-landing',
+    },
+    {
+      image: '/image/Banner/Hutech.jpg',
+      bgColor: '#ca8a04',
+      school: 'HUTECH',
+      tag: 'THÔNG TIN TUYỂN SINH',
+      tagGradient: 'linear-gradient(to right, #eab308, #ca8a04)',
+      stat: '35.000+', statLabel: 'Sinh viên đang học',
+      tab: 'hutech-landing',
+    },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlide(prev => (prev + 1) % heroSlides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
   // Scroll to top when tab changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -644,27 +691,79 @@ export default function App() {
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border-2 border-dashed border-slate-200 rounded-full animate-spin-slow opacity-30"></div>
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border-2 border-dotted border-blue-200 rounded-full animate-spin-slow opacity-30" style={{ animationDirection: 'reverse', animationDuration: '30s' }}></div>
 
-                    {/* Main Image with Shape Mask */}
-                    <div className="absolute top-10 right-0 w-[450px] h-[550px] bg-slate-200 rounded-[40px] overflow-hidden rotate-3 hover:rotate-0 transition-all duration-700 shadow-2xl group card-3d">
-                      <img
-                        src="https://images.unsplash.com/photo-1666243035395-9b7853cecc05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtZXNlJTIwc3R1ZGVudCUyMGhhcHB5JTIwdW5pdmVyc2l0eSUyMGNhbXB1cyUyMGJyaWdodHxlbnwxfHx8fDE3NzE1MDg0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                        alt="Student Success"
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      {/* Overlay Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    {/* Main Image Slideshow */}
+                    <div
+                      className="absolute top-10 right-0 rounded-[40px] overflow-hidden shadow-2xl transition-all duration-700 group"
+                      style={{ width: 450, height: 520, backgroundColor: '#1e293b', transform: 'rotate(3deg)', zIndex: 2 }}
+                      onMouseEnter={e => (e.currentTarget.style.transform = 'rotate(0deg)')}
+                      onMouseLeave={e => (e.currentTarget.style.transform = 'rotate(3deg)')}
+                    >
+                      {/* Slides */}
+                      {heroSlides.map((slide, i) => (
+                        <div
+                          key={i}
+                          className="absolute inset-0 transition-opacity duration-700"
+                          style={{
+                            opacity: heroSlide === i ? 1 : 0,
+                            pointerEvents: heroSlide === i ? 'auto' : 'none',
+                            backgroundColor: slide.bgColor,
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => setActiveTab(slide.tab)}
+                        >
+                          <img
+                            src={slide.image}
+                            alt={slide.school}
+                            className="w-full h-full object-contain"
+                          />
+                          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)' }}></div>
 
-                      {/* Stats overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between">
-                        <div className="text-white">
-                          <div className="text-4xl font-black">98%</div>
-                          <div className="text-sm font-medium opacity-90">Tỉ lệ đỗ NV1</div>
-                        </div>
-                        <div className="flex gap-2">
-                          <div className="glass-dark px-3 py-1.5 rounded-full text-white text-xs font-bold flex items-center gap-1">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> Live
+                          {/* Tag trên cùng */}
+                          <div className="absolute top-5 left-5">
+                            <span
+                              className="text-white text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg"
+                              style={{ background: slide.tagGradient }}
+                            >
+                              {slide.tag}
+                            </span>
+                          </div>
+
+                          {/* Thông tin dưới */}
+                          <div className="absolute bottom-12 left-0 right-0 px-6 flex items-end justify-between">
+                            <div className="text-white">
+                              <div className="text-2xl font-black leading-tight">{slide.school}</div>
+                              <div className="text-sm font-medium opacity-80 mt-1">{slide.statLabel}</div>
+                              <div className="text-4xl font-black text-white mt-1">{slide.stat}</div>
+                            </div>
+                            <div className="glass-dark px-3 py-1.5 rounded-full text-white text-xs font-bold flex items-center gap-1">
+                              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> Live
+                            </div>
+                          </div>
+
+                          {/* Hover hint */}
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <div className="bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-bold px-5 py-2.5 rounded-full flex items-center gap-2">
+                              <ArrowRight size={16} />
+                              Xem trang trường
+                            </div>
                           </div>
                         </div>
+                      ))}
+
+                      {/* Radio dots */}
+                      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2" style={{ zIndex: 10 }}>
+                        {heroSlides.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={e => { e.stopPropagation(); setHeroSlide(i); }}
+                            className="transition-all duration-300 rounded-full"
+                            style={{
+                              width: heroSlide === i ? 24 : 10,
+                              height: 10,
+                              backgroundColor: heroSlide === i ? 'white' : 'rgba(255,255,255,0.5)',
+                            }}
+                          />
+                        ))}
                       </div>
                     </div>
 

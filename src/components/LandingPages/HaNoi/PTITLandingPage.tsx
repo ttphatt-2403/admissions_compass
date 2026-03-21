@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   Menu, X, ChevronRight, Cpu,
   Code, Users, Trophy, BookOpen, MapPin,
@@ -97,6 +98,7 @@ function Reveal({ children, delay = 0, className = '' }: RevealProps) {
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function PTITLandingPage() {
+  usePageAnalytics('PTIT', 'Học viện Công nghệ Bưu chính Viễn thông');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { ref: statsRef, visible: statsVisible } = useScrollReveal(0.2);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   BookOpen, GraduationCap, Users, Lightbulb, 
   Menu, X, Phone, Mail, MapPin, ArrowRight, 
@@ -7,6 +8,7 @@ import {
 } from 'lucide-react';
 
 const HNUELandingPage = () => {
+  usePageAnalytics('HNUE', 'Đại học Sư phạm Hà Nội');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const programs = [

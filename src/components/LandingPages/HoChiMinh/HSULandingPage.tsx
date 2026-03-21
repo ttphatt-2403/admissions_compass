@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   Play, 
   ArrowRight, 
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 
 export default function HSULandingPage() {
+  usePageAnalytics('HSU', 'Đại học Hoa Sen');
   const [activeTab, setActiveTab] = useState('media');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

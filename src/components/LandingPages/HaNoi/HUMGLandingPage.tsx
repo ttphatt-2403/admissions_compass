@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   ArrowRight, BookOpen, Briefcase, CheckCircle2,
   ChevronLeft, ChevronRight, Compass, GraduationCap,
@@ -233,6 +234,7 @@ const fields = [
 
 /* ─── Main component ────────────────────────────────── */
 export default function HUMGLandingPage() {
+  usePageAnalytics('HUMG', 'Đại học Mỏ - Địa chất');
   const [sliderIdx, setSliderIdx]   = useState(0);
   const [submitted, setSubmitted]   = useState(false);
   const [form, setForm]             = useState({ name: '', phone: '', major: '' });

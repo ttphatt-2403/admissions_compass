@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   Briefcase, 
   Globe, 
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react';
 
 export default function UEFLandingPage() {
+  usePageAnalytics('UEF', 'Đại học Kinh tế Tài chính TP.HCM');
   const [activeMajor, setActiveMajor] = useState<string>('finance');
   const [activeMethod, setActiveMethod] = useState<number>(0);
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   Menu,
   X,
@@ -23,6 +24,7 @@ import {
 import { FAQSection } from '../../FAQSection';
 
 const UETLandingPage = () => {
+  usePageAnalytics('UET', 'Đại học Công nghệ - ĐHQGHN');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const UET_BLUE = '#003F87';
   const UET_RED = '#E31837';

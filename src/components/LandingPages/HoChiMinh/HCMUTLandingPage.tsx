@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   Menu, X, Search, ChevronRight, TrendingUp, DollarSign,
   BarChart, Briefcase, Users, Globe, Award, BookOpen,
@@ -7,6 +8,7 @@ import {
 } from 'lucide-react';
 
 const HCMUTLandingPage = () => {
+  usePageAnalytics('HCMUT', 'Đại học Bách khoa TP.HCM');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const majors = [

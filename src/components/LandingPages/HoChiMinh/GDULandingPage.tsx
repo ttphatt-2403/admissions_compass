@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   Users, 
   BookOpen, 
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 
 export default function GDULandingPage() {
+  usePageAnalytics('GDU', 'Đại học Gia Định');
   const [activeMajor, setActiveMajor] = useState<string>('business');
 
   const majors = {

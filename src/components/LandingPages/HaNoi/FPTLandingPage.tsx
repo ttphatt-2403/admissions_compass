@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   BookOpen,
   Users,
@@ -20,6 +21,8 @@ import {
 } from 'lucide-react';
 
 const FPTLandingPage = () => {
+  usePageAnalytics('FPT', 'Đại học FPT');
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',

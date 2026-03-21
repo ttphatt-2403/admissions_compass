@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   X, ArrowRight, Newspaper, Megaphone, Landmark, Users,
   MapPin, Calendar, GraduationCap, Camera, Mic,
@@ -109,6 +110,7 @@ const partners = [
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const AJCLandingPage = () => {
+  usePageAnalytics('AJC', 'Học viện Báo chí và Tuyên truyền');
   const [scrolled, setScrolled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [selectedMajor, setSelectedMajor] = useState<typeof trainingGroups[0] | null>(null);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   Menu, X, Globe, BookOpen, Briefcase, Award, 
   Users, Plane, TrendingUp, Search, Phone, 
@@ -6,6 +7,7 @@ import {
 } from 'lucide-react';
 
 const FTULandingPage = () => {
+  usePageAnalytics('FTU', 'Đại học Ngoại thương Hà Nội');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const majors = [

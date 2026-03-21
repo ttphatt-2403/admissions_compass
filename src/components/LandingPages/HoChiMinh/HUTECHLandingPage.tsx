@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   Cpu, 
   Code, 
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react';
 
 export default function HUTECHLandingPage() {
+  usePageAnalytics('HUTECH', 'Đại học Công nghệ TP.HCM');
   const [activeMajor, setActiveMajor] = useState<string>('it');
 
   const majors = {

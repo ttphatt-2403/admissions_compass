@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   ArrowRight, 
   Globe, 
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 
 const RMITLandingPage = () => {
+  usePageAnalytics('RMIT', 'Đại học RMIT Việt Nam');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 

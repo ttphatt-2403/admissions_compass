@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   Code, Cpu, Shield, Globe, Terminal, Server, 
   Database, Smartphone, ArrowRight, CheckCircle, 
@@ -6,6 +7,7 @@ import {
 } from 'lucide-react';
 
 const UITLandingPage = () => {
+  usePageAnalytics('UIT', 'Đại học Công nghệ Thông tin');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const majors = [

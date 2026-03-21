@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   ArrowRight,
   CheckCircle2,
@@ -294,6 +295,7 @@ const skills = ['Lập trình', 'Thiết kế kỹ thuật', 'Quản lý dự á
 // ─── Main component ───────────────────────────────────────────────────────────
 
 const HAUILandingPage: React.FC = () => {
+  usePageAnalytics('HAUI', 'Đại học Công nghiệp Hà Nội');
   const [submitted, setSubmitted] = useState(false);
 
   const statsSection = useScrollReveal();

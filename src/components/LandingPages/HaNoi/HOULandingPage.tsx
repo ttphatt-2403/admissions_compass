@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   ArrowRight, BookOpen, Briefcase, CheckCircle2,
   ChevronLeft, ChevronRight, Globe, GraduationCap,
@@ -119,6 +120,7 @@ const employers = ['FPT Software', 'VNG', 'Grab', 'Viettel', 'Vingroup', 'KPMG',
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function HOULandingPage() {
+  usePageAnalytics('HOU', 'Đại học Mở Hà Nội');
   const [sliderIdx, setSliderIdx]   = useState(0);
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [submitted, setSubmitted]   = useState(false);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   ArrowRight, BookOpen, Briefcase, Building2, Calendar,
   ChevronLeft, ChevronRight, CheckCircle2, MapPin,
@@ -293,6 +294,7 @@ function AnimatedBar({ score, active }: { score: number; active: boolean }) {
 
 /* ─── Main component ─────────────────────────────────────────── */
 export default function NUCELandingPage() {
+  usePageAnalytics('NUCE', 'Đại học Xây dựng Hà Nội');
   const [sliderIdx, setSliderIdx] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm]           = useState({ name: '', phone: '', major: '' });

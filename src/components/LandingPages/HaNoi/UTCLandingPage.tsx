@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import {
   ArrowRight,
   Building2,
@@ -175,6 +176,7 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
 /* ─── Component ──────────────────────────────────────────────── */
 
 const UTCLandingPage = () => {
+  usePageAnalytics('UTC', 'Đại học Giao thông Vận tải');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<MajorTab>('engineering');
   const [submitted, setSubmitted] = useState(false);

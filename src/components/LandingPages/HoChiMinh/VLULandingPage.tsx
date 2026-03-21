@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePageAnalytics } from '../../../hooks/usePageAnalytics';
 import { 
   ArrowRight, 
   MapPin, 
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 
 export default function VLULandingPage() {
+  usePageAnalytics('VLU', 'Đại học Văn Lang');
   const [activeMajorTab, setActiveMajorTab] = useState<'design' | 'economics' | 'tech' | 'language'>('design');
 
   const facilities = [

@@ -276,79 +276,155 @@ export function B2BLanding() {
         </div>
       </section>
 
-      {/* SECTION 2: VỀ NỀN TẢNG */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-blue-600 font-bold uppercase tracking-wider text-sm">Giới thiệu</span>
-            <h2 className="text-4xl lg:text-5xl font-black text-slate-900 mt-3">Về nền tảng của chúng tôi</h2>
+      {/* SECTION 2: BẢNG GIÁ */}
+      <section className="py-24 bg-[#f5f0eb] overflow-hidden">
+        <style>{`
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+          }
+          @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(15,23,42,0.08), 0 20px 40px -8px rgba(15,23,42,0.15); }
+            50%       { box-shadow: 0 0 0 4px rgba(15,23,42,0.06), 0 24px 48px -8px rgba(15,23,42,0.22); }
+          }
+          .pricing-header { animation: fadeInDown 0.6s ease both; }
+          .pricing-col-0 { animation: fadeInUp 0.6s ease 0.1s both; }
+          .pricing-col-1 { animation: fadeInUp 0.6s ease 0.25s both; }
+          .pricing-col-2 { animation: fadeInUp 0.6s ease 0.4s both; }
+          .pricing-col-hl { animation: glowPulse 3s ease-in-out infinite; }
+          .pricing-row { transition: background 0.2s; }
+          .pricing-row:hover td { background-color: rgba(241,245,249,0.7) !important; }
+          .btn-register {
+            position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            transition: transform 0.2s, box-shadow 0.2s;
+          }
+          .btn-register::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+            background-size: 200% auto;
+            opacity: 0;
+            transition: opacity 0.3s;
+          }
+          .btn-register:hover { transform: translateY(-1px); box-shadow: 0 8px 24px -4px rgba(15,23,42,0.35); }
+          .btn-register:hover::after { opacity: 1; animation: shimmer 0.7s linear; }
+          .btn-register:active { transform: translateY(0); }
+          .check-icon { transition: transform 0.2s; }
+          .check-icon:hover { transform: scale(1.2); }
+        `}</style>
+
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header */}
+          <div className="text-center mb-12 pricing-header">
+            <h2 className="text-5xl font-serif font-bold text-slate-900">Gói dịch vụ</h2>
+            <p className="text-slate-500 mt-3">Chọn gói phù hợp để tiếp cận hàng nghìn học sinh trên La Bàn Tuyển Sinh</p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Target className="text-blue-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Sứ mệnh</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Đồng hành cùng học sinh Việt Nam trên con đường chinh phục ước mơ đại học thông qua nền tảng công nghệ giáo dục tiên tiến.
-                  </p>
-                </div>
-              </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-separate border-spacing-x-3">
+              {/* Plan header rows */}
+              <thead>
+                {/* Icon + name + desc */}
+                <tr>
+                  <td className="w-2/5 pb-2" />
+                  {[
+                    { icon: '🌱', name: 'Starter',  desc: 'Bắt đầu hiện diện',    hl: false, col: 0 },
+                    { icon: '🚀', name: 'Boost',    desc: 'Tăng trưởng mạnh mẽ', hl: true,  col: 1 },
+                    { icon: '👑', name: 'Premium',  desc: 'Toàn diện & ưu tiên',  hl: false, col: 2 },
+                  ].map((p) => (
+                    <td key={p.name} className={`rounded-t-2xl px-6 pt-7 pb-3 text-center align-bottom pricing-col-${p.col} ${p.hl ? 'bg-white pricing-col-hl' : 'bg-white shadow-sm'}`}>
+                      <span className="text-3xl">{p.icon}</span>
+                      <h3 className="text-xl font-bold text-slate-900 mt-3">{p.name}</h3>
+                      <p className="text-slate-600 text-sm font-medium mt-0.5">{p.desc}</p>
+                    </td>
+                  ))}
+                </tr>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Award className="text-indigo-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Tầm nhìn</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Trở thành nền tảng hỗ trợ tuyển sinh và định hướng nghề nghiệp hàng đầu tại Việt Nam, kết nối học sinh và các trường đại học.
-                  </p>
-                </div>
-              </div>
+                {/* Divider */}
+                <tr>
+                  <td />
+                  {[0, 1, 2].map((i) => (
+                    <td key={i} className={`px-6 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                      <div className="h-px bg-slate-100" />
+                    </td>
+                  ))}
+                </tr>
+              </thead>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Zap className="text-purple-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Định vị</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Nền tảng EdTech toàn diện với hệ sinh thái tài liệu, công cụ tính điểm, lộ trình học tập và thông tin tuyển sinh cập nhật 24/7.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Timeline */}
-            <div className="relative">
-              <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-600 via-indigo-600 to-purple-600"></div>
-              
-              <div className="space-y-8">
+              {/* Feature rows */}
+              <tbody>
                 {[
-                  { year: '2020', title: 'Ra mắt nền tảng', users: '5K users' },
-                  { year: '2021', title: 'Mở rộng tính năng', users: '25K users' },
-                  { year: '2022', title: 'Hợp tác 10+ trường ĐH', users: '80K users' },
-                  { year: '2023', title: 'Ứng dụng Mobile', users: '200K users' },
-                  { year: '2024', title: 'AI Learning Path', users: '350K users' },
-                  { year: '2025', title: 'Mở rộng toàn quốc', users: '500K+ users' }
-                ].map((item, idx) => (
-                  <div key={idx} className="relative flex items-center gap-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg z-10">
-                      {item.year}
-                    </div>
-                    <div className="flex-1 bg-white rounded-xl p-4 shadow-md border border-slate-200">
-                      <h4 className="font-bold text-slate-900">{item.title}</h4>
-                      <p className="text-sm text-slate-500 mt-1">{item.users}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+                  { label: 'Hồ sơ trường trong danh bạ',             s: true,  sNote: '',                  b: true,  bNote: '',                   p: true,  pNote: '' },
+                  { label: 'Xuất hiện trong bài Toplist',            s: true,  sNote: '1 bài (3 tháng)',   b: true,  bNote: '1 bài (6 tháng)',    p: true,  pNote: '1 bài (12 tháng)' },
+                  { label: 'Bài viết PR',                            s: false, sNote: '',                  b: true,  bNote: '1 bài (1000 từ)',    p: true,  pNote: '3 bài brandname' },
+                  { label: 'Hiển thị banner',                        s: true,  sNote: '🎁 7 ngày',        b: true,  bNote: '🎁 15 ngày',         p: true,  pNote: '🎁 30 ngày' },
+                  { label: 'Chia sẻ lên mạng xã hội',               s: false, sNote: '',                  b: true,  bNote: '',                   p: true,  pNote: '' },
+                  { label: 'Tư vấn nội dung tuyển sinh',             s: false, sNote: '',                  b: false, bNote: '',                   p: true,  pNote: '' },
+                  { label: 'Email marketing',                        s: false, sNote: '',                  b: false, bNote: '',                   p: true,  pNote: 'Gửi đến DSKH' },
+                  { label: 'Quảng cáo FB / Google / TikTok',        s: false, sNote: '',                  b: false, bNote: '',                   p: true,  pNote: '' },
+                ].map((row, i) => {
+                  const cells = [
+                    { ok: row.s, note: row.sNote },
+                    { ok: row.b, note: row.bNote },
+                    { ok: row.p, note: row.pNote },
+                  ];
+                  return (
+                    <tr key={i} className="pricing-row">
+                      <td className="py-3.5 pr-4 text-sm text-slate-800 font-medium text-center">{row.label}</td>
+                      {cells.map((cell, ci) => (
+                        <td key={ci} className={`px-6 py-3.5 text-center ${ci === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                          {cell.ok ? (
+                            <span className="inline-flex flex-col items-center gap-1">
+                              <svg className="w-5 h-5 text-slate-900 check-icon" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                              {cell.note && <span className="text-xs text-slate-600 font-medium leading-tight">{cell.note}</span>}
+                            </span>
+                          ) : (
+                            <span className="w-6 h-6 bg-red-100 rounded-full inline-flex items-center justify-center text-red-400 font-bold text-xs">✕</span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+
+                {/* Price ở trên nút */}
+                <tr>
+                  <td className="pt-4" />
+                  {['990.000', '4.500.000', '15.000.000'].map((price, i) => (
+                    <td key={i} className={`px-6 pt-5 pb-1 text-center border-t border-slate-100 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                      <span className="text-2xl font-black text-slate-900">{price}</span>
+                      <span className="text-sm text-slate-600 font-medium ml-1">đ / gói</span>
+                    </td>
+                  ))}
+                </tr>
+
+                {/* CTA button ở dưới cùng */}
+                <tr>
+                  <td className="pb-2" />
+                  {[0, 1, 2].map((i) => (
+                    <td key={i} className={`px-6 pt-3 pb-7 rounded-b-2xl ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                      <button className="btn-register w-full text-white font-semibold py-2.5 rounded-xl text-sm">
+                        Đăng ký ngay
+                      </button>
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
+
+          <p className="text-center text-slate-500 text-xs mt-6">* Giá chưa bao gồm VAT · Liên hệ để được tư vấn gói phù hợp</p>
         </div>
       </section>
 
@@ -980,5 +1056,29 @@ export function B2BLanding() {
 
      
     </div>
+  );
+}
+
+function Check({ label }: { label?: string }) {
+  return (
+    <span className="inline-flex flex-col items-center gap-1">
+      <span className="w-7 h-7 bg-emerald-500 rounded-md flex items-center justify-center text-white font-bold text-sm">✓</span>
+      {label && <span className="text-slate-400 text-xs text-center leading-tight mt-0.5">{label}</span>}
+    </span>
+  );
+}
+
+function Cross() {
+  return (
+    <span className="w-7 h-7 bg-red-500 rounded-md inline-flex items-center justify-center text-white font-bold text-sm mx-auto">✕</span>
+  );
+}
+
+function Gift({ label }: { label: string }) {
+  return (
+    <span className="inline-flex flex-col items-center gap-0.5">
+      <span className="text-base">🎁</span>
+      <span className="text-orange-400 text-xs font-bold">{label}</span>
+    </span>
   );
 }

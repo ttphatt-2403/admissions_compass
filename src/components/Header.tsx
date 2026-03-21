@@ -61,7 +61,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
                   activeTab === item.id
                     ? 'bg-blue-100 text-blue-600 font-extrabold'
                     : item.highlight
-                    ? 'text-red-500 font-extrabold hover:bg-red-50 hover:text-red-600'
+                    ? 'text-green-500 font-extrabold hover:bg-green-50 hover:text-green-600'
                     : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
                 }`}
               >
@@ -125,7 +125,7 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
                   activeTab === item.id
                     ? 'bg-blue-100 text-blue-600 font-extrabold border-l-4 border-blue-500'
                     : item.highlight
-                    ? 'text-red-500 font-extrabold hover:bg-red-50'
+                    ? 'text-green-500 font-extrabold hover:bg-green-50'
                     : 'text-gray-700 hover:bg-blue-50'
                 }`}
               >
