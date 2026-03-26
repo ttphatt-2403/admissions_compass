@@ -347,18 +347,18 @@ export function B2BLanding() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-separate border-spacing-x-3">
+            <table className="w-full table-fixed border-separate border-spacing-x-3">
               {/* Plan header rows */}
               <thead>
                 {/* Icon + name + desc */}
                 <tr>
-                  <td className="w-2/5 pb-2" />
+                  <td className="w-[25%] pb-2" />
                   {[
-                    { icon: '🌱', name: 'Starter',  desc: 'Bắt đầu hiện diện',    hl: false, col: 0 },
-                    { icon: '🚀', name: 'Boost',    desc: 'Tăng trưởng mạnh mẽ', hl: true,  col: 1 },
-                    { icon: '👑', name: 'Premium',  desc: 'Toàn diện & ưu tiên',  hl: false, col: 2 },
+                    { icon: '🌱', name: 'Gói Tiêu Chuẩn',  desc: 'Standard Profile',    hl: false, col: 0 },
+                    { icon: '🚀', name: 'Gói Tăng Tốc',    desc: 'Targeted Focus', hl: true,  col: 1 },
+                    { icon: '👑', name: 'Gói Toàn Diện',   desc: 'Full Combo',  hl: false, col: 2 },
                   ].map((p) => (
-                    <td key={p.name} className={`rounded-t-2xl px-6 pt-7 pb-3 text-center align-bottom pricing-col-${p.col} ${p.hl ? 'bg-white pricing-col-hl' : 'bg-white shadow-sm'}`}>
+                    <td key={p.name} className={`w-[25%] rounded-t-2xl px-6 pt-7 pb-3 text-center align-bottom pricing-col-${p.col} ${p.hl ? 'bg-white pricing-col-hl' : 'bg-white shadow-sm'}`}>
                       <span className="text-3xl">{p.icon}</span>
                       <h3 className="text-xl font-bold text-slate-900 mt-3">{p.name}</h3>
                       <p className="text-slate-600 text-sm font-medium mt-0.5">{p.desc}</p>
@@ -380,14 +380,11 @@ export function B2BLanding() {
               {/* Feature rows */}
               <tbody>
                 {[
-                  { label: 'Hồ sơ trường trong danh bạ',             s: true,  sNote: '',                  b: true,  bNote: '',                   p: true,  pNote: '' },
-                  { label: 'Xuất hiện trong bài Toplist',            s: true,  sNote: '1 bài (3 tháng)',   b: true,  bNote: '1 bài (6 tháng)',    p: true,  pNote: '1 bài (12 tháng)' },
-                  { label: 'Bài viết PR',                            s: false, sNote: '',                  b: true,  bNote: '1 bài (1000 từ)',    p: true,  pNote: '3 bài brandname' },
-                  { label: 'Hiển thị banner',                        s: true,  sNote: '🎁 7 ngày',        b: true,  bNote: '🎁 15 ngày',         p: true,  pNote: '🎁 30 ngày' },
-                  { label: 'Chia sẻ lên mạng xã hội',               s: false, sNote: '',                  b: true,  bNote: '',                   p: true,  pNote: '' },
-                  { label: 'Tư vấn nội dung tuyển sinh',             s: false, sNote: '',                  b: false, bNote: '',                   p: true,  pNote: '' },
-                  { label: 'Email marketing',                        s: false, sNote: '',                  b: false, bNote: '',                   p: true,  pNote: 'Gửi đến DSKH' },
-                  { label: 'Quảng cáo FB / Google / TikTok',        s: false, sNote: '',                  b: false, bNote: '',                   p: true,  pNote: '' },
+                  { label: 'Trang hồ sơ trường chuyên biệt',       s: true,  sNote: '',                  b: true,  bNote: '',                      p: true,  pNote: '' },
+                  { label: 'Thứ hạng tìm kiếm',                     s: true,  sNote: 'Hiển thị tự nhiên', b: true,  bNote: 'Hiển thị tự nhiên',     p: true,  pNote: 'Ưu tiên Top 1 trên thanh tìm kiếm' },
+                  { label: 'Bài viết PR / Hướng nghiệp',            s: false, sNote: '',                  b: true,  bNote: '1 bài PR định hướng nghề nghiệp (khoảng 1000 từ)', p: true, pNote: '3 bài PR thương hiệu trường chuyên sâu' },
+                  { label: 'Phân phối nội dung Đa kênh',            s: false, sNote: '',                  b: true,  bNote: 'Chia sẻ bài viết lên các nền tảng mạng xã hội', p: true, pNote: 'Chia sẻ Mạng xã hội + Email Marketing đến danh sách học sinh quan tâm' },
+                  { label: 'Dịch vụ nâng cao',                      s: false, sNote: '',                  b: false, bNote: '',                      p: true,  pNote: 'Hỗ trợ chạy Ads (FB/Google/TikTok)' },
                 ].map((row, i) => {
                   const cells = [
                     { ok: row.s, note: row.sNote },
@@ -398,13 +395,13 @@ export function B2BLanding() {
                     <tr key={i} className="pricing-row">
                       <td className="py-3.5 pr-4 text-sm text-slate-800 font-medium text-center">{row.label}</td>
                       {cells.map((cell, ci) => (
-                        <td key={ci} className={`px-6 py-3.5 text-center ${ci === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                        <td key={ci} className={`px-6 py-3.5 text-center align-middle ${ci === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
                           {cell.ok ? (
                             <span className="inline-flex flex-col items-center gap-1">
                               <svg className="w-5 h-5 text-slate-900 check-icon" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                               </svg>
-                              {cell.note && <span className="text-xs text-slate-600 font-medium leading-tight">{cell.note}</span>}
+                              {cell.note && <span className="text-xs text-slate-600 font-medium leading-tight break-words text-center block max-w-full">{cell.note}</span>}
                             </span>
                           ) : (
                             <span className="w-6 h-6 bg-red-100 rounded-full inline-flex items-center justify-center text-red-400 font-bold text-xs">✕</span>
@@ -418,7 +415,7 @@ export function B2BLanding() {
                 {/* Price ở trên nút */}
                 <tr>
                   <td className="pt-4" />
-                  {['990.000', '4.500.000', '15.000.000'].map((price, i) => (
+                  {['4.900.000', '9.900.000', '19.900.000'].map((price, i) => (
                     <td key={i} className={`px-6 pt-5 pb-1 text-center border-t border-slate-100 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
                       <span className="text-2xl font-black text-slate-900">{price}</span>
                       <span className="text-sm text-slate-600 font-medium ml-1">đ / gói</span>
