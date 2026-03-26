@@ -347,12 +347,12 @@ export function B2BLanding() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full table-fixed border-separate border-spacing-x-3">
+            <table className="w-full table-fixed border-separate border-spacing-x-2">
               {/* Plan header rows */}
               <thead>
                 {/* Icon + name + desc */}
                 <tr>
-                  <td className="w-[25%] pb-2" />
+                  <td className="w-[25%] pb-2 pr-2" />
                   {[
                     { icon: '🌱', name: 'Gói Tiêu Chuẩn',  desc: 'Standard Profile',    hl: false, col: 0 },
                     { icon: '🚀', name: 'Gói Tăng Tốc',    desc: 'Targeted Focus', hl: true,  col: 1 },
@@ -393,7 +393,7 @@ export function B2BLanding() {
                   ];
                   return (
                     <tr key={i} className="pricing-row">
-                      <td className="py-3.5 pr-4 text-sm text-slate-800 font-medium text-center">{row.label}</td>
+                      <td className="py-3.5 pr-3 text-sm text-slate-800 font-medium text-left leading-snug">{row.label}</td>
                       {cells.map((cell, ci) => (
                         <td key={ci} className={`px-6 py-3.5 text-center align-middle ${ci === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
                           {cell.ok ? (
