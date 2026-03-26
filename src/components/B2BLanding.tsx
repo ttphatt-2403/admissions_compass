@@ -347,18 +347,18 @@ export function B2BLanding() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full table-fixed border-separate border-spacing-x-2">
+            <table className="w-full table-fixed border-separate border-spacing-x-2" style={{ tableLayout: 'fixed' }}>
               {/* Plan header rows */}
               <thead>
                 {/* Icon + name + desc */}
                 <tr>
-                  <td className="w-[25%] pb-2 pr-2" />
+                  <td className="w-1/4 pb-2 pr-2" />
                   {[
                     { icon: '🌱', name: 'Gói Tiêu Chuẩn',  desc: 'Standard Profile',    hl: false, col: 0 },
                     { icon: '🚀', name: 'Gói Tăng Tốc',    desc: 'Targeted Focus', hl: true,  col: 1 },
                     { icon: '👑', name: 'Gói Toàn Diện',   desc: 'Full Combo',  hl: false, col: 2 },
                   ].map((p) => (
-                    <td key={p.name} className={`w-[25%] rounded-t-2xl px-6 pt-7 pb-3 text-center align-bottom pricing-col-${p.col} ${p.hl ? 'bg-white pricing-col-hl' : 'bg-white shadow-sm'}`}>
+                    <td key={p.name} className={`w-1/4 rounded-t-2xl px-6 pt-7 pb-3 text-center align-bottom pricing-col-${p.col} ${p.hl ? 'bg-white pricing-col-hl' : 'bg-white shadow-sm'}`} style={{ width: '25%' }}>
                       <span className="text-3xl">{p.icon}</span>
                       <h3 className="text-xl font-bold text-slate-900 mt-3">{p.name}</h3>
                       <p className="text-slate-600 text-sm font-medium mt-0.5">{p.desc}</p>
@@ -370,7 +370,7 @@ export function B2BLanding() {
                 <tr>
                   <td />
                   {[0, 1, 2].map((i) => (
-                    <td key={i} className={`px-6 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                    <td key={i} className={`px-6 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'} w-1/4`} style={{ width: '25%' }}>
                       <div className="h-px bg-slate-100" />
                     </td>
                   ))}
@@ -395,13 +395,15 @@ export function B2BLanding() {
                     <tr key={i} className="pricing-row">
                       <td className="py-3.5 pr-3 text-sm text-slate-800 font-medium text-left leading-snug">{row.label}</td>
                       {cells.map((cell, ci) => (
-                        <td key={ci} className={`px-6 py-3.5 text-center align-middle ${ci === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                        <td key={ci} className={`px-6 py-3.5 text-center align-middle ${ci === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'} min-h-[64px] w-1/4`} style={{ width: '25%' }}>
                           {cell.ok ? (
-                            <span className="inline-flex flex-col items-center gap-1">
+                            <span className="inline-flex flex-col items-center gap-1 min-h-[40px] justify-center">
                               <svg className="w-5 h-5 text-slate-900 check-icon" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                               </svg>
-                              {cell.note && <span className="text-xs text-slate-600 font-medium leading-tight break-words text-center block max-w-full">{cell.note}</span>}
+                              <span className="text-xs text-slate-600 font-medium leading-tight break-words text-center block max-w-full min-h-[18px]">
+                                {cell.note ? cell.note : <span>&nbsp;</span>}
+                              </span>
                             </span>
                           ) : (
                             <span className="w-6 h-6 bg-red-100 rounded-full inline-flex items-center justify-center text-red-400 font-bold text-xs">✕</span>
@@ -416,7 +418,7 @@ export function B2BLanding() {
                 <tr>
                   <td className="pt-4" />
                   {['4.900.000', '9.900.000', '19.900.000'].map((price, i) => (
-                    <td key={i} className={`px-6 pt-5 pb-1 text-center border-t border-slate-100 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                    <td key={i} className={`px-6 pt-5 pb-1 text-center border-t border-slate-100 ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'} w-1/4`} style={{ width: '25%' }}>
                       <span className="text-2xl font-black text-slate-900">{price}</span>
                       <span className="text-sm text-slate-600 font-medium ml-1">đ / gói</span>
                     </td>
@@ -427,7 +429,7 @@ export function B2BLanding() {
                 <tr>
                   <td className="pb-2" />
                   {[0, 1, 2].map((i) => (
-                    <td key={i} className={`px-6 pt-3 pb-7 rounded-b-2xl ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'}`}>
+                    <td key={i} className={`px-6 pt-3 pb-7 rounded-b-2xl ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'} w-1/4`} style={{ width: '25%' }}>
                       <button className="btn-register w-full text-white font-semibold py-2.5 rounded-xl text-sm">
                         Đăng ký ngay
                       </button>
