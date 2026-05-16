@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react';
 import { Calculator, Lightbulb, TrendingUp, AlertCircle, RefreshCw, GraduationCap, ArrowLeft } from 'lucide-react';
-import { mockUniversities, University, Major } from './UniversitySearch';
+import { mockUniversities } from './UniversitySearch';
 import { TabType } from '../types';
 import { getUniversityLogo } from '../data/universityLogos';
+import type { AdmissionMethodType } from '../types/admissions';
+import { calculateAdmissionScore, getProbability, getMethodTypeName } from '../utils/scoreFormulas';
 
 interface ScoreCalculatorProps {
   setActiveTab: (tab: TabType) => void;
@@ -30,6 +32,9 @@ interface MajorSuggestion {
   ranking: number;
   universityId: string;
   majorCode: string;
+  methodName?: string;        // tên phương thức xét tuyển
+  methodType?: AdmissionMethodType; // loại phương thức
+  examMaxScore?: number;      // thang điểm tối đa (cho ĐGNL/ĐGTD)
 }
 
 interface Block {
@@ -139,9 +144,23 @@ const blocks: Block[] = [
   }
 ];
 
+// Các tab loại phương thức xét tuyển
+const EXAM_TABS: { type: AdmissionMethodType; label: string; shortLabel: string; color: string }[] = [
+  { type: 'thpt',         label: 'Điểm thi THPT',            shortLabel: 'THPT',    color: 'green' },
+  { type: 'dgnl_vnu_hn',  label: 'ĐGNL ĐHQG Hà Nội',         shortLabel: 'ĐGNL HN', color: 'blue' },
+  { type: 'dgnl_vnu_hcm', label: 'ĐGNL ĐHQG TP.HCM',         shortLabel: 'ĐGNL HCM',color: 'purple' },
+  { type: 'dgtd_bk',      label: 'ĐGTD Bách Khoa',            shortLabel: 'ĐGTD',    color: 'orange' },
+  { type: 'hoc_ba',       label: 'Xét học bạ',                shortLabel: 'Học bạ',  color: 'teal' },
+];
+
 export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
   const suggestionsRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = 5; // items per page
+
+  // ── Exam type tab ─────────────────────────────────────────────
+  const [activeExamType, setActiveExamType] = useState<AdmissionMethodType>('thpt');
+
+  // ── THPT states ───────────────────────────────────────────────
   const [selectedBlock, setSelectedBlock] = useState<Block>(blocks[0]);
   const [selectedCombination, setSelectedCombination] = useState<SubjectCombination>(blocks[0].combinations[0]);
   const [scores, setScores] = useState<Record<string, string>>({
@@ -150,11 +169,24 @@ export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
     'Hóa học': '',
   });
   const [priorityScore, setPriorityScore] = useState('');
+
+  // ── Single-exam states (ĐGNL / ĐGTD) ─────────────────────────
+  const [examScore, setExamScore] = useState('');
+
+  // ── Shared result states ──────────────────────────────────────
   const [totalScore, setTotalScore] = useState<number | null>(null);
   const [suggestions, setSuggestions] = useState<MajorSuggestion[]>([]);
   const [isCalculating, setIsCalculating] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const handleExamTypeChange = (type: AdmissionMethodType) => {
+    setActiveExamType(type);
+    setTotalScore(null);
+    setSuggestions([]);
+    setCurrentPage(1);
+    setExamScore('');
+  };
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
 
@@ -213,31 +245,51 @@ export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
 
   const calculateScore = () => {
     let total = 0;
-    let allFilled = true;
+    const priority = priorityScore !== '' ? parseFloat(priorityScore) : 0;
 
-    selectedCombination.subjects.forEach(subject => {
-      const score = scores[subject];
-      if (score === '') {
-        allFilled = false;
-      } else {
-        total += parseFloat(score);
+    if (activeExamType === 'thpt' || activeExamType === 'hoc_ba') {
+      // ── THPT / Học bạ: cần điểm 3 môn ────────────────────────
+      let allFilled = true;
+      const subjectScores: Record<string, number> = {};
+
+      selectedCombination.subjects.forEach(subject => {
+        const score = scores[subject];
+        if (score === '') {
+          allFilled = false;
+        } else {
+          subjectScores[subject] = parseFloat(score);
+        }
+      });
+
+      if (!allFilled) {
+        alert('Vui lòng nhập đủ điểm các môn');
+        return;
       }
-    });
 
-    if (!allFilled) {
-      alert('Vui lòng nhập đủ điểm các môn');
-      return;
-    }
+      // Dùng formula utility để tính
+      const method = {
+        id: 'calc',
+        type: activeExamType,
+        name: '',
+        combinationId: selectedCombination.id,
+        subjects: selectedCombination.subjects.map(s => ({ name: s, weight: 1 })),
+        benchmarkScore: 0,
+        trend: 'stable' as const,
+      };
+      total = calculateAdmissionScore(method, subjectScores, priority);
 
-    // Add priority score if entered
-    if (priorityScore !== '') {
-      total += parseFloat(priorityScore);
+    } else {
+      // ── ĐGNL / ĐGTD: một điểm duy nhất ───────────────────────
+      if (examScore === '') {
+        alert('Vui lòng nhập điểm thi');
+        return;
+      }
+      total = parseFloat(examScore);
     }
 
     setIsCalculating(true);
     setTotalScore(total);
 
-    // Simulate calculation delay for better UX
     setTimeout(() => {
       generateSuggestions(total);
       setIsCalculating(false);
@@ -249,60 +301,94 @@ export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
 
     mockUniversities.forEach((uni) => {
       uni.majors.forEach((major) => {
-        // Check if major accepts the selected combination
-        // major.subjects is a string like "A00, A01, D01"
-        const acceptedCombinations = major.subjects.split(',').map(s => s.trim());
 
-        if (acceptedCombinations.includes(selectedCombination.id)) {
-          let probability: 'high' | 'medium' | 'low' | null = null;
-
-          // Determine probability
-          const diff = score - major.benchmarkScore;
-
-          if (diff >= 1.0) {
-            probability = 'high'; // Safe zone
-          } else if (diff >= 0) {
-            probability = 'medium'; // Competitive
-          } else if (diff >= -1.0) {
-            probability = 'low'; // Risky but possible
+        if (activeExamType === 'thpt') {
+          // ── Ưu tiên dùng admissionMethods nếu có ──────────────
+          if (major.admissionMethods && major.admissionMethods.length > 0) {
+            major.admissionMethods
+              .filter(m => m.type === 'thpt' && m.combinationId === selectedCombination.id)
+              .forEach(method => {
+                const probability = getProbability(score, method.benchmarkScore, 'thpt');
+                if (probability) {
+                  newSuggestions.push({
+                    name: major.name,
+                    university: uni.name,
+                    universityShortName: uni.shortName,
+                    benchmarkScore: method.benchmarkScore,
+                    yourScore: score,
+                    probability,
+                    subjectCombination: selectedCombination.id,
+                    ranking: uni.ranking,
+                    universityId: uni.id,
+                    majorCode: major.code,
+                    methodName: method.name,
+                    methodType: 'thpt',
+                  });
+                }
+              });
+          } else {
+            // ── Fallback: dùng subjects string cũ (backward compat) ──
+            const accepted = major.subjects.split(',').map(s => s.trim());
+            if (accepted.includes(selectedCombination.id)) {
+              const probability = getProbability(score, major.benchmarkScore, 'thpt');
+              if (probability) {
+                newSuggestions.push({
+                  name: major.name,
+                  university: uni.name,
+                  universityShortName: uni.shortName,
+                  benchmarkScore: major.benchmarkScore,
+                  yourScore: score,
+                  probability,
+                  subjectCombination: selectedCombination.id,
+                  ranking: uni.ranking,
+                  universityId: uni.id,
+                  majorCode: major.code,
+                  methodType: 'thpt',
+                });
+              }
+            }
           }
-          // Ignore if score is too low compared to benchmark (e.g. < -1.0)
-
-          if (probability) {
-            newSuggestions.push({
-              name: major.name,
-              university: uni.name,
-              universityShortName: uni.shortName,
-              benchmarkScore: major.benchmarkScore,
-              yourScore: score,
-              probability,
-              subjectCombination: selectedCombination.id,
-              ranking: uni.ranking,
-              universityId: uni.id,
-              majorCode: major.code
+        } else {
+          // ── ĐGNL / ĐGTD / Học bạ: tìm trong admissionMethods ──
+          (major.admissionMethods ?? [])
+            .filter(m => m.type === activeExamType)
+            .forEach(method => {
+              const probability = getProbability(
+                score, method.benchmarkScore, activeExamType, method.examMaxScore
+              );
+              if (probability) {
+                newSuggestions.push({
+                  name: major.name,
+                  university: uni.name,
+                  universityShortName: uni.shortName,
+                  benchmarkScore: method.benchmarkScore,
+                  yourScore: score,
+                  probability,
+                  subjectCombination: '',
+                  ranking: uni.ranking,
+                  universityId: uni.id,
+                  majorCode: major.code,
+                  methodName: method.name,
+                  methodType: activeExamType,
+                  examMaxScore: method.examMaxScore,
+                });
+              }
             });
-          }
         }
       });
     });
 
-    // Sort suggestions:
-    // 1. Probability (High -> Medium -> Low)
-    // 2. Ranking (Lower number is better)
-    // 3. Benchmark Score (Higher is usually more prestigious/competitive)
     newSuggestions.sort((a, b) => {
       const probOrder = { high: 3, medium: 2, low: 1 };
       if (probOrder[a.probability] !== probOrder[b.probability]) {
         return probOrder[b.probability] - probOrder[a.probability];
       }
-      if (a.ranking !== b.ranking) {
-        return a.ranking - b.ranking;
-      }
+      if (a.ranking !== b.ranking) return a.ranking - b.ranking;
       return b.benchmarkScore - a.benchmarkScore;
     });
 
     setSuggestions(newSuggestions);
-    setCurrentPage(1); // Reset to page 1 when new suggestions are generated
+    setCurrentPage(1);
   };
 
   const getProbabilityColor = (probability: string) => {
@@ -358,125 +444,198 @@ export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
             Nhập điểm thi của bạn
           </h3>
 
-          {/* Block Selector */}
-          <div className="mb-6">
-            <label className="block text-sm font-bold text-gray-700 mb-2">
-              Chọn khối ngành
-            </label>
-            <div className="relative">
-              <select
-                value={selectedBlock.id}
-                onChange={(e) => handleBlockChange(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none font-medium text-gray-900"
-              >
-                {blocks.map(block => (
-                  <option key={block.id} value={block.id}>{block.name}</option>
-                ))}
-              </select>
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-500">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </div>
-            </div>
-          </div>
-
-          {/* Combination Selector */}
+          {/* ── Exam Type Tabs ─────────────────────────────────── */}
           <div className="mb-8">
-            <label className="block text-sm font-bold text-gray-700 mb-2">
-              Chọn tổ hợp môn xét tuyển
+            <label className="block text-sm font-bold text-gray-700 mb-3">
+              Chọn phương thức xét tuyển
             </label>
-            <div className="relative">
-              <select
-                value={selectedCombination.id}
-                onChange={(e) => handleCombinationChange(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none font-medium text-gray-900"
-              >
-                {selectedBlock.combinations.map(combo => (
-                  <option key={combo.id} value={combo.id}>{combo.name}</option>
-                ))}
-              </select>
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-500">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {EXAM_TABS.map(tab => (
+                <button
+                  key={tab.type}
+                  onClick={() => handleExamTypeChange(tab.type)}
+                  className={`px-4 py-2 rounded-xl font-semibold text-sm transition-all border-2 ${
+                    activeExamType === tab.type
+                      ? 'bg-green-600 text-white border-green-600 shadow-md'
+                      : 'bg-white text-gray-600 border-gray-200 hover:border-green-400 hover:text-green-700'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Score Inputs */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            {selectedCombination.subjects.map(subject => (
-              <div key={subject}>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Điểm môn {subject}
+          {/* ── THPT inputs ─────────────────────────────────────── */}
+          {(activeExamType === 'thpt' || activeExamType === 'hoc_ba') && (
+            <>
+              <div className="mb-6">
+                <label className="block text-sm font-bold text-gray-700 mb-2">Chọn khối ngành</label>
+                <div className="relative">
+                  <select
+                    value={selectedBlock.id}
+                    onChange={(e) => handleBlockChange(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none font-medium text-gray-900"
+                  >
+                    {blocks.map(block => (
+                      <option key={block.id} value={block.id}>{block.name}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-8">
+                <label className="block text-sm font-bold text-gray-700 mb-2">Chọn tổ hợp môn xét tuyển</label>
+                <div className="relative">
+                  <select
+                    value={selectedCombination.id}
+                    onChange={(e) => handleCombinationChange(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none font-medium text-gray-900"
+                  >
+                    {selectedBlock.combinations.map(combo => (
+                      <option key={combo.id} value={combo.id}>{combo.name}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {selectedCombination.subjects.map(subject => (
+                  <div key={subject}>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      {activeExamType === 'hoc_ba' ? `TB môn ${subject} (lớp 12)` : `Điểm môn ${subject}`}
+                    </label>
+                    <input
+                      type="text" inputMode="decimal" placeholder="0.00"
+                      value={scores[subject] || ''}
+                      onChange={(e) => handleScoreChange(subject, e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 text-center text-xl font-bold text-green-700 placeholder-gray-300 transition-all focus:border-green-500"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Điểm ưu tiên (Khu vực / Đối tượng)</label>
+                    <p className="text-xs text-gray-500">Nhập tổng điểm ưu tiên nếu có (tối đa 2.75 điểm)</p>
+                  </div>
+                  <input
+                    type="text" inputMode="decimal" placeholder="0.00"
+                    value={priorityScore}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
+                        const numValue = parseFloat(value);
+                        if (value === '' || (numValue >= 0 && numValue <= 3)) setPriorityScore(value);
+                      }
+                    }}
+                    className="w-full md:w-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-center font-bold"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* ── Single exam score (ĐGNL / ĐGTD) ────────────────── */}
+          {(activeExamType === 'dgnl_vnu_hn' || activeExamType === 'dgnl_vnu_hcm' || activeExamType === 'dgtd_bk') && (() => {
+            const maxMap: Record<string, number> = { dgnl_vnu_hn: 150, dgnl_vnu_hcm: 1200, dgtd_bk: 50 };
+            const maxScore = maxMap[activeExamType];
+            const labelMap: Record<string, string> = {
+              dgnl_vnu_hn:  'Điểm ĐGNL ĐHQG Hà Nội',
+              dgnl_vnu_hcm: 'Điểm ĐGNL ĐHQG TP.HCM',
+              dgtd_bk:      'Điểm ĐGTD Bách Khoa',
+            };
+            return (
+              <div className="mb-8">
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  {labelMap[activeExamType]} (thang 0–{maxScore})
                 </label>
                 <input
-                  type="text"
-                  inputMode="decimal"
-                  placeholder="0.00"
-                  value={scores[subject] || ''}
-                  onChange={(e) => handleScoreChange(subject, e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 text-center text-xl font-bold text-green-700 placeholder-gray-300 transition-all focus:border-green-500"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Priority Score */}
-          <div className="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
-            <div className="flex flex-col md:flex-row md:items-center gap-4">
-              <div className="flex-1">
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
-                  Điểm ưu tiên (Khu vực / Đối tượng)
-                </label>
-                <p className="text-xs text-gray-500">Nhập tổng điểm ưu tiên nếu có (tối đa 2.75 điểm)</p>
-              </div>
-              <input
-                type="text"
-                inputMode="decimal"
-                placeholder="0.00"
-                value={priorityScore}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
-                    const numValue = parseFloat(value);
-                    if (value === '' || (numValue >= 0 && numValue <= 3)) {
-                      setPriorityScore(value);
+                  type="text" inputMode="decimal"
+                  placeholder={`0 – ${maxScore}`}
+                  value={examScore}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (v === '' || /^\d*\.?\d{0,2}$/.test(v)) {
+                      const n = parseFloat(v);
+                      if (v === '' || (n >= 0 && n <= maxScore)) setExamScore(v);
                     }
-                  }
-                }}
-                className="w-full md:w-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-center font-bold"
-              />
-            </div>
-          </div>
+                  }}
+                  className="w-full md:w-64 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 text-center text-2xl font-bold text-green-700 placeholder-gray-300"
+                />
+                <p className="text-xs text-gray-500 mt-2">
+                  Nhập điểm bài thi {getMethodTypeName(activeExamType)} của bạn
+                </p>
+              </div>
+            );
+          })()}
 
-          {/* Formula Explanation */}
+          {/* ── Formula Explanation (dynamic) ───────────────────── */}
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-8 border border-amber-200 shadow-md">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center flex-shrink-0">
                 <Lightbulb size={24} className="text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-amber-800 mb-3">Công thức tính điểm xét tuyển</h3>
-                <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
-                  <p className="text-center font-mono text-lg text-gray-800 font-semibold">
-                    Điểm xét tuyển = Môn 1 + Môn 2 + Môn 3 + Điểm ưu tiên
-                  </p>
-                </div>
-                <div className="space-y-2 text-sm text-gray-700">
-                  <p className="flex items-start gap-2">
-                    <span className="text-amber-600 font-bold">•</span>
-                    <span><strong>Môn 1, 2, 3:</strong> Điểm các môn trong tổ hợp xét tuyển (thang điểm 0-10)</span>
-                  </p>
-                  <p className="flex items-start gap-2">
-                    <span className="text-amber-600 font-bold">•</span>
-                    <span><strong>Điểm ưu tiên:</strong> Gồm điểm ưu tiên khu vực (tối đa 0.75) và đối tượng (tối đa 2.0)</span>
-                  </p>
-                  <p className="flex items-start gap-2">
-                    <span className="text-amber-600 font-bold">•</span>
-                    <span><strong>Điểm tối đa:</strong> 30 điểm (không tính ưu tiên) hoặc 32.75 điểm (có ưu tiên)</span>
-                  </p>
-                </div>
-                <div className="mt-4 p-3 bg-amber-100 rounded-lg text-sm text-amber-800">
-                  <strong>Ví dụ:</strong> Toán 8.5 + Lý 7.0 + Hóa 8.0 + Ưu tiên 0.5 = <strong>24.0 điểm</strong>
-                </div>
+                <h3 className="text-lg font-bold text-amber-800 mb-3">Công thức tính điểm — {getMethodTypeName(activeExamType)}</h3>
+                {activeExamType === 'thpt' && (
+                  <>
+                    <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
+                      <p className="text-center font-mono text-lg text-gray-800 font-semibold">
+                        Điểm = Môn 1 + Môn 2 + Môn 3 + Điểm ưu tiên
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-700">Thang 0–30 (tối đa 32.75 có ưu tiên). Ví dụ: 8.5 + 7.0 + 8.0 + 0.5 = <strong>24.0</strong></p>
+                  </>
+                )}
+                {activeExamType === 'hoc_ba' && (
+                  <>
+                    <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
+                      <p className="text-center font-mono text-lg text-gray-800 font-semibold">
+                        Điểm = (TB Môn 1 + TB Môn 2 + TB Môn 3) × 3 + Ưu tiên
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-700">Nhập điểm trung bình từng môn (0–10). Thang quy đổi 0–30.</p>
+                  </>
+                )}
+                {activeExamType === 'dgnl_vnu_hn' && (
+                  <>
+                    <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
+                      <p className="text-center font-mono text-lg text-gray-800 font-semibold">
+                        Thang điểm: 0 – 150
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-700">Bài thi ĐGNL ĐHQG Hà Nội gồm 3 phần: Tư duy định lượng, Tư duy định tính, Khoa học. Điểm chuẩn thường từ 75–100.</p>
+                  </>
+                )}
+                {activeExamType === 'dgnl_vnu_hcm' && (
+                  <>
+                    <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
+                      <p className="text-center font-mono text-lg text-gray-800 font-semibold">
+                        Thang điểm: 0 – 1200
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-700">Bài thi ĐGNL ĐHQG TP.HCM gồm: Ngôn ngữ (200đ), Toán học (300đ), Giải quyết vấn đề (700đ).</p>
+                  </>
+                )}
+                {activeExamType === 'dgtd_bk' && (
+                  <>
+                    <div className="bg-white rounded-xl p-4 border border-amber-100 mb-4">
+                      <p className="text-center font-mono text-lg text-gray-800 font-semibold">
+                        Thang điểm: 0 – 50
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-700">Bài thi ĐGTD Bách Khoa Hà Nội gồm: Toán (25đ), Tiếng Anh (12.5đ), Đọc hiểu/Vật lý (12.5đ). Điểm chuẩn thường từ 38–46.</p>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -616,6 +775,11 @@ export function ScoreCalculator({ setActiveTab }: ScoreCalculatorProps) {
                               <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-800">
                                 Top {suggestion.ranking}
                               </span>
+                              {suggestion.methodType && (
+                                <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">
+                                  {suggestion.methodName ?? getMethodTypeName(suggestion.methodType)}
+                                </span>
+                              )}
                               <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getProbabilityColor(suggestion.probability)}`}>
                                 {getProbabilityText(suggestion.probability).toUpperCase()}
                               </span>

@@ -30,11 +30,13 @@ import {
   TrendingDown,
   ChevronRight,
   BookOpen,
-  MessageSquare
+  MessageSquare,
+  X
 } from 'lucide-react';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart as ReBarChart, Bar } from 'recharts';
 
 export function B2BLanding() {
+  const [selectedQR, setSelectedQR] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     organization: '',
     representative: '',
@@ -430,7 +432,10 @@ export function B2BLanding() {
                   <td className="pb-2" />
                   {[0, 1, 2].map((i) => (
                     <td key={i} className={`px-6 pt-3 pb-7 rounded-b-2xl ${i === 1 ? 'bg-white shadow-lg' : 'bg-white shadow-sm'} w-1/4`} style={{ width: '25%' }}>
-                      <button className="btn-register w-full text-white font-semibold py-2.5 rounded-xl text-sm">
+                      <button 
+                        onClick={() => setSelectedQR(['/image/qr/qr-4tr9.jpg', '/image/qr/qr-9tr9.jpg', '/image/qr/qr-19tr9.jpg'][i])}
+                        className="btn-register w-full text-white font-semibold py-2.5 rounded-xl text-sm"
+                      >
                         Đăng ký ngay
                       </button>
                     </td>
@@ -1070,7 +1075,31 @@ export function B2BLanding() {
         </div>
       </section>
 
-     
+      {/* QR Modal */}
+      {selectedQR && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60" onClick={() => setSelectedQR(null)}>
+          <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-w-lg w-full font-sans" onClick={(e) => e.stopPropagation()}>
+            <button 
+              onClick={() => setSelectedQR(null)}
+              className="absolute top-5 right-5 text-white hover:text-slate-200 bg-black/20 hover:bg-black/40 rounded-full p-1.5 transition-colors z-10"
+            >
+              <X size={24} />
+            </button>
+            <div className="bg-blue-600 text-white p-6 text-center">
+              <h3 className="text-2xl font-bold">Quét mã thanh toán</h3>
+              <p className="text-blue-100 mt-1">Sử dụng ứng dụng ngân hàng</p>
+            </div>
+            <div className="p-8 pb-10 flex flex-col items-center">
+              <div className="bg-white border-2 border-slate-100 p-4 rounded-2xl shadow-sm mb-8 w-full flex justify-center">
+                <img src={selectedQR} alt="QR Code" className="w-full max-w-[300px] aspect-square object-contain rounded-xl" style={{ imageRendering: 'pixelated' }} />
+              </div>
+              <p className="text-slate-600 text-center text-lg">
+                Vui lòng ghi rõ <span className="font-bold text-slate-800">Tên Đối Tác</span> trong nội dung.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
