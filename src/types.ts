@@ -1,4 +1,4 @@
-export type TabType = 'home' | 'documents' | 'universities' | 'calculator' | 'studypath' | 'news' | 'math-roadmap' | 'chemistry-roadmap' | 'chatbot' | 'community' | 'riasec'
+export type TabType = 'home' | 'documents' | 'universities' | 'calculator' | 'studypath' | 'news' | 'math-roadmap' | 'chemistry-roadmap' | 'chatbot' | 'community' | 'riasec' | 'numerology'
   // Landing Pages - Hà Nội
   | 'fpt-landing' | 'vnu-landing' | 'hust-landing' | 'neu-landing' | 'ftu-landing' | 'hmu-landing' | 'hnue-landing'
   | 'ajc-landing' | 'ptit-landing' | 'haui-landing' | 'utc-landing' | 'nuce-landing' | 'humg-landing' | 'hou-landing'
