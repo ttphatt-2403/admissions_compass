@@ -43,8 +43,13 @@ function gradientStyle(from: string, to: string) {
   return { background: `linear-gradient(135deg, ${from}, ${to})` };
 }
 
+const DOB_DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
+const DOB_MONTHS = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+const DOB_YEARS = Array.from({ length: 80 }, (_, i) => String(2005 - i));
+
 /* ─── CSS Animations (injected once) ─── */
 const ANIM_STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;600&display=swap');
   @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   @keyframes spin-reverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
   @keyframes float-y { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
@@ -53,6 +58,62 @@ const ANIM_STYLES = `
   @keyframes fade-up { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
   @keyframes loading-dots { 0%,80%,100%{opacity:0;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
   @keyframes ring-pulse { 0%,100%{opacity:0.15} 50%{opacity:0.35} }
+  @keyframes streak {
+    0% { transform: rotate(var(--a,15deg)) translateX(-120%); opacity:0; }
+    10% { opacity:1; }
+    90% { opacity:1; }
+    100% { transform: rotate(var(--a,15deg)) translateX(220%); opacity:0; }
+  }
+  @keyframes ripple-out {
+    0% { transform:scale(1); opacity:0.4; }
+    100% { transform:scale(2.2); opacity:0; }
+  }
+  .gold-text { background:linear-gradient(135deg,#c9a84c,#f59e0b,#fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .violet-text { background:linear-gradient(135deg,#c4b5fd,#818cf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .glass { background:rgba(255,255,255,0.04); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.08); }
+  .glass-gold { background:rgba(201,168,76,0.06); backdrop-filter:blur(12px); border:1px solid rgba(201,168,76,0.15); }
+  .cs-fade-up { animation:fade-up 0.8s ease-out both; }
+  .cs-float { animation:float-y 6s ease-in-out infinite; }
+  .cs-float2 { animation:float-y 8s ease-in-out 1s infinite; }
+  .cs-spin-slow { animation:spin-slow 40s linear infinite; }
+  .cs-spin-rev { animation:spin-reverse 28s linear infinite; }
+  .cs-spin-med { animation:spin-slow 20s linear infinite; }
+  .cs-pulse-glow { animation:pulse-glow 3s ease-in-out infinite; }
+  @keyframes orbit-glow { 0%,100%{box-shadow:0 0 8px rgba(251,191,36,0.3),0 0 0 1px rgba(201,168,76,0.2)} 50%{box-shadow:0 0 22px rgba(251,191,36,0.9),0 0 0 2.5px rgba(201,168,76,0.7)} }
+  @keyframes badge-ring { 0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,0.5),inset 0 0 10px rgba(201,168,76,0.05)} 50%{box-shadow:0 0 0 8px rgba(201,168,76,0),inset 0 0 20px rgba(201,168,76,0.15)} }
+  @keyframes big-num-glow { 0%,100%{text-shadow:0 0 20px rgba(255,255,255,0.25),0 4px 24px rgba(0,0,0,0.5)} 50%{text-shadow:0 0 50px rgba(255,255,255,0.8),0 0 90px rgba(255,255,255,0.3),0 4px 24px rgba(0,0,0,0.5)} }
+  @keyframes num-shimmer { 0%{left:-80%} 100%{left:130%} }
+  @keyframes insight-pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+  .cs-orbit-glow { animation:orbit-glow 2.5s ease-in-out infinite; }
+  .cs-badge-ring { animation:badge-ring 2s ease-in-out infinite; }
+  .cs-big-num { animation:big-num-glow 3s ease-in-out infinite; }
+  .cs-insight-num { animation:insight-pop 4s ease-in-out infinite; }
+  @keyframes aurora-shift { 0%,100%{opacity:0.6;transform:scale(1) translate(0,0)} 33%{opacity:0.8;transform:scale(1.08) translate(-2%,1%)} 66%{opacity:0.5;transform:scale(0.95) translate(2%,-1%)} }
+  @keyframes card-shimmer { 0%{left:-100%} 100%{left:200%} }
+  .aurora-1 { animation:aurora-shift 12s ease-in-out infinite; }
+  .aurora-2 { animation:aurora-shift 16s ease-in-out 4s infinite; }
+  .aurora-3 { animation:aurora-shift 20s ease-in-out 8s infinite; }
+  .form-field-label { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:#c9a84c; margin-bottom:0.65rem; display:block; text-shadow:0 0 16px rgba(201,168,76,0.45); }
+  .cosmic-input { width:100%; background:rgba(15,8,32,0.6); border:1px solid rgba(124,58,237,0.4); border-radius:12px; padding:15px 20px; color:#e2d9f3; font-family:'Raleway',sans-serif; font-size:1rem; font-weight:400; transition:border-color 0.2s,box-shadow 0.2s,background 0.2s; caret-color:#c9a84c; outline:none; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 2px 8px rgba(0,0,0,0.3); }
+  .cosmic-input::placeholder { color:rgba(167,139,250,0.3); font-weight:300; }
+  .cosmic-input:focus { border-color:rgba(201,168,76,0.7); box-shadow:0 0 0 3px rgba(201,168,76,0.12),0 0 28px rgba(201,168,76,0.18),inset 0 1px 0 rgba(255,255,255,0.06); background:rgba(20,8,45,0.7); }
+  .cosmic-input:hover:not(:focus) { border-color:rgba(167,139,250,0.55); }
+  .cosmic-select { appearance:none; -webkit-appearance:none; background:rgba(15,8,32,0.6) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='rgba(201,168,76,0.8)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center; border:1px solid rgba(124,58,237,0.4); border-radius:12px; padding:15px 36px 15px 16px; color:#e2d9f3; font-family:'Raleway',sans-serif; font-size:0.92rem; font-weight:400; transition:border-color 0.2s,box-shadow 0.2s; outline:none; cursor:pointer; width:100%; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 2px 8px rgba(0,0,0,0.3); }
+  .cosmic-select:focus { border-color:rgba(201,168,76,0.7); box-shadow:0 0 0 3px rgba(201,168,76,0.12),0 0 28px rgba(201,168,76,0.18); background-color:rgba(20,8,45,0.7); }
+  .cosmic-select:hover:not(:focus) { border-color:rgba(167,139,250,0.55); }
+  .cosmic-select option { background:#0f0820; color:#e2d9f3; }
+  .form-card { background:rgba(10,4,28,0.75); backdrop-filter:blur(40px); -webkit-backdrop-filter:blur(40px); border:1px solid rgba(124,58,237,0.2); border-radius:24px; box-shadow:0 40px 100px rgba(0,0,0,0.65),0 0 0 1px rgba(255,255,255,0.04) inset,0 1px 0 rgba(255,255,255,0.07) inset; }
+  .submit-btn { width:100%; padding:17px; border-radius:12px; background:linear-gradient(135deg,#5b21b6 0%,#4338ca 50%,#3730a3 100%); border:1px solid rgba(167,139,250,0.5); color:#e2d9f3; font-family:'Cinzel',serif; font-size:0.8rem; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:all 0.25s cubic-bezier(0.23,1,0.32,1); position:relative; overflow:hidden; box-shadow:0 0 24px rgba(124,58,237,0.35),0 4px 16px rgba(0,0,0,0.4); }
+  .submit-btn::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent); transform:skewX(-20deg); transition:none; }
+  .submit-btn:not(:disabled):hover::after { animation:card-shimmer 0.6s ease-out forwards; }
+  .submit-btn:not(:disabled):hover { border-color:rgba(201,168,76,0.6); box-shadow:0 0 48px rgba(124,58,237,0.5),0 0 80px rgba(201,168,76,0.12),0 4px 20px rgba(0,0,0,0.4); transform:translateY(-2px); color:#fde68a; background:linear-gradient(135deg,#6d28d9 0%,#4f46e5 50%,#4338ca 100%); }
+  .submit-btn:not(:disabled):active { transform:translateY(0); }
+  .submit-btn:disabled { opacity:0.3; cursor:not-allowed; box-shadow:none; }
+  .divider-line { height:1px; background:linear-gradient(90deg,transparent,rgba(124,58,237,0.35),rgba(201,168,76,0.25),transparent); margin:4px 0; }
+  .field-icon { position:absolute; left:15px; top:50%; transform:translateY(-50%); color:rgba(201,168,76,0.5); pointer-events:none; font-size:0.85rem; transition:color 0.2s; }
+  .cosmic-input:focus ~ .field-icon, .has-icon:focus + .field-icon { color:rgba(201,168,76,0.9); }
+  .has-icon { padding-left:42px !important; }
+  .select-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,168,76,0.5); margin-bottom:0.35rem; display:block; }
 `;
 
 /* ─── InfoSection ─── */
@@ -67,6 +128,417 @@ function InfoSection({ icon, title, children, bg, borderColor }: {
       </div>
       {children}
     </div>
+  );
+}
+
+/* ─── Cosmic Helper Components ─── */
+function SacredRings({ size = 400, gold = false }: { size?: number; gold?: boolean }) {
+  const c = size / 2;
+  const stroke = gold ? 'rgba(201,168,76,0.35)' : 'rgba(124,58,237,0.25)';
+  const r22 = size * 0.22;
+  const r42 = size * 0.42;
+  const petals = Array.from({ length: 6 }, (_, i) => {
+    const a = (i * 60) * Math.PI / 180;
+    return { x: c + Math.cos(a) * r22, y: c + Math.sin(a) * r22 };
+  });
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none">
+      {[0.12, 0.22, 0.32, 0.42, 0.48].map((f, i) => (
+        <circle key={i} cx={c} cy={c} r={size * f} stroke={stroke} strokeWidth={0.8} />
+      ))}
+      {petals.map((p, i) => (
+        <circle key={`p${i}`} cx={p.x} cy={p.y} r={r22} stroke={stroke} strokeWidth={0.5} />
+      ))}
+      {Array.from({ length: 6 }, (_, i) => {
+        const a1 = (i * 60) * Math.PI / 180;
+        const a2 = ((i + 3) * 60) * Math.PI / 180;
+        return <line key={`l${i}`} x1={c + Math.cos(a1) * r42} y1={c + Math.sin(a1) * r42} x2={c + Math.cos(a2) * r42} y2={c + Math.sin(a2) * r42} stroke={stroke} strokeWidth={0.5} />;
+      })}
+    </svg>
+  );
+}
+
+function GoldParticles({ count = 12 }: { count?: number }) {
+  return (
+    <>
+      {Array.from({ length: count }, (_, i) => (
+        <div key={i} className="absolute rounded-full pointer-events-none cs-pulse-glow"
+          style={{
+            width: i % 3 === 0 ? 3 : 2, height: i % 3 === 0 ? 3 : 2,
+            background: '#c9a84c', opacity: 0.25 + (i % 5) * 0.1,
+            top: `${(i * 37 + 13) % 86 + 7}%`, left: `${(i * 53 + 7) % 86 + 7}%`,
+            boxShadow: '0 0 6px rgba(201,168,76,0.7)',
+            animationDelay: `${i * 0.3}s`,
+          }} />
+      ))}
+    </>
+  );
+}
+
+function ImageWithFallback({ src, alt, className, style }: { src?: string; alt: string; className?: string; style?: React.CSSProperties }) {
+  const [err, setErr] = useState(false);
+  if (err || !src) {
+    return (
+      <div className={className} style={{ ...style, background: 'linear-gradient(135deg, rgba(124,58,237,0.5) 0%, rgba(201,168,76,0.3) 50%, rgba(59,130,246,0.4) 100%)' }} />
+    );
+  }
+  return <img src={src} alt={alt} className={className} style={style} onError={() => setErr(true)} />;
+}
+
+function CosmicButton({ onClick, children, size = 'md', variant = 'violet' }: {
+  onClick?: () => void; children: React.ReactNode; size?: 'sm' | 'md' | 'lg'; variant?: 'gold' | 'violet';
+}) {
+  const pad = size === 'lg' ? 'px-9 py-4' : size === 'sm' ? 'px-4 py-2' : 'px-6 py-3';
+  const fs = size === 'lg' ? 'text-sm' : size === 'sm' ? 'text-xs' : 'text-sm';
+  const bg = variant === 'gold' ? 'linear-gradient(135deg,#c9a84c,#f59e0b)' : 'rgba(124,58,237,0.25)';
+  const border = variant === 'gold' ? 'rgba(201,168,76,0.7)' : 'rgba(124,58,237,0.45)';
+  const color = variant === 'gold' ? '#0a0617' : '#c4b5fd';
+  const shadow = variant === 'gold' ? '0 0 28px rgba(201,168,76,0.4)' : '0 0 20px rgba(124,58,237,0.3)';
+  return (
+    <button onClick={onClick} className={`${pad} ${fs} font-semibold rounded-full tracking-wider transition-all duration-300 hover:scale-105 cursor-pointer whitespace-nowrap`}
+      style={{ background: bg, border: `1px solid ${border}`, color, boxShadow: shadow, fontFamily: "'Cinzel', serif" }}>
+      {children}
+    </button>
+  );
+}
+
+/* ─── Landing Sections ─── */
+function LandingHero({ onStart }: { onStart: () => void }) {
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden" style={{ paddingTop: 64 }}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-2/3 h-full"
+          style={{ background: 'radial-gradient(ellipse at 15% 40%, rgba(124,58,237,0.18) 0%, transparent 65%)' }} />
+        <div className="absolute bottom-0 right-0 w-2/3 h-2/3"
+          style={{ background: 'radial-gradient(ellipse at 85% 75%, rgba(59,130,246,0.14) 0%, transparent 60%)' }} />
+      </div>
+      {[15, 25, 45].map((angle, i) => (
+        <div key={i} className="absolute h-px pointer-events-none"
+          style={{
+            top: `${20 + i * 25}%`, left: '-10%', width: '60%',
+            background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent)',
+            transform: `rotate(${angle}deg)`,
+            animation: `streak ${8 + i * 3}s linear ${i * 2}s infinite`,
+            ['--a' as string]: `${angle}deg`,
+          }} />
+      ))}
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center py-16">
+        <div className="cs-fade-up" style={{ animationDelay: '0.1s' }}>
+          <div className="flex items-center gap-3 mb-8">
+            <div className="h-px w-12" style={{ background: 'linear-gradient(90deg, transparent, #c9a84c)' }} />
+            <span className="text-xs tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>
+              Thần Số Học AI
+            </span>
+          </div>
+          <h1 className="mb-6" style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(2.2rem,5vw,4rem)', fontWeight: 700, lineHeight: 1.1 }}>
+            <span className="block" style={{ color: '#e2d9f3' }}>Thần Số Học</span>
+            <span className="block gold-text">Toàn Diện</span>
+            <span className="block" style={{ color: '#c4b5fd' }}>&amp; Chuyên Sâu</span>
+          </h1>
+          <p className="mb-10 leading-relaxed max-w-lg" style={{ fontFamily: "'Raleway', sans-serif", fontSize: 'clamp(0.95rem,1.5vw,1.1rem)', color: 'rgba(196,181,253,0.75)', fontWeight: 300 }}>
+            Hệ thống AI giải mã bản đồ số học của bạn từ ngày sinh và họ tên — khám phá sứ mệnh tâm hồn, con đường định mệnh và mật mã vũ trụ ẩn giấu.
+          </p>
+          <div className="flex flex-row items-center gap-3 flex-wrap">
+            <CosmicButton onClick={onStart} size="md" variant="gold">Bắt Đầu Hành Trình</CosmicButton>
+            <CosmicButton size="md" variant="violet">Khám Phá Thêm</CosmicButton>
+          </div>
+          <div className="mt-14 flex gap-10">
+            {[['9', 'Chỉ số phân tích'], ['5', 'Chiều sâu tâm linh'], ['∞', 'Hành trình số phận']].map(([n, l]) => (
+              <div key={l}>
+                <div className="gold-text text-3xl font-bold" style={{ fontFamily: "'Cinzel', serif" }}>{n}</div>
+                <div className="text-xs mt-1 tracking-wider" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.5)' }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center relative">
+          <div className="relative cs-float" style={{ width: 'clamp(300px,40vw,480px)', height: 'clamp(300px,40vw,480px)' }}>
+            <div className="absolute inset-0 cs-spin-slow"><SacredRings size={480} gold /></div>
+            <div className="absolute inset-[40px] cs-spin-rev"><SacredRings size={400} /></div>
+            <div className="absolute inset-[80px] rounded-full overflow-hidden"
+              style={{ boxShadow: '0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(124,58,237,0.2)' }}>
+              <ImageWithFallback alt="Sacred numerology wheel" className="w-full h-full object-cover" />
+            </div>
+            {[1,2,3,4,5,6,7,8,9].map((n, i) => {
+              const angle = (i / 9) * Math.PI * 2 - Math.PI / 2;
+              const r = 47;
+              const palette = ['#fbbf24','#a78bfa','#60a5fa','#34d399','#f87171','#fb923c','#c084fc','#38bdf8','#facc15'];
+              const col = palette[i];
+              return (
+                <div key={n} className="absolute flex items-center justify-center rounded-full cs-orbit-glow"
+                  style={{
+                    left: `${50 + Math.cos(angle) * r}%`, top: `${50 + Math.sin(angle) * r}%`,
+                    transform: 'translate(-50%,-50%)', width: 40, height: 40,
+                    background: `radial-gradient(circle at 35% 35%, ${col}22 0%, rgba(0,0,0,0.35) 100%)`,
+                    border: `1.5px solid ${col}70`,
+                    fontFamily: "'Cinzel', serif", fontSize: 15, fontWeight: 900, color: col,
+                    textShadow: `0 0 14px ${col}dd, 0 0 30px ${col}66`,
+                    animationDelay: `${i * 0.28}s`,
+                  }}>
+                  {n}
+                </div>
+              );
+            })}
+            {[1,2,3].map(i => (
+              <div key={i} className="absolute inset-0 rounded-full pointer-events-none"
+                style={{ border: '1px solid rgba(124,58,237,0.2)', animation: `ripple-out 3s ease-out ${i}s infinite` }} />
+            ))}
+            <GoldParticles count={16} />
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+        <span className="text-xs tracking-[0.25em] uppercase" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Scroll</span>
+        <div className="w-px h-10" style={{ background: 'linear-gradient(180deg, #c9a84c, transparent)' }} />
+      </div>
+    </section>
+  );
+}
+
+function LandingAwakening() {
+  return (
+    <section className="relative py-32 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.1) 0%, transparent 70%)' }} />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-16">
+        <div className="relative flex-shrink-0 cs-float2" style={{ width: 300, height: 360 }}>
+          <div className="absolute -inset-8 cs-spin-slow opacity-30"><SacredRings size={460} gold /></div>
+          <div className="relative rounded-2xl overflow-hidden"
+            style={{ boxShadow: '0 0 40px rgba(124,58,237,0.4), 0 0 80px rgba(201,168,76,0.15), 0 30px 60px rgba(0,0,0,0.6)', height: 360 }}>
+            <ImageWithFallback alt="Sacred numerology book" className="w-full h-full object-cover" style={{ height: 360 }} />
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: 'linear-gradient(135deg, transparent 30%, rgba(201,168,76,0.12) 60%, transparent 80%)' }} />
+          </div>
+          <GoldParticles count={18} />
+        </div>
+        <div className="flex-1 max-w-xl">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="text-xs tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Thức Tỉnh</span>
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(90deg, rgba(201,168,76,0.6), transparent)' }} />
+          </div>
+          <h2 className="mb-6" style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.8rem,3.5vw,3rem)', fontWeight: 600, lineHeight: 1.15, color: '#e2d9f3' }}>
+            Cuốn Sách Cổ Đại<br /><span className="gold-text">Đã Chờ Đợi Bạn</span>
+          </h2>
+          <p style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.7)', lineHeight: 1.8, fontSize: '1rem', fontWeight: 300, marginBottom: '2rem' }}>
+            Từ hàng nghìn năm trước, các nền văn minh vĩ đại đã sử dụng con số như ngôn ngữ vũ trụ. Mỗi con số mang trong mình một tần số rung động riêng biệt — và bản đồ số học của bạn là chữ ký duy nhất của linh hồn.
+          </p>
+          <div className="space-y-4">
+            {[
+              { n: '11', label: 'Số Chủ — Con đường khai sáng', col: '#fbbf24' },
+              { n: '7',  label: 'Số Linh Hồn — Trí tuệ bí ẩn', col: '#c084fc' },
+              { n: '33', label: 'Số Sứ Mệnh — Thầy của thầy', col: '#60a5fa' },
+            ].map(({ n, label, col }, idx) => (
+              <div key={n} className="flex items-center gap-4 glass rounded-xl px-5 py-3 group transition-all duration-300 hover:-translate-y-0.5">
+                <div className="relative flex-shrink-0 flex items-center justify-center cs-badge-ring rounded-full"
+                  style={{ width: 48, height: 48, background: `radial-gradient(circle, ${col}18, transparent 70%)`, animationDelay: `${idx * 0.7}s` }}>
+                  <span className="font-black text-lg relative z-10" style={{ fontFamily: "'Cinzel', serif", color: col, textShadow: `0 0 12px ${col}cc, 0 0 24px ${col}55` }}>{n}</span>
+                </div>
+                <span className="text-sm" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.75)' }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LandingCosmicEngine() {
+  const SIZE = 480;
+  const C = SIZE / 2;
+  const LABEL_R = 260;
+  const labels = [
+    { label: 'Ngày Sinh', angle: 0 },
+    { label: 'Linh Hồn', angle: 72 },
+    { label: 'Sứ Mệnh', angle: 144 },
+    { label: 'Biểu Hiện', angle: 216 },
+    { label: 'Nhân Cách', angle: 288 },
+  ];
+  return (
+    <section className="relative py-24 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.1) 0%, transparent 60%)' }} />
+      <div className="relative z-10 text-center mb-16 px-6">
+        <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.8rem,4vw,3.2rem)', fontWeight: 700, color: '#e2d9f3', marginBottom: '1rem' }}>
+          Cỗ Máy <span className="violet-text">Vũ Trụ</span>
+        </h2>
+        <p style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', maxWidth: 540, margin: '0 auto', fontWeight: 300 }}>
+          Hệ thống số học thần thánh hoạt động như một vòng quay thiên cầu, mã hoá mọi khía cạnh con người.
+        </p>
+      </div>
+      <div className="flex items-center justify-center" style={{ height: SIZE + 40 }}>
+        <div className="relative" style={{ width: SIZE, height: SIZE }}>
+          {/* Outer ring */}
+          <div className="absolute inset-0 cs-spin-slow"><SacredRings size={SIZE} /></div>
+          {/* Inner ring */}
+          <div className="absolute cs-spin-rev" style={{ inset: 60 }}><SacredRings size={SIZE - 120} gold /></div>
+          {/* Center image */}
+          <div className="absolute rounded-full overflow-hidden"
+            style={{ inset: 120, boxShadow: '0 0 80px rgba(124,58,237,0.5), 0 0 160px rgba(59,130,246,0.2)' }}>
+            <div className="w-full h-full cs-spin-med">
+              <ImageWithFallback alt="Numerology wheel" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          {/* Center glow */}
+          <div className="absolute cs-pulse-glow"
+            style={{ width: 48, height: 48, left: C - 24, top: C - 24, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,76,0.9), rgba(124,58,237,0.4))', filter: 'blur(4px)' }} />
+          {/* Orbital labels - positioned inside the SIZE×SIZE container */}
+          {labels.map(({ label, angle }) => {
+            const rad = (angle - 90) * Math.PI / 180;
+            return (
+              <div key={label} className="absolute glass rounded-full px-3 py-1.5 text-xs tracking-wider"
+                style={{
+                  left: C + Math.cos(rad) * LABEL_R,
+                  top: C + Math.sin(rad) * LABEL_R,
+                  transform: 'translate(-50%, -50%)',
+                  fontFamily: "'Cinzel', serif",
+                  color: '#c9a84c',
+                  whiteSpace: 'nowrap',
+                  fontSize: 11,
+                }}>
+                {label}
+              </div>
+            );
+          })}
+          <GoldParticles count={16} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LandingAnalysis() {
+  const cards = [
+    { icon: '①', title: 'Số Đường Đời', desc: 'Tính từ ngày tháng năm sinh — chỉ số cốt lõi định nghĩa hành trình và sứ mệnh của bạn.' },
+    { icon: '②', title: 'Số Linh Hồn', desc: 'Rút ra từ nguyên âm trong tên — ước muốn sâu thẳm nhất của tâm hồn bạn.' },
+    { icon: '③', title: 'Số Biểu Hiện', desc: 'Từ toàn bộ tên đầy đủ — tài năng thiên bẩm và năng lực tiềm ẩn chờ được khai mở.' },
+    { icon: '④', title: 'Phân Tích 5 Chiều', desc: 'Khám phá tình yêu, sự nghiệp, tài chính, sức khỏe và tâm linh qua lăng kính số học.' },
+    { icon: '⑤', title: 'Chu Kỳ Cá Nhân', desc: 'Dự đoán các giai đoạn quan trọng trong cuộc sống theo vòng quay số học 9 năm.' },
+    { icon: '⑥', title: 'AI Giải Mã', desc: 'Trí tuệ nhân tạo phân tích bản đồ hoàn chỉnh và tạo ra bản tường giải cá nhân hóa sâu sắc.' },
+  ];
+  return (
+    <section className="relative py-24 px-6 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.08) 0%, transparent 60%)' }} />
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="text-xs tracking-[0.3em] uppercase mb-4 block" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Phân Tích Chuyên Sâu</span>
+          <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.8rem,3.5vw,3rem)', fontWeight: 700, color: '#e2d9f3' }}>
+            Hệ Thống <span className="gold-text">9 Chỉ Số</span> Toàn Diện
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {cards.map((card, i) => (
+            <div key={i} className="glass rounded-2xl p-7 relative overflow-hidden group transition-all duration-500 hover:-translate-y-1"
+              style={{ boxShadow: '0 4px 40px rgba(0,0,0,0.3)', borderColor: i % 2 === 0 ? 'rgba(124,58,237,0.2)' : 'rgba(201,168,76,0.15)' }}>
+              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.15), transparent 70%)' }} />
+              <div className="mb-4 text-3xl gold-text" style={{ fontFamily: "'Cinzel', serif" }}>{card.icon}</div>
+              <h3 className="mb-3 font-semibold" style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', color: '#e2d9f3', letterSpacing: '0.05em' }}>{card.title}</h3>
+              <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: '0.875rem', lineHeight: 1.7, color: 'rgba(196,181,253,0.65)', fontWeight: 300 }}>{card.desc}</p>
+              <div className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent)' }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LandingInsights() {
+  return (
+    <section className="relative py-24 px-6 overflow-hidden">
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.8rem,3.5vw,3rem)', fontWeight: 700, color: '#e2d9f3' }}>
+            Thư <span className="violet-text">Viện Số Học</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{ gridAutoRows: 160 }}>
+          <div className="glass-gold rounded-2xl p-6 row-span-2 col-span-1 flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300">
+            <div className="relative">
+              <div className="absolute -top-2 -left-2 w-14 h-14 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.25), transparent 70%)' }} />
+              <div className="text-5xl gold-text font-black cs-insight-num relative z-10" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 12px rgba(201,168,76,0.6))' }}>1</div>
+            </div>
+            <div><h4 className="font-semibold mb-2 text-sm" style={{ fontFamily: "'Cinzel', serif", color: '#fbbf24' }}>Người Tiên Phong</h4>
+              <p className="text-xs leading-relaxed" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.65)', fontWeight: 300 }}>Lãnh đạo bẩm sinh, ý chí sắt đá — không gì ngăn cản được hành trình chinh phục.</p>
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-6 col-span-2 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(196,181,253,0.15), transparent 70%)' }} />
+            <div className="text-4xl violet-text font-black cs-insight-num relative z-10" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 10px rgba(196,181,253,0.5))', animationDelay: '0.5s' }}>7</div>
+            <div><h4 className="font-semibold mb-1 text-sm" style={{ fontFamily: "'Cinzel', serif", color: '#c4b5fd' }}>Người Tìm Kiếm Chân Lý</h4>
+              <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.55)', fontWeight: 300 }}>Trực giác huyền bí, tâm trí phân tích, kết nối với chiều sâu vũ trụ.</p>
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div className="text-3xl gold-text font-black cs-insight-num" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 8px rgba(201,168,76,0.5))', animationDelay: '1s' }}>3</div>
+            <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Sáng tạo &amp; biểu đạt.</p>
+          </div>
+          <div className="glass rounded-2xl p-5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div className="text-3xl font-black cs-insight-num" style={{ color: '#60a5fa', fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 8px rgba(96,165,250,0.6))', animationDelay: '1.5s' }}>9</div>
+            <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Trí tuệ nhân loại.</p>
+          </div>
+          <div className="glass-gold rounded-2xl p-6 col-span-2 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+            <div className="text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Năm 2026</div>
+            <div><h4 className="font-semibold mb-1 text-sm" style={{ fontFamily: "'Cinzel', serif", color: '#fbbf24' }}>Chu Kỳ Số 9</h4>
+              <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Năm hoàn kết — buông bỏ, chuyển hóa và chuẩn bị cho vòng sinh mới.</p>
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-6 row-span-2 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(196,181,253,0.12), transparent 70%)' }} />
+            <div className="text-5xl violet-text font-black cs-insight-num relative z-10" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 14px rgba(196,181,253,0.7))', animationDelay: '2s' }}>11</div>
+            <div><h4 className="font-semibold mb-2 text-sm" style={{ fontFamily: "'Cinzel', serif", color: '#c4b5fd' }}>Số Chủ</h4>
+              <p className="text-xs leading-relaxed" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Trực giác thiên tài, kết nối tâm linh, sứ mệnh khai sáng nhân loại.</p>
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div className="text-3xl gold-text font-black cs-insight-num" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 8px rgba(201,168,76,0.5))', animationDelay: '2.5s' }}>5</div>
+            <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Tự do &amp; phiêu lưu.</p>
+          </div>
+          <div className="glass rounded-2xl p-5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div className="text-3xl font-black cs-insight-num" style={{ color: '#34d399', fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 10px rgba(52,211,153,0.6))', animationDelay: '3s' }}>22</div>
+            <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Kiến trúc sư vũ trụ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LandingCTA({ onStart }: { onStart: () => void }) {
+  return (
+    <section className="relative py-32 px-6 overflow-hidden flex flex-col items-center justify-center text-center">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.2) 0%, rgba(59,130,246,0.1) 40%, transparent 75%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 80%, rgba(201,168,76,0.08) 0%, transparent 50%)' }} />
+      </div>
+      <div className="relative z-10 mb-12" style={{ width: 240, height: 240 }}>
+        <div className="absolute inset-0 cs-spin-slow"><SacredRings size={240} gold /></div>
+        <div className="absolute inset-0 cs-spin-rev"><SacredRings size={240} /></div>
+        <div className="absolute inset-[40px] rounded-full cs-pulse-glow"
+          style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.6) 0%, rgba(124,58,237,0.4) 40%, rgba(59,130,246,0.2) 70%, transparent 100%)', filter: 'blur(2px)', boxShadow: '0 0 80px rgba(201,168,76,0.4), 0 0 160px rgba(124,58,237,0.3)' }} />
+        {[1,2,3].map(i => (
+          <div key={i} className="absolute inset-0 rounded-full pointer-events-none"
+            style={{ border: '1px solid rgba(201,168,76,0.15)', animation: `ripple-out 4s ease-out ${i * 1.2}s infinite` }} />
+        ))}
+        <GoldParticles count={20} />
+      </div>
+      <div className="relative z-10">
+        <p className="text-xs tracking-[0.4em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Vũ Trụ Đang Chờ Đợi</p>
+        <h2 className="mb-4" style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(2rem,4.5vw,3.6rem)', fontWeight: 700, color: '#e2d9f3', lineHeight: 1.1 }}>
+          Unlock Your<br /><span className="gold-text">Cosmic Blueprint</span>
+        </h2>
+        <p className="mb-10 max-w-lg mx-auto" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.65)', lineHeight: 1.8, fontWeight: 300 }}>
+          Hệ thống AI của chúng tôi sẽ giải mã bản đồ số học hoàn chỉnh của bạn và tiết lộ những bí ẩn sâu thẳm nhất của linh hồn.
+        </p>
+        <CosmicButton onClick={onStart} size="lg" variant="gold">Bắt Đầu Hành Trình</CosmicButton>
+      </div>
+    </section>
   );
 }
 
@@ -109,7 +581,8 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
           </div>
           <div className="flex items-end justify-between gap-2 flex-wrap">
             <div className="flex items-end gap-2 sm:gap-3 min-w-0">
-              <span className="text-5xl sm:text-7xl font-black leading-none tracking-tighter flex-shrink-0">{number}</span>
+              <span className="text-5xl sm:text-7xl font-black leading-none tracking-tighter flex-shrink-0"
+                style={{ textShadow: '0 0 40px rgba(255,255,255,0.4), 0 4px 20px rgba(0,0,0,0.3)' }}>{number}</span>
               <div className="pb-1 min-w-0">
                 <p className="font-black text-base sm:text-lg leading-tight">{profile.name}</p>
                 <p className="text-xs opacity-75 leading-relaxed line-clamp-2 sm:max-w-[220px]">{profile.keyword}</p>
@@ -379,10 +852,7 @@ export default function NumerologyTest() {
   const validate = (): boolean => {
     const d = parseInt(day), m = parseInt(month), y = parseInt(year);
     if (!fullName.trim()) { setError('Vui lòng nhập Họ và Tên của bạn.'); return false; }
-    if (!day || !month || !year) { setError('Vui lòng nhập đầy đủ ngày sinh.'); return false; }
-    if (isNaN(d) || d < 1 || d > 31) { setError('Ngày sinh không hợp lệ.'); return false; }
-    if (isNaN(m) || m < 1 || m > 12) { setError('Tháng sinh không hợp lệ.'); return false; }
-    if (isNaN(y) || y < 1900 || y > new Date().getFullYear()) { setError('Năm sinh không hợp lệ.'); return false; }
+    if (!day || !month || !year) { setError('Vui lòng chọn đầy đủ ngày tháng năm sinh.'); return false; }
     if (new Date(y, m-1, d).getMonth() !== m-1) { setError('Ngày tháng không hợp lệ.'); return false; }
     setError('');
     return true;
@@ -430,99 +900,32 @@ export default function NumerologyTest() {
      INTRO
   ══════════════════════════════════════════ */
   if (phase === 'intro') {
-    const bullets = [
-      { icon: <Calendar size={16}/>, text: '3 chỉ số từ Ngày Sinh', sub: 'Đường Đời · Ngày Sinh · Thái Độ' },
-      { icon: <User size={16}/>,     text: '3 chỉ số từ Họ & Tên',  sub: 'Sứ Mệnh · Linh Hồn · Nhân Cách' },
-      { icon: <Brain size={16}/>,    text: 'Phân tích 5 chiều sâu', sub: 'Tâm lý · Nghề nghiệp · Tình cảm · Tâm linh' },
-    ];
-
+    const goToInput = () => setPhase('input');
     return (
-      <div className="min-h-screen relative overflow-x-hidden" style={{ background: DARK_BG }}>
+      <div style={{ background: '#070312' }} className="overflow-x-hidden">
         <style>{ANIM_STYLES}</style>
-
-        {/* Glow orbs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] left-[10%] rounded-full" style={{ width:'min(600px,90vw)', height:'min(600px,90vw)', background:'radial-gradient(circle,rgba(139,92,246,0.15) 0%,transparent 65%)' }}/>
-          <div className="absolute bottom-[0%] right-[-5%] rounded-full" style={{ width:'min(500px,80vw)', height:'min(500px,80vw)', background:'radial-gradient(circle,rgba(59,130,246,0.12) 0%,transparent 65%)' }}/>
+        {/* Stars */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+          {[...Array(90)].map((_,i) => (
+            <div key={i} className="absolute rounded-full bg-white"
+              style={{ width: i%7===0?2.5:i%3===0?1.5:1, height: i%7===0?2.5:i%3===0?1.5:1,
+                opacity: 0.04+(i%9)*0.04, top:`${(i*11+7)%100}%`, left:`${(i*17+3)%100}%` }} />
+          ))}
         </div>
-
-        {/* Star field */}
-        {[...Array(70)].map((_,i) => (
-          <div key={i} className="absolute rounded-full bg-white pointer-events-none"
-            style={{ width: i%7===0?2.5:i%3===0?1.5:1, height: i%7===0?2.5:i%3===0?1.5:1,
-              opacity: 0.06+(i%9)*0.04, top:`${(i*11+7)%100}%`, left:`${(i*17+3)%96}%` }}/>
-        ))}
-
-        {/* ── 2-column layout ── */}
-        <div className="relative z-10 min-h-screen flex items-center">
-          <div className="w-full max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 py-12 lg:py-0">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-
-              {/* Left column */}
-              <div className="flex-1 text-center lg:text-left">
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-purple-200 text-xs font-bold mb-6 tracking-widest uppercase"
-                  style={{ background:'rgba(139,92,246,0.15)', border:'1px solid rgba(139,92,246,0.35)', boxShadow:'0 0 20px rgba(139,92,246,0.2)' }}>
-                  <Sparkles size={13}/> <span className="text-white">Pythagoras · 570 TCN</span>
-                </div>
-
-                {/* Headline */}
-                <h1 className="font-black leading-[1.1] tracking-tight mb-5"
-                  style={{ fontSize:'clamp(2.2rem,5vw,4rem)' }}>
-                  <span className="text-white block">Thần Số Học</span>
-                  <span style={{ background:'linear-gradient(90deg,#c084fc,#818cf8,#38bdf8)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', display:'inline-block' }}>
-                    Toàn Diện & Chuyên Sâu
-                  </span>
-                </h1>
-
-                <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto lg:mx-0">
-                  Giải mã <span className="text-white font-bold">6 chỉ số cốt lõi</span> từ Họ Tên và Ngày Sinh.
-                  Khám phá bản chất thực sự và con đường vũ trụ dành riêng cho bạn.
-                </p>
-
-                {/* Bullet points */}
-                <div className="space-y-3 mb-10 max-w-md mx-auto lg:mx-0">
-                  {bullets.map((b, i) => (
-                    <div key={i} className="flex items-start gap-3 p-3 rounded-xl text-left"
-                      style={{ background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.07)' }}>
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ background:'rgba(139,92,246,0.25)', color:'#c084fc' }}>
-                        {b.icon}
-                      </div>
-                      <div>
-                        <p className="text-white font-bold text-sm">{b.text}</p>
-                        <p className="text-slate-500 text-xs mt-0.5">{b.sub}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
-                  <button
-                    onClick={() => setPhase('input')}
-                    className="group inline-flex items-center gap-3 px-8 py-4 font-black text-white rounded-2xl text-base transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden w-full sm:w-auto justify-center"
-                    style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow:'0 0 30px rgba(124,58,237,0.5)' }}>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background:'linear-gradient(135deg,#8b5cf6,#6366f1)' }}/>
-                    <Sparkles size={18} className="relative z-10 flex-shrink-0"/>
-                    <span className="relative z-10">Khám phá ngay</span>
-                    <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0"/>
-                  </button>
-                  <p className="text-slate-600 text-xs flex items-center gap-1.5">
-                    <Shield size={11} className="flex-shrink-0"/> Miễn phí · Không cần tài khoản
-                  </p>
-                </div>
-              </div>
-
-              {/* Right column — Orbital (hidden on mobile) */}
-              <div className="hidden lg:flex flex-shrink-0 items-center justify-center"
-                style={{ animation:'float-y 6s ease-in-out infinite' }}>
-                <OrbitalVisual />
-              </div>
-            </div>
+        {/* Nav */}
+        <nav className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 sm:px-8 py-4">
+          <div className="glass rounded-full px-5 py-2">
+            <span className="gold-text font-semibold text-sm tracking-wider" style={{ fontFamily: "'Cinzel', serif" }}>✦ Thần Số Học</span>
           </div>
-        </div>
+          <CosmicButton onClick={goToInput} size="sm" variant="gold">Bắt Đầu</CosmicButton>
+        </nav>
+
+        <LandingHero onStart={goToInput} />
+        <LandingAwakening />
+        <LandingCosmicEngine />
+        <LandingAnalysis />
+        <LandingInsights />
+        <LandingCTA onStart={goToInput} />
       </div>
     );
   }
@@ -531,103 +934,159 @@ export default function NumerologyTest() {
      INPUT
   ══════════════════════════════════════════ */
   if (phase === 'input') {
+    const isComplete = fullName.trim() && day && month && year;
     return (
-      <div className="min-h-screen relative overflow-x-hidden" style={{ background: DARK_BG }}>
+      <div className="min-h-screen flex flex-col overflow-hidden relative" style={{ background: '#070312' }}>
         <style>{ANIM_STYLES}</style>
 
-        {/* Glow */}
+        {/* Aurora mesh background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[20%] left-1/2 -translate-x-1/2 rounded-full"
-            style={{ width:'min(500px,90vw)', height:'min(500px,90vw)', background:'radial-gradient(circle,rgba(139,92,246,0.12) 0%,transparent 65%)' }}/>
+          <div className="aurora-1 absolute rounded-full" style={{ width: '70vw', height: '70vw', top: '-20%', left: '-10%', background: 'radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 65%)' }} />
+          <div className="aurora-2 absolute rounded-full" style={{ width: '60vw', height: '60vw', bottom: '-15%', right: '-10%', background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 65%)' }} />
+          <div className="aurora-3 absolute rounded-full" style={{ width: '50vw', height: '50vw', top: '30%', right: '10%', background: 'radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 65%)' }} />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(91,33,182,0.1) 0%, transparent 70%)' }} />
         </div>
 
-        <div className="relative z-10 min-h-screen flex items-start sm:items-center justify-center px-4 py-10 sm:py-16">
-          <div className="w-full max-w-md mx-auto">
+        {/* Sacred rings background */}
+        <div className="absolute pointer-events-none" style={{ width: 800, height: 800, opacity: 0.055, left: '50%', top: '50%', transform: 'translate(-50%,-50%)' }}>
+          <div className="w-full h-full cs-spin-slow"><SacredRings size={800} gold /></div>
+        </div>
+        <div className="absolute pointer-events-none" style={{ width: 560, height: 560, opacity: 0.04, left: '50%', top: '50%', transform: 'translate(-50%,-50%)' }}>
+          <div className="w-full h-full cs-spin-rev"><SacredRings size={560} /></div>
+        </div>
 
-            {/* Step header */}
-            <div className="text-center mb-8">
-              {/* Step indicator */}
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white"
-                    style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)' }}>1</div>
-                  <span className="text-white text-xs font-semibold">Thông tin</span>
-                </div>
-                <div className="flex-1 h-px max-w-[40px]" style={{ background:'rgba(139,92,246,0.3)' }}/>
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black border"
-                    style={{ borderColor:'rgba(139,92,246,0.4)', color:'rgba(139,92,246,0.5)' }}>2</div>
-                  <span className="text-slate-600 text-xs font-semibold">Kết quả</span>
-                </div>
+        {/* Stars */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+          {[...Array(80)].map((_,i) => (
+            <div key={i} className="absolute rounded-full bg-white"
+              style={{ width: i%9===0?2.5:i%4===0?1.5:1, height: i%9===0?2.5:i%4===0?1.5:1, opacity: 0.03+(i%8)*0.04, top:`${(i*13+5)%100}%`, left:`${(i*17+3)%100}%` }} />
+          ))}
+        </div>
+
+        {/* Back button — top left */}
+        <button onClick={() => setPhase('intro')}
+          className="absolute top-7 left-7 z-30 flex items-center gap-2 transition-all duration-300 group"
+          style={{ fontFamily: "'Cinzel', serif", color: 'rgba(201,168,76,0.55)', fontSize: '0.65rem', letterSpacing: '0.22em', textTransform: 'uppercase' }}>
+          <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>
+          <span className="group-hover:opacity-100 transition-opacity duration-300" style={{ opacity: 0.8 }}>Quay Lại</span>
+        </button>
+
+        {/* Main content */}
+        <div className="relative z-10 flex-1 flex items-center justify-center w-full">
+        <div className="w-full max-w-lg mx-auto px-6 py-6 cs-fade-up" style={{ animationDelay: '0.1s' }}>
+
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-5">
+              <div className="relative" style={{ width: 64, height: 64 }}>
+                <div className="absolute inset-0 cs-spin-slow opacity-70"><SacredRings size={64} gold /></div>
+                <div className="absolute inset-[10px] rounded-full cs-pulse-glow"
+                  style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.6), rgba(124,58,237,0.4))', filter: 'blur(2px)' }} />
+                <div className="absolute inset-0 flex items-center justify-center" style={{ color: '#fbbf24', fontSize: '1.1rem' }}>✦</div>
               </div>
-
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">
-                Nhập Thông Tin Của Bạn
-              </h2>
-              <p className="text-slate-500 text-xs sm:text-sm">
-                Dùng tên đầy đủ như trên CCCD/hộ chiếu để kết quả chính xác nhất.
-              </p>
             </div>
+            <p className="text-xs tracking-[0.35em] uppercase mb-3" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c', textShadow: '0 0 20px rgba(201,168,76,0.5)' }}>
+              Giải Mã Vũ Trụ
+            </p>
+            <h1 className="whitespace-nowrap" style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.4rem,3.5vw,2.2rem)', fontWeight: 700, color: '#e2d9f3', textShadow: '0 0 40px rgba(226,217,243,0.3)' }}>
+              Nhập Thông Tin <span className="gold-text">Của Bạn</span>
+            </h1>
+            <p className="mt-3" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontSize: '0.88rem', fontWeight: 300 }}>
+              Chúng tôi sẽ tạo bản đồ số học cá nhân hóa dành riêng cho bạn
+            </p>
+          </div>
 
-            {/* Card */}
-            <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/10 shadow-2xl"
-              style={{ background:'rgba(255,255,255,0.05)', backdropFilter:'blur(20px)' }}>
+          {/* Form card */}
+          <div className="form-card p-8 relative overflow-hidden">
+            {/* Card inner glow corners */}
+            <div className="absolute -top-16 -left-16 w-52 h-52 rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%)' }} />
+            <div className="absolute -bottom-16 -right-16 w-52 h-52 rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.14), transparent 70%)' }} />
+            {/* Top border glow */}
+            <div className="absolute top-0 left-8 right-8 h-px pointer-events-none"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), rgba(124,58,237,0.3), transparent)' }} />
 
-              {/* Name input */}
-              <div className="mb-5">
-                <label className="flex items-center gap-2 text-white text-xs font-bold mb-2.5 uppercase tracking-widest">
-                  <User size={12}/> Họ và Tên đầy đủ
-                </label>
-                <input type="text" placeholder="VD: NGUYEN THI BICH NGOC" value={fullName}
-                  onChange={e => setFullName(e.target.value.toUpperCase())}
-                  className="w-full rounded-xl px-4 py-3.5 text-white font-bold placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all border text-sm sm:text-base uppercase"
-                  style={{ background:'rgba(255,255,255,0.07)', borderColor:'rgba(255,255,255,0.12)' }}/>
+            <div className="space-y-5 relative z-10">
+              {/* Full Name */}
+              <div>
+                <label className="form-field-label">Họ Và Tên Đầy Đủ</label>
+                <div className="relative">
+                  <span className="field-icon">✦</span>
+                  <input type="text" value={fullName} onChange={e => { setFullName(e.target.value); setError(''); }}
+                    placeholder="Nguyễn Văn An" className="cosmic-input has-icon" />
+                </div>
               </div>
 
-              {/* Date inputs */}
-              <div className="mb-6">
-                <label className="flex items-center gap-2 text-white text-xs font-bold mb-2.5 uppercase tracking-widest">
-                  <Calendar size={12}/> Ngày tháng năm sinh
-                </label>
-                <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                  {[
-                    { val: day,   set: setDay,   ph: 'Ngày',  hint: 'DD' },
-                    { val: month, set: setMonth, ph: 'Tháng', hint: 'MM' },
-                    { val: year,  set: setYear,  ph: 'Năm',   hint: 'YYYY' },
-                  ].map(({ val, set, ph, hint }, i) => (
-                    <div key={i}>
-                      <p className="text-center text-[10px] text-white/60 font-bold mb-1">{hint}</p>
-                      <input type="number" placeholder={ph} value={val} onChange={e => set(e.target.value)}
-                        className="w-full rounded-xl px-2 py-3 text-white text-center font-bold placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all border text-sm"
-                        style={{ background:'rgba(255,255,255,0.07)', borderColor:'rgba(255,255,255,0.12)' }}/>
-                    </div>
-                  ))}
+              {/* Date of Birth */}
+              <div>
+                <label className="form-field-label">Ngày Tháng Năm Sinh</label>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <span className="select-label">Ngày</span>
+                    <select value={day} onChange={e => { setDay(e.target.value); setError(''); }}
+                      className="cosmic-select" style={{ color: day ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
+                      <option value="" disabled>--</option>
+                      {DOB_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <span className="select-label">Tháng</span>
+                    <select value={month} onChange={e => { setMonth(e.target.value); setError(''); }}
+                      className="cosmic-select" style={{ color: month ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
+                      <option value="" disabled>--</option>
+                      {DOB_MONTHS.map((m, i) => <option key={i} value={String(i + 1).padStart(2, '0')}>{m}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <span className="select-label">Năm</span>
+                    <select value={year} onChange={e => { setYear(e.target.value); setError(''); }}
+                      className="cosmic-select" style={{ color: year ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
+                      <option value="" disabled>--</option>
+                      {DOB_YEARS.map(y => <option key={y} value={y}>{y}</option>)}
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Error */}
               {error && (
-                <div className="flex items-start gap-2 rounded-xl px-4 py-3 mb-4"
-                  style={{ background:'rgba(239,68,68,0.12)', border:'1px solid rgba(239,68,68,0.3)' }}>
-                  <AlertTriangle size={14} className="text-red-400 flex-shrink-0 mt-0.5"/>
-                  <p className="text-red-300 text-sm">{error}</p>
+                <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)' }}>
+                  <AlertTriangle size={13} className="text-red-400 flex-shrink-0" />
+                  <p className="text-xs" style={{ color: 'rgba(252,165,165,0.9)', fontFamily: "'Raleway', sans-serif" }}>{error}</p>
                 </div>
               )}
 
-              <button onClick={handleCalculate}
-                className="w-full py-4 font-black rounded-xl text-white text-sm sm:text-base transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer"
-                style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow:'0 0 20px rgba(124,58,237,0.4)' }}>
-                <Sparkles size={17}/>
-                Giải mã bản đồ của tôi
+              <div className="divider-line" />
+
+              {/* Submit */}
+              <button onClick={handleCalculate} className="submit-btn" disabled={!isComplete}>
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  <Star size={13} style={{ color: 'rgba(253,230,138,0.7)' }} />
+                  Giải Mã Bản Đồ Của Tôi
+                  <Star size={13} style={{ color: 'rgba(253,230,138,0.7)' }} />
+                </span>
               </button>
 
-              <button onClick={() => setPhase('intro')}
-                className="mt-3 w-full py-3 text-white/50 hover:text-white text-sm font-semibold transition-colors cursor-pointer">
-                ← Quay lại
-              </button>
+              <p className="text-center" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.28)', fontSize: '0.7rem', letterSpacing: '0.06em' }}>
+                Thông tin của bạn được bảo mật tuyệt đối · Không chia sẻ bên thứ ba
+              </p>
             </div>
           </div>
+
+          {/* Number indicators */}
+          <div className="flex justify-center gap-6 mt-8">
+            {['①','②','③','④','⑤'].map((n, i) => (
+              <div key={i} className="cs-pulse-glow text-sm"
+                style={{ fontFamily: "'Cinzel', serif", color: i < 3 ? 'rgba(201,168,76,0.5)' : 'rgba(124,58,237,0.3)', animationDelay: `${i * 0.4}s` }}>
+                {n}
+              </div>
+            ))}
+          </div>
         </div>
+        </div>
+
+        <GoldParticles count={18} />
       </div>
     );
   }
@@ -740,10 +1199,13 @@ export default function NumerologyTest() {
             <div className="absolute rounded-full border border-dashed border-white/10"
               style={{ inset: 10, animation: 'spin-reverse 15s linear infinite' }}/>
             {/* Main filled circle */}
-            <div className="absolute rounded-full flex items-center justify-center"
-              style={{ inset: 18, ...grad, boxShadow: `0 0 40px ${lp.colorFrom}88, 0 8px 32px rgba(0,0,0,0.5)` }}>
-              <span className="font-black text-white leading-none select-none"
-                style={{ fontSize: 'clamp(4.5rem,18vw,7.5rem)', textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
+            <div className="absolute rounded-full flex items-center justify-center overflow-hidden"
+              style={{ inset: 18, ...grad, boxShadow: `0 0 40px ${lp.colorFrom}88, 0 0 80px ${lp.colorFrom}44, 0 8px 32px rgba(0,0,0,0.5)` }}>
+              {/* Shimmer streak */}
+              <div className="absolute pointer-events-none"
+                style={{ width: '40%', height: '150%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', transform: 'skewX(-20deg)', animation: 'num-shimmer 4s ease-in-out 1s infinite' }} />
+              <span className="font-black text-white leading-none select-none cs-big-num relative z-10"
+                style={{ fontSize: 'clamp(4.5rem,18vw,7.5rem)' }}>
                 {result.lifePathNum}
               </span>
             </div>
@@ -764,8 +1226,12 @@ export default function NumerologyTest() {
           <div className="flex items-end justify-center gap-3 sm:gap-4 mb-10 w-full">
             {others.map(({ num, p, label }, i) => (
               <div key={i} className="flex flex-col items-center gap-1.5">
-                <div className="rounded-full flex items-center justify-center font-black text-white shadow-lg border border-white/10"
-                  style={{ ...gradientStyle(p.colorFrom, p.colorTo), width: 44, height: 44, fontSize: 16 }}>{num}</div>
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full cs-pulse-glow"
+                    style={{ background: `radial-gradient(circle, ${p.colorFrom}40, transparent 70%)`, transform: 'scale(1.5)', animationDelay: `${i * 0.4}s` }} />
+                  <div className="rounded-full flex items-center justify-center font-black text-white shadow-lg border border-white/15 relative z-10"
+                    style={{ ...gradientStyle(p.colorFrom, p.colorTo), width: 46, height: 46, fontSize: 16, boxShadow: `0 0 16px ${p.colorFrom}66, 0 4px 12px rgba(0,0,0,0.4)` }}>{num}</div>
+                </div>
                 <p className="text-white/65 text-[10px] font-semibold whitespace-nowrap">{label}</p>
               </div>
             ))}
@@ -824,10 +1290,13 @@ export default function NumerologyTest() {
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 max-w-xs sm:max-w-3xl mx-auto">
             {summaryItems.map(({ icon, label, num, p, main }, i) => (
               <div key={i}
-                className={`rounded-xl sm:rounded-2xl py-3 sm:py-4 px-1.5 sm:px-2 text-white text-center shadow-lg border border-white/10 ${main ? 'ring-2 ring-amber-400/60' : ''}`}
-                style={gradientStyle(p.colorFrom, p.colorTo)}>
+                className={`rounded-xl sm:rounded-2xl py-3 sm:py-4 px-1.5 sm:px-2 text-white text-center shadow-lg border border-white/10 relative overflow-hidden ${main ? 'ring-2 ring-amber-400/60' : ''}`}
+                style={{ ...gradientStyle(p.colorFrom, p.colorTo), boxShadow: `0 0 20px ${p.colorFrom}55` }}>
+                <div className="absolute inset-0 pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.08), transparent)' }} />
                 <div className="flex justify-center mb-1 opacity-80">{icon}</div>
-                <p className={`font-black leading-none ${main ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'}`}>{num}</p>
+                <p className={`font-black leading-none ${main ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'}`}
+                  style={{ textShadow: '0 0 20px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.3)' }}>{num}</p>
                 <p className="text-[10px] sm:text-xs font-semibold opacity-80 mt-1 leading-tight">{label}</p>
                 {main && <p className="text-[9px] opacity-60 mt-0.5 font-medium">Core</p>}
               </div>
