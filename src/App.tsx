@@ -132,6 +132,7 @@ import { B2BLanding } from './components/B2BLanding';
 import { Footer } from './components/Footer';
 import RIASECTest from './components/RIASECTest';
 import NumerologyTest from './components/NumerologyTest';
+import NumerologyAdmin from './pages/NumerologyAdmin';
 
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
@@ -1449,6 +1450,7 @@ export default function App() {
         {activeTab === 'community' && <Community />}
         {activeTab === 'riasec' && <RIASECTest />}
         {activeTab === 'numerology' && <NumerologyTest />}
+        {activeTab === 'numerology-admin' && <NumerologyAdmin />}
         {activeTab === 'fpt-landing' && <FPTLandingPage />}
         {activeTab === 'vnu-landing' && <VNULandingPage />}
         {activeTab === 'rmit-landing' && <RMITLandingPage />}

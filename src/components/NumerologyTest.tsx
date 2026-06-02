@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import NumerologyGate from './NumerologyGate';
 import {
   Sparkles, Star, RotateCcw, Calendar, ArrowRight,
   Heart, Briefcase, Brain, Zap, BookOpen, Shield, ChevronRight,
@@ -1266,18 +1267,13 @@ export default function NumerologyTest() {
             ))}
           </div>
 
-          {/* CTA */}
-          <button
-            onClick={() => { setResultSubPhase('detail'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="group inline-flex items-center gap-3 px-8 py-4 font-black text-white rounded-2xl text-base transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden w-full sm:w-auto justify-center"
-            style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow:'0 0 30px rgba(124,58,237,0.5)' }}>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ background:'linear-gradient(135deg,#8b5cf6,#6366f1)' }}/>
-            <span className="relative z-10">Xem phân tích chi tiết</span>
-            <ChevronDown size={18} className="relative z-10 group-hover:translate-y-0.5 transition-transform duration-200 flex-shrink-0"/>
-          </button>
+          {/* CTA — gated */}
+          <NumerologyGate
+            inline
+            onUnlock={() => { setResultSubPhase('detail'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          />
 
-          <p className="text-white/40 text-xs mt-4">Phân tích 6 chỉ số · 5 chiều sâu mỗi chỉ số</p>
+          <p className="text-white/40 text-xs mt-4">Phân tích 6 chỉ số · 5 chiều sâu mỗi chỉ số · 1 lượt / lần xem</p>
         </div>
       </div>
     );
