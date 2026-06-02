@@ -114,6 +114,16 @@ const ANIM_STYLES = `
   .cosmic-input:focus ~ .field-icon, .has-icon:focus + .field-icon { color:rgba(201,168,76,0.9); }
   .has-icon { padding-left:42px !important; }
   .select-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,168,76,0.5); margin-bottom:0.35rem; display:block; }
+  /* ── Mystic result page ── */
+  .mystic-pill-tab { display:flex; align-items:center; gap:5px; padding:7px 13px; border-radius:999px; border:1px solid rgba(255,255,255,0.09); font-size:0.72rem; font-weight:600; letter-spacing:0.04em; white-space:nowrap; transition:all 0.2s; cursor:pointer; background:rgba(255,255,255,0.04); color:rgba(196,181,253,0.5); flex-shrink:0; }
+  .mystic-pill-tab.active { background:linear-gradient(135deg,rgba(139,92,246,0.35),rgba(219,39,119,0.2)); border-color:rgba(139,92,246,0.45); color:#e9d5ff; box-shadow:0 0 16px rgba(139,92,246,0.2); }
+  .mystic-pill-tab:hover:not(.active) { background:rgba(255,255,255,0.07); color:rgba(196,181,253,0.8); }
+  .mystic-num-card { background:rgba(255,255,255,0.025); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,0.07); border-radius:24px; overflow:hidden; }
+  .mystic-info-box { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:16px; }
+  @keyframes energy-fill { from{width:0} to{width:var(--target-w)} }
+  .energy-bar { animation:energy-fill 1.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  @keyframes twinkle { 0%,100%{opacity:var(--min-op);transform:scale(1)} 50%{opacity:var(--max-op);transform:scale(var(--scale))} }
+  .star-twinkle { animation:twinkle var(--dur,3s) ease-in-out var(--delay,0s) infinite; }
 `;
 
 /* ─── InfoSection ─── */
@@ -125,6 +135,21 @@ function InfoSection({ icon, title, children, bg, borderColor }: {
       <div className="flex items-center gap-2 mb-3">
         <span className="flex-shrink-0">{icon}</span>
         <span className="text-xs font-extrabold uppercase tracking-wider text-slate-600 leading-tight">{title}</span>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/* ─── DarkInfoSection ─── */
+function DarkInfoSection({ icon, title, children, accentColor = 'rgba(196,181,253,0.55)' }: {
+  icon: React.ReactNode; title: string; children: React.ReactNode; accentColor?: string;
+}) {
+  return (
+    <div className="mystic-info-box">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="flex-shrink-0">{icon}</span>
+        <span className="text-xs font-bold uppercase tracking-wider" style={{ color: accentColor }}>{title}</span>
       </div>
       {children}
     </div>
@@ -561,36 +586,41 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
   const ctx = INDEX_CONTEXT[indexType];
 
   const tabs: { id: TabId; label: string; icon: React.ReactNode }[] = [
-    { id: 'overview',   label: 'Tổng quan',   icon: <Brain size={12} /> },
-    { id: 'psychology', label: 'Tâm lý',       icon: <Zap size={12} /> },
-    { id: 'love',       label: 'Quan hệ',      icon: <Heart size={12} /> },
-    { id: 'career',     label: 'Nghề nghiệp',  icon: <Briefcase size={12} /> },
-    { id: 'spiritual',  label: 'Tâm linh',     icon: <Compass size={12} /> },
+    { id: 'overview',   label: 'Tổng quan',   icon: <Brain size={11} /> },
+    { id: 'psychology', label: 'Tâm lý',       icon: <Zap size={11} /> },
+    { id: 'love',       label: 'Quan hệ',      icon: <Heart size={11} /> },
+    { id: 'career',     label: 'Nghề nghiệp',  icon: <Briefcase size={11} /> },
+    { id: 'spiritual',  label: 'Tâm linh',     icon: <Compass size={11} /> },
   ];
 
   return (
-    <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-      {/* Header */}
-      <div className="p-4 sm:p-6 text-white relative overflow-hidden" style={grad}>
-        <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-10 bg-white" />
-        <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full opacity-10 bg-white" />
-        <div className="relative">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="opacity-80 flex-shrink-0">{labelIcon}</span>
-            <span className="text-xs font-bold tracking-widest uppercase opacity-80">{label}</span>
+    <div className="mystic-num-card">
+      {/* Header with giant watermark number */}
+      <div className="relative overflow-hidden" style={{ ...grad, padding: '28px 24px 22px' }}>
+        {/* Watermark giant number */}
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 select-none pointer-events-none leading-none"
+          style={{ fontSize: 'clamp(5rem,14vw,8rem)', fontWeight: 900,
+            color: 'rgba(255,255,255,0.11)', fontFamily: "'Cinzel', serif" }}>
+          {number}
+        </div>
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'linear-gradient(135deg, rgba(0,0,0,0.25) 0%, transparent 60%)' }} />
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="opacity-80 flex-shrink-0 text-white">{labelIcon}</span>
+            <span className="text-xs font-bold tracking-widest uppercase text-white/70">{label}</span>
           </div>
-          <div className="flex items-end justify-between gap-2 flex-wrap">
-            <div className="flex items-end gap-2 sm:gap-3 min-w-0">
-              <span className="text-5xl sm:text-7xl font-black leading-none tracking-tighter flex-shrink-0"
-                style={{ textShadow: '0 0 40px rgba(255,255,255,0.4), 0 4px 20px rgba(0,0,0,0.3)' }}>{number}</span>
-              <div className="pb-1 min-w-0">
-                <p className="font-black text-base sm:text-lg leading-tight">{profile.name}</p>
-                <p className="text-xs opacity-75 leading-relaxed line-clamp-2 sm:max-w-[220px]">{profile.keyword}</p>
+          <div className="flex items-end gap-3 sm:gap-4">
+            <span className="font-black text-white leading-none cs-big-num flex-shrink-0"
+              style={{ fontSize: 'clamp(3.2rem,9vw,5rem)', textShadow: '0 0 40px rgba(255,255,255,0.5), 0 4px 20px rgba(0,0,0,0.4)' }}>
+              {number}
+            </span>
+            <div className="pb-1 min-w-0">
+              <p className="font-black text-white text-base sm:text-lg leading-tight">{profile.name}</p>
+              <p className="text-white/60 text-xs mt-1 leading-relaxed line-clamp-2 sm:max-w-[200px]">{profile.keyword}</p>
+              <div className="flex gap-3 mt-2 text-white/45 text-xs">
+                <span>{profile.planet}</span><span>·</span><span>{profile.element}</span>
               </div>
-            </div>
-            <div className="text-right text-xs opacity-70 space-y-0.5 pb-1 flex-shrink-0">
-              <p className="font-semibold">{profile.planet}</p>
-              <p>{profile.element}</p>
             </div>
           </div>
         </div>
@@ -598,146 +628,145 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
 
       {/* Context banner */}
       {ctx && (
-        <div className={`px-4 sm:px-5 py-3 border-b ${ctx.color} border-l-4`} style={{ borderLeftColor: profile.colorFrom }}>
-          <p className="text-xs font-black uppercase tracking-wide mb-0.5 opacity-70">{ctx.title}</p>
-          <p className="text-xs leading-relaxed">{ctx.desc}</p>
+        <div className="px-5 py-3 border-b" style={{ background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(255,255,255,0.07)' }}>
+          <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: profile.colorFrom }}>— {ctx.title}</p>
+          <p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.7)' }}>{ctx.desc}</p>
         </div>
       )}
 
       {/* Essence */}
-      <div className="px-4 sm:px-5 py-4 bg-slate-50 border-b border-slate-100">
-        <p className="text-slate-700 text-sm leading-relaxed">
-          <span className="font-extrabold text-slate-900">Năng lực cốt lõi — </span>{profile.essence}
+      <div className="px-5 py-4 border-b" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.06)' }}>
+        <p className="text-sm leading-relaxed" style={{ color: 'rgba(226,217,243,0.8)' }}>
+          <span className="font-extrabold" style={{ color: '#e2d9f3' }}>Năng lực cốt lõi — </span>{profile.essence}
         </p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex overflow-x-auto border-b border-slate-100 bg-white">
+      {/* Tabs - pill style */}
+      <div className="flex gap-2 px-4 py-3 overflow-x-auto border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
         {tabs.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
-            className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-3 text-xs font-bold whitespace-nowrap border-b-2 transition-all duration-200 flex-shrink-0 cursor-pointer ${
-              tab === t.id ? 'border-purple-500 text-purple-700 bg-purple-50/60' : 'border-transparent text-slate-400 hover:text-slate-600 hover:bg-slate-50'
-            }`}>
+            className={`mystic-pill-tab ${tab === t.id ? 'active' : ''}`}>
             {t.icon}<span>{t.label}</span>
           </button>
         ))}
       </div>
 
       {/* Tab content */}
-      <div className="p-4 sm:p-5 space-y-3 bg-white">
+      <div className="p-4 sm:p-5 space-y-3">
 
         {tab === 'overview' && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <InfoSection icon={<Sun size={14} className="text-amber-500"/>} title="Góc Sáng" bg="bg-amber-50" borderColor="border-amber-100">
-                <p className="text-sm text-amber-900 leading-relaxed">{profile.lightSide}</p>
-              </InfoSection>
-              <InfoSection icon={<Moon size={14} className="text-slate-500"/>} title="Góc Tối" bg="bg-slate-100" borderColor="border-slate-200">
-                <p className="text-sm text-slate-700 leading-relaxed">{profile.darkSide}</p>
-              </InfoSection>
+              <DarkInfoSection icon={<Sun size={14} style={{ color: '#fbbf24' }}/>} title="Góc Sáng" accentColor="#fbbf24">
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(253,230,138,0.85)' }}>{profile.lightSide}</p>
+              </DarkInfoSection>
+              <DarkInfoSection icon={<Moon size={14} style={{ color: '#94a3b8' }}/>} title="Góc Tối" accentColor="#94a3b8">
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.75)' }}>{profile.darkSide}</p>
+              </DarkInfoSection>
             </div>
             {profile.giftToWorld && (
-              <InfoSection icon={<Gift size={14} className="text-emerald-600"/>} title="Món Quà Cho Thế Giới" bg="bg-emerald-50" borderColor="border-emerald-100">
-                <p className="text-sm text-emerald-900 leading-relaxed font-medium">{profile.giftToWorld}</p>
-              </InfoSection>
+              <DarkInfoSection icon={<Gift size={14} style={{ color: '#34d399' }}/>} title="Món Quà Cho Thế Giới" accentColor="#34d399">
+                <p className="text-sm leading-relaxed font-medium" style={{ color: 'rgba(167,243,208,0.85)' }}>{profile.giftToWorld}</p>
+              </DarkInfoSection>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <InfoSection icon={<TrendingUp size={14} className="text-green-600"/>} title="Ưu Điểm" bg="bg-green-50" borderColor="border-green-100">
+              <DarkInfoSection icon={<TrendingUp size={14} style={{ color: '#4ade80' }}/>} title="Ưu Điểm" accentColor="#4ade80">
                 <ul className="space-y-2">{profile.strengths.map((s,i)=>(
-                  <li key={i} className="flex items-start gap-2 text-sm text-green-900">
-                    <ChevronRight size={13} className="text-green-500 flex-shrink-0 mt-0.5"/><span>{s}</span>
+                  <li key={i} className="flex items-start gap-2 text-sm" style={{ color: 'rgba(187,247,208,0.8)' }}>
+                    <ChevronRight size={13} style={{ color: '#4ade80' }} className="flex-shrink-0 mt-0.5"/><span>{s}</span>
                   </li>))}</ul>
-              </InfoSection>
-              <InfoSection icon={<AlertTriangle size={14} className="text-red-500"/>} title="Nhược Điểm" bg="bg-red-50" borderColor="border-red-100">
+              </DarkInfoSection>
+              <DarkInfoSection icon={<AlertTriangle size={14} style={{ color: '#fb923c' }}/>} title="Thử Thách" accentColor="#fb923c">
                 <ul className="space-y-2">{profile.weaknesses.map((w,i)=>(
-                  <li key={i} className="flex items-start gap-2 text-sm text-red-900">
-                    <ChevronRight size={13} className="text-red-400 flex-shrink-0 mt-0.5"/><span>{w}</span>
+                  <li key={i} className="flex items-start gap-2 text-sm" style={{ color: 'rgba(254,215,170,0.8)' }}>
+                    <ChevronRight size={13} style={{ color: '#fb923c' }} className="flex-shrink-0 mt-0.5"/><span>{w}</span>
                   </li>))}</ul>
-              </InfoSection>
+              </DarkInfoSection>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <InfoSection icon={<Users size={14} className="text-blue-500"/>} title="Hợp với số" bg="bg-blue-50" borderColor="border-blue-100">
+              <DarkInfoSection icon={<Users size={14} style={{ color: '#60a5fa' }}/>} title="Hợp với số" accentColor="#60a5fa">
                 <div className="flex flex-wrap gap-2 mt-1">{profile.compatible.map(n=>(
-                  <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black shadow-sm" style={grad}>{n}</span>
+                  <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black" style={grad}>{n}</span>
                 ))}</div>
-              </InfoSection>
-              <InfoSection icon={<Zap size={14} className="text-orange-500"/>} title="Thách thức" bg="bg-orange-50" borderColor="border-orange-100">
+              </DarkInfoSection>
+              <DarkInfoSection icon={<Zap size={14} style={{ color: '#f472b6' }}/>} title="Thách thức" accentColor="#f472b6">
                 <div className="flex flex-wrap gap-2 mt-1">{profile.challenging.map(n=>(
-                  <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black shadow-sm" style={{background:'linear-gradient(135deg,#fb923c,#ef4444)'}}>{n}</span>
+                  <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black" style={{ background:'linear-gradient(135deg,#ec4899,#8b5cf6)' }}>{n}</span>
                 ))}</div>
-              </InfoSection>
+              </DarkInfoSection>
             </div>
           </>
         )}
 
         {tab === 'psychology' && (
           <>
-            <InfoSection icon={<Brain size={14} className="text-purple-500"/>} title="Phân Tích Tâm Lý Chuyên Sâu" bg="bg-purple-50" borderColor="border-purple-100">
+            <DarkInfoSection icon={<Brain size={14} style={{ color: '#c084fc' }}/>} title="Phân Tích Tâm Lý Chuyên Sâu" accentColor="#c084fc">
               <ul className="space-y-3 mt-1">{profile.deepAnalysis.map((item,i)=>(
-                <li key={i} className="flex gap-3 text-sm text-purple-900 leading-relaxed">
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-200 text-purple-700 text-xs font-black flex items-center justify-center mt-0.5">{i+1}</span>
+                <li key={i} className="flex gap-3 text-sm leading-relaxed" style={{ color: 'rgba(233,213,255,0.8)' }}>
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 text-xs font-black"
+                    style={{ background: 'rgba(192,132,252,0.2)', color: '#c084fc' }}>{i+1}</span>
                   <span>{item}</span>
                 </li>))}</ul>
-            </InfoSection>
-            {profile.childhood && <InfoSection icon={<Baby size={14} className="text-teal-600"/>} title="Dấu Ấn Tuổi Thơ" bg="bg-teal-50" borderColor="border-teal-100"><p className="text-sm text-teal-900 leading-relaxed">{profile.childhood}</p></InfoSection>}
-            {profile.mindset && <InfoSection icon={<Lightbulb size={14} className="text-sky-500"/>} title="Mô Thức Tư Duy" bg="bg-sky-50" borderColor="border-sky-100"><p className="text-sm text-sky-900 leading-relaxed">{profile.mindset}</p></InfoSection>}
-            {profile.stressResponse && <InfoSection icon={<Zap size={14} className="text-orange-500"/>} title="Phản Ứng Khi Căng Thẳng" bg="bg-orange-50" borderColor="border-orange-100"><p className="text-sm text-orange-900 leading-relaxed">{profile.stressResponse}</p></InfoSection>}
-            {profile.shadowWork && <InfoSection icon={<Shield size={14} className="text-slate-600"/>} title="Góc Khuất Cần Chữa Lành (Shadow Work)" bg="bg-slate-100" borderColor="border-slate-200"><p className="text-sm text-slate-800 leading-relaxed italic">{profile.shadowWork}</p></InfoSection>}
+            </DarkInfoSection>
+            {profile.childhood && <DarkInfoSection icon={<Baby size={14} style={{ color: '#2dd4bf' }}/>} title="Dấu Ấn Tuổi Thơ" accentColor="#2dd4bf"><p className="text-sm leading-relaxed" style={{ color: 'rgba(153,246,228,0.8)' }}>{profile.childhood}</p></DarkInfoSection>}
+            {profile.mindset && <DarkInfoSection icon={<Lightbulb size={14} style={{ color: '#38bdf8' }}/>} title="Mô Thức Tư Duy" accentColor="#38bdf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.mindset}</p></DarkInfoSection>}
+            {profile.stressResponse && <DarkInfoSection icon={<Zap size={14} style={{ color: '#fb923c' }}/>} title="Phản Ứng Khi Căng Thẳng" accentColor="#fb923c"><p className="text-sm leading-relaxed" style={{ color: 'rgba(254,215,170,0.8)' }}>{profile.stressResponse}</p></DarkInfoSection>}
+            {profile.shadowWork && <DarkInfoSection icon={<Shield size={14} style={{ color: '#94a3b8' }}/>} title="Góc Khuất Cần Chữa Lành (Shadow Work)" accentColor="#94a3b8"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(196,181,253,0.7)' }}>{profile.shadowWork}</p></DarkInfoSection>}
           </>
         )}
 
         {tab === 'love' && (
           <>
-            <InfoSection icon={<Heart size={14} className="text-rose-500"/>} title="Phong Cách Tình Yêu" bg="bg-rose-50" borderColor="border-rose-100"><p className="text-sm text-rose-900 leading-relaxed">{profile.loveStyle}</p></InfoSection>
-            {profile.relationshipDynamics && <InfoSection icon={<Link2 size={14} className="text-pink-500"/>} title="Động Lực Trong Các Mối Quan Hệ" bg="bg-pink-50" borderColor="border-pink-100"><p className="text-sm text-pink-900 leading-relaxed">{profile.relationshipDynamics}</p></InfoSection>}
-            {profile.communicationStyle && <InfoSection icon={<MessageCircle size={14} className="text-blue-500"/>} title="Phong Cách Giao Tiếp" bg="bg-blue-50" borderColor="border-blue-100"><p className="text-sm text-blue-900 leading-relaxed">{profile.communicationStyle}</p></InfoSection>}
-            <InfoSection icon={<Activity size={14} className="text-teal-600"/>} title="Sức Khỏe Cần Chú Ý" bg="bg-teal-50" borderColor="border-teal-100"><p className="text-sm text-teal-900 leading-relaxed">{profile.healthFocus}</p></InfoSection>
+            <DarkInfoSection icon={<Heart size={14} style={{ color: '#fb7185' }}/>} title="Phong Cách Tình Yêu" accentColor="#fb7185"><p className="text-sm leading-relaxed" style={{ color: 'rgba(253,164,175,0.85)' }}>{profile.loveStyle}</p></DarkInfoSection>
+            {profile.relationshipDynamics && <DarkInfoSection icon={<Link2 size={14} style={{ color: '#f9a8d4' }}/>} title="Động Lực Trong Các Mối Quan Hệ" accentColor="#f9a8d4"><p className="text-sm leading-relaxed" style={{ color: 'rgba(249,168,212,0.8)' }}>{profile.relationshipDynamics}</p></DarkInfoSection>}
+            {profile.communicationStyle && <DarkInfoSection icon={<MessageCircle size={14} style={{ color: '#60a5fa' }}/>} title="Phong Cách Giao Tiếp" accentColor="#60a5fa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.communicationStyle}</p></DarkInfoSection>}
+            <DarkInfoSection icon={<Activity size={14} style={{ color: '#2dd4bf' }}/>} title="Sức Khỏe Cần Chú Ý" accentColor="#2dd4bf"><p className="text-sm leading-relaxed" style={{ color: 'rgba(153,246,228,0.8)' }}>{profile.healthFocus}</p></DarkInfoSection>
           </>
         )}
 
         {tab === 'career' && (
           <>
-            <InfoSection icon={<Target size={14} className="text-indigo-600"/>} title="Phong Cách Làm Việc" bg="bg-indigo-50" borderColor="border-indigo-100"><p className="text-sm text-indigo-900 leading-relaxed">{profile.workStyle}</p></InfoSection>
-            <InfoSection icon={<Building2 size={14} className="text-blue-600"/>} title="Môi Trường Làm Việc Lý Tưởng" bg="bg-blue-50" borderColor="border-blue-100"><p className="text-sm text-blue-900 leading-relaxed">{profile.workEnv}</p></InfoSection>
-            <InfoSection icon={<Users size={14} className="text-violet-600"/>} title="Phong Cách Lãnh Đạo" bg="bg-violet-50" borderColor="border-violet-100"><p className="text-sm text-violet-900 leading-relaxed">{profile.leadershipStyle}</p></InfoSection>
+            <DarkInfoSection icon={<Target size={14} style={{ color: '#818cf8' }}/>} title="Phong Cách Làm Việc" accentColor="#818cf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(199,210,254,0.8)' }}>{profile.workStyle}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Building2 size={14} style={{ color: '#60a5fa' }}/>} title="Môi Trường Làm Việc Lý Tưởng" accentColor="#60a5fa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.workEnv}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Users size={14} style={{ color: '#c084fc' }}/>} title="Phong Cách Lãnh Đạo" accentColor="#c084fc"><p className="text-sm leading-relaxed" style={{ color: 'rgba(233,213,255,0.8)' }}>{profile.leadershipStyle}</p></DarkInfoSection>
             {profile.majors?.length > 0 && (
-              <InfoSection icon={<GraduationCap size={14} className="text-purple-600"/>} title="Gợi Ý Ngành Học" bg="bg-purple-50" borderColor="border-purple-100">
+              <DarkInfoSection icon={<GraduationCap size={14} style={{ color: '#a78bfa' }}/>} title="Gợi Ý Ngành Học" accentColor="#a78bfa">
                 <div className="flex flex-wrap gap-2 mt-1">{profile.majors.map((m,i)=>(
-                  <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-purple-800 border border-purple-200 shadow-sm">{m}</span>
+                  <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background:'rgba(167,139,250,0.15)', color:'#c4b5fd', border:'1px solid rgba(167,139,250,0.25)' }}>{m}</span>
                 ))}</div>
-              </InfoSection>
+              </DarkInfoSection>
             )}
-            <InfoSection icon={<Briefcase size={14} className="text-slate-600"/>} title="Gợi Ý Nghề Nghiệp" bg="bg-slate-50" borderColor="border-slate-200">
+            <DarkInfoSection icon={<Briefcase size={14} style={{ color: '#94a3b8' }}/>} title="Gợi Ý Nghề Nghiệp" accentColor="#94a3b8">
               <div className="flex flex-wrap gap-2 mt-1">{profile.careers.map((c,i)=>(
-                <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold text-white shadow-sm" style={grad}>{c}</span>
+                <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold text-white" style={grad}>{c}</span>
               ))}</div>
-            </InfoSection>
-            <InfoSection icon={<Lightbulb size={14} className="text-amber-600"/>} title="Lời Khuyên Phát Triển Sự Nghiệp" bg="bg-amber-50" borderColor="border-amber-100"><p className="text-sm text-amber-900 leading-relaxed">{profile.careerAdvice}</p></InfoSection>
-            <InfoSection icon={<Wallet size={14} className="text-green-600"/>} title="Phong Cách Tài Chính" bg="bg-green-50" borderColor="border-green-100"><p className="text-sm text-green-900 leading-relaxed">{profile.moneyStyle}</p></InfoSection>
+            </DarkInfoSection>
+            <DarkInfoSection icon={<Lightbulb size={14} style={{ color: '#fbbf24' }}/>} title="Lời Khuyên Phát Triển Sự Nghiệp" accentColor="#fbbf24"><p className="text-sm leading-relaxed" style={{ color: 'rgba(253,230,138,0.85)' }}>{profile.careerAdvice}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Wallet size={14} style={{ color: '#4ade80' }}/>} title="Phong Cách Tài Chính" accentColor="#4ade80"><p className="text-sm leading-relaxed" style={{ color: 'rgba(187,247,208,0.8)' }}>{profile.moneyStyle}</p></DarkInfoSection>
           </>
         )}
 
         {tab === 'spiritual' && (
           <>
-            <InfoSection icon={<Compass size={14} className="text-violet-600"/>} title="Con Đường Tâm Linh" bg="bg-violet-50" borderColor="border-violet-100"><p className="text-sm text-violet-900 leading-relaxed">{profile.spiritualPath}</p></InfoSection>
-            <InfoSection icon={<BookOpen size={14} className="text-purple-600"/>} title="Bài Học Cuộc Đời" bg="bg-purple-50" borderColor="border-purple-100"><p className="text-sm text-purple-900 leading-relaxed italic">"{profile.lesson}"</p></InfoSection>
-            {profile.karmicLesson && <InfoSection icon={<Shield size={14} className="text-indigo-600"/>} title="Bài Học Nghiệp (Karmic Lesson)" bg="bg-indigo-50" borderColor="border-indigo-100"><p className="text-sm text-indigo-900 leading-relaxed">{profile.karmicLesson}</p></InfoSection>}
+            <DarkInfoSection icon={<Compass size={14} style={{ color: '#a78bfa' }}/>} title="Con Đường Tâm Linh" accentColor="#a78bfa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.85)' }}>{profile.spiritualPath}</p></DarkInfoSection>
+            <DarkInfoSection icon={<BookOpen size={14} style={{ color: '#c084fc' }}/>} title="Bài Học Cuộc Đời" accentColor="#c084fc"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(233,213,255,0.8)' }}>"{profile.lesson}"</p></DarkInfoSection>
+            {profile.karmicLesson && <DarkInfoSection icon={<Shield size={14} style={{ color: '#818cf8' }}/>} title="Bài Học Nghiệp (Karmic Lesson)" accentColor="#818cf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(199,210,254,0.8)' }}>{profile.karmicLesson}</p></DarkInfoSection>}
             {profile.lifeThemes?.length > 0 && (
-              <InfoSection icon={<Map size={14} className="text-amber-600"/>} title="Các Chủ Đề Lớn Của Cuộc Đời" bg="bg-amber-50" borderColor="border-amber-100">
+              <DarkInfoSection icon={<Map size={14} style={{ color: '#fbbf24' }}/>} title="Các Chủ Đề Lớn Của Cuộc Đời" accentColor="#fbbf24">
                 <ul className="space-y-2 mt-1">{profile.lifeThemes.map((theme,i)=>(
-                  <li key={i} className="flex gap-2 text-sm text-amber-900">
-                    <ChevronRight size={13} className="text-amber-500 flex-shrink-0 mt-0.5"/><span>{theme}</span>
+                  <li key={i} className="flex gap-2 text-sm" style={{ color: 'rgba(253,230,138,0.8)' }}>
+                    <ChevronRight size={13} style={{ color: '#fbbf24' }} className="flex-shrink-0 mt-0.5"/><span>{theme}</span>
                   </li>))}</ul>
-              </InfoSection>
+              </DarkInfoSection>
             )}
             {profile.affirmations?.length > 0 && (
-              <InfoSection icon={<Sparkles size={14} className="text-fuchsia-600"/>} title="Khẳng Định Tích Cực" bg="bg-fuchsia-50" borderColor="border-fuchsia-100">
+              <DarkInfoSection icon={<Sparkles size={14} style={{ color: '#f0abfc' }}/>} title="Khẳng Định Tích Cực" accentColor="#f0abfc">
                 <div className="space-y-2 mt-1">{profile.affirmations.map((aff,i)=>(
-                  <p key={i} className="text-sm font-semibold text-fuchsia-800 italic bg-white p-3 rounded-xl border border-fuchsia-100 leading-relaxed">"{aff}"</p>
+                  <p key={i} className="text-sm font-semibold italic rounded-xl p-3 leading-relaxed" style={{ background:'rgba(240,171,252,0.08)', border:'1px solid rgba(240,171,252,0.15)', color:'rgba(240,171,252,0.9)' }}>"{aff}"</p>
                 ))}</div>
-              </InfoSection>
+              </DarkInfoSection>
             )}
-            <InfoSection icon={<Flame size={14} className="text-yellow-600"/>} title="Lời Khuyên Thực Tế" bg="bg-yellow-50" borderColor="border-yellow-100"><p className="text-sm text-yellow-900 leading-relaxed italic">"{profile.advice}"</p></InfoSection>
+            <DarkInfoSection icon={<Flame size={14} style={{ color: '#fbbf24' }}/>} title="Lời Khuyên Thực Tế" accentColor="#fbbf24"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(253,230,138,0.85)' }}>"{profile.advice}"</p></DarkInfoSection>
           </>
         )}
       </div>
@@ -1266,23 +1295,62 @@ export default function NumerologyTest() {
     { icon: <Eye size={14}/>,      label: 'Thái Độ',   num: result.attitudeNum,    p: result.attitude,    main: false },
   ];
 
+  const energyItems = [
+    { label: 'Đường Đời', num: result.lifePathNum,    color: result.lifePath.colorFrom },
+    { label: 'Sứ Mệnh',   num: result.destinyNum,     color: result.destiny.colorFrom },
+    { label: 'Linh Hồn',  num: result.soulUrgeNum,    color: result.soulUrge.colorFrom },
+    { label: 'Nhân Cách', num: result.personalityNum, color: result.personality.colorFrom },
+    { label: 'Ngày Sinh', num: result.birthdayNum,    color: result.birthday.colorFrom },
+    { label: 'Thái Độ',   num: result.attitudeNum,    color: result.attitude.colorFrom },
+  ];
+
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background:'#f1f5f9' }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background:'linear-gradient(160deg,#06040f 0%,#0e0627 35%,#140a35 65%,#0b1033 100%)' }}>
       <style>{ANIM_STYLES}</style>
 
+      {/* Twinkling star field */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+        {[...Array(110)].map((_,i) => {
+          const size = i%9===0 ? 3 : i%4===0 ? 2 : 1;
+          const minOp = 0.05 + (i%5)*0.04;
+          const maxOp = minOp + 0.35 + (i%7)*0.08;
+          const dur = 2 + (i%11)*0.45;
+          const delay = (i*0.17)%4;
+          const scale = size >= 2 ? 1.6 : 1.3;
+          const colors = ['#ffffff','#ffffff','#ffffff','#c4b5fd','#fbbf24','#ffffff','#ffffff','#38bdf8'];
+          const color = colors[i % colors.length];
+          return (
+            <div key={i} className="absolute rounded-full star-twinkle"
+              style={{
+                width: size, height: size,
+                background: color,
+                top:`${(i*11+7)%100}%`, left:`${(i*17+3)%100}%`,
+                boxShadow: size >= 2 ? `0 0 ${size*3}px ${color}` : 'none',
+                '--min-op': minOp, '--max-op': maxOp,
+                '--dur': `${dur}s`, '--delay': `${delay}s`,
+                '--scale': scale,
+              } as React.CSSProperties} />
+          );
+        })}
+      </div>
+
       {/* ── Hero summary bar ── */}
-      <div className="pb-8 sm:pb-10 pt-8 sm:pt-10 px-4 sm:px-6"
+      <div className="relative pb-8 sm:pb-10 pt-10 sm:pt-12 px-4 sm:px-6 overflow-hidden"
         style={{ background:'linear-gradient(160deg,#0f0c29,#302b63,#24243e)' }}>
-        <div className="max-w-4xl mx-auto text-center">
+        {/* Sacred ring bg decoration */}
+        <div className="absolute pointer-events-none opacity-10" style={{ width: 600, height: 600, right: -150, top: -150 }}>
+          <div className="w-full h-full cs-spin-slow"><SacredRings size={600} gold /></div>
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-purple-200 text-xs font-semibold mb-4 border border-purple-400/30"
             style={{ background:'rgba(139,92,246,0.2)' }}>
             <Sparkles size={12}/> Bản Đồ Thần Số Học
           </div>
           <h1 className="font-black text-white mb-1 tracking-tight uppercase leading-tight"
-            style={{ fontSize:'clamp(1.1rem,3.5vw,2rem)' }}>
+            style={{ fontSize:'clamp(1.1rem,3.5vw,2rem)', fontFamily:"'Cinzel', serif" }}>
             {result.fullName}
           </h1>
-          <p className="text-purple-300/70 text-xs sm:text-sm mb-6">
+          <p className="text-purple-300/70 text-xs sm:text-sm mb-7">
             Ngày sinh: <span className="font-bold text-amber-400">{result.dob}</span>
           </p>
 
@@ -1290,10 +1358,8 @@ export default function NumerologyTest() {
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 max-w-xs sm:max-w-3xl mx-auto">
             {summaryItems.map(({ icon, label, num, p, main }, i) => (
               <div key={i}
-                className={`rounded-xl sm:rounded-2xl py-3 sm:py-4 px-1.5 sm:px-2 text-white text-center shadow-lg border border-white/10 relative overflow-hidden ${main ? 'ring-2 ring-amber-400/60' : ''}`}
+                className={`rounded-xl sm:rounded-2xl py-3 sm:py-4 px-1.5 sm:px-2 text-white text-center shadow-lg border border-white/10 relative overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 ${main ? 'ring-2 ring-amber-400/60' : ''}`}
                 style={{ ...gradientStyle(p.colorFrom, p.colorTo), boxShadow: `0 0 20px ${p.colorFrom}55` }}>
-                <div className="absolute inset-0 pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.08), transparent)' }} />
                 <div className="flex justify-center mb-1 opacity-80">{icon}</div>
                 <p className={`font-black leading-none ${main ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'}`}
                   style={{ textShadow: '0 0 20px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.3)' }}>{num}</p>
@@ -1305,15 +1371,55 @@ export default function NumerologyTest() {
         </div>
       </div>
 
-      {/* ── Cards ── */}
-      <div className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-10 space-y-8 sm:space-y-10">
+      {/* ── Content area ── */}
+      <div className="relative z-10 max-w-3xl mx-auto px-3 sm:px-4 py-8 sm:py-12 space-y-10">
 
+        {/* Soul Summary block */}
+        <div className="rounded-3xl p-6 sm:p-8 relative overflow-hidden"
+          style={{ background:'linear-gradient(135deg,rgba(91,33,182,0.35),rgba(124,58,237,0.2),rgba(219,39,119,0.15))', border:'1px solid rgba(139,92,246,0.3)', boxShadow:'0 20px 60px rgba(124,58,237,0.2)' }}>
+          <div className="absolute -right-10 -top-10 w-48 h-48 pointer-events-none opacity-10">
+            <div className="w-full h-full cs-spin-slow"><SacredRings size={192} gold /></div>
+          </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles size={15} style={{ color:'#c9a84c' }}/>
+              <span className="text-xs tracking-[0.25em] uppercase font-bold" style={{ fontFamily:"'Cinzel',serif", color:'#c9a84c' }}>Tóm Tắt Bản Đồ Linh Hồn</span>
+            </div>
+            <p className="text-sm sm:text-base leading-relaxed" style={{ color:'rgba(226,217,243,0.9)', fontFamily:"'Raleway',sans-serif", fontWeight:300 }}>
+              Bạn mang năng lượng của <span className="font-semibold" style={{ color:'#fbbf24' }}>{result.lifePath.name}</span> — {result.lifePath.essence}.{' '}
+              Số {result.attitudeNum} bổ sung chiều sâu <span style={{ color:'#c4b5fd' }}>{result.attitude.keyword?.split('·')[0]?.trim()}</span>, giúp bạn tiếp cận thế giới bằng cái nhìn của {result.attitude.name}.
+            </p>
+          </div>
+        </div>
+
+        {/* Energy Chart */}
+        <div className="mystic-num-card p-5 sm:p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <Activity size={15} style={{ color:'#c9a84c' }}/>
+            <h3 className="text-sm font-bold tracking-wider uppercase" style={{ fontFamily:"'Cinzel',serif", color:'#c9a84c' }}>Biểu Đồ Năng Lượng Số</h3>
+          </div>
+          <div className="space-y-3">
+            {energyItems.map(({ label, num, color }) => (
+              <div key={label} className="flex items-center gap-3">
+                <span className="text-xs w-20 flex-shrink-0 text-right" style={{ color:'rgba(196,181,253,0.55)', fontFamily:"'Cinzel',serif" }}>{label}</span>
+                <div className="flex-1 h-7 rounded-full relative overflow-hidden" style={{ background:'rgba(255,255,255,0.05)' }}>
+                  <div className="h-full rounded-full energy-bar flex items-center px-3"
+                    style={{ '--target-w':`${(num/11)*100}%`, width:`${(num/11)*100}%`, background:`linear-gradient(90deg, ${color}cc, ${color}55)`, boxShadow:`0 0 10px ${color}44` } as React.CSSProperties}>
+                    <span className="text-white text-xs font-black ml-auto" style={{ textShadow:`0 0 8px ${color}` }}>{num}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Cards — Nhóm Ngày Sinh */}
         <section className="space-y-4 sm:space-y-5">
-          <div className="flex items-center gap-3">
-            <div className="w-1 h-7 sm:h-8 rounded-full flex-shrink-0" style={{ background:'linear-gradient(#6366f1,#8b5cf6)' }}/>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-1 h-8 rounded-full flex-shrink-0" style={{ background:'linear-gradient(#6366f1,#8b5cf6)' }}/>
             <div>
-              <h2 className="text-base sm:text-xl font-black text-slate-800">Nhóm Ngày Sinh</h2>
-              <p className="text-slate-500 text-xs">Thiên hướng tự nhiên · Con đường sống · Tài năng bẩm sinh</p>
+              <h2 className="text-base sm:text-xl font-black" style={{ color:'#e2d9f3', fontFamily:"'Cinzel',serif" }}>Nhóm Ngày Sinh</h2>
+              <p className="text-xs mt-0.5" style={{ color:'rgba(196,181,253,0.45)' }}>Thiên hướng tự nhiên · Con đường sống · Tài năng bẩm sinh</p>
             </div>
           </div>
           <NumberCard number={result.lifePathNum} label="Số Đường Đời — Core"  labelIcon={<Map size={14}/>}      profile={result.lifePath}  indexType="lifepath"/>
@@ -1321,12 +1427,13 @@ export default function NumerologyTest() {
           <NumberCard number={result.attitudeNum} label="Số Thái Độ"             labelIcon={<Eye size={14}/>}      profile={result.attitude}  indexType="attitude"/>
         </section>
 
+        {/* Cards — Nhóm Họ Tên */}
         <section className="space-y-4 sm:space-y-5">
-          <div className="flex items-center gap-3">
-            <div className="w-1 h-7 sm:h-8 rounded-full flex-shrink-0" style={{ background:'linear-gradient(#f59e0b,#ef4444)' }}/>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-1 h-8 rounded-full flex-shrink-0" style={{ background:'linear-gradient(#f59e0b,#ef4444)' }}/>
             <div>
-              <h2 className="text-base sm:text-xl font-black text-slate-800">Nhóm Họ Tên</h2>
-              <p className="text-slate-500 text-xs">Khát vọng sâu thẳm · Vai trò cuộc đời · Vỏ bọc xã hội</p>
+              <h2 className="text-base sm:text-xl font-black" style={{ color:'#e2d9f3', fontFamily:"'Cinzel',serif" }}>Nhóm Họ Tên</h2>
+              <p className="text-xs mt-0.5" style={{ color:'rgba(196,181,253,0.45)' }}>Khát vọng sâu thẳm · Vai trò cuộc đời · Vỏ bọc xã hội</p>
             </div>
           </div>
           <NumberCard number={result.destinyNum}     label="Số Sứ Mệnh (Biểu Đạt)" labelIcon={<Target size={14}/>} profile={result.destiny}     indexType="destiny"/>
@@ -1335,16 +1442,17 @@ export default function NumerologyTest() {
         </section>
 
         {/* Reset */}
-        <div className="text-center py-4 sm:py-6 border-t border-slate-200">
-          <p className="text-slate-400 text-sm mb-4">Muốn xem lại con số chính?</p>
+        <div className="text-center py-6 border-t" style={{ borderColor:'rgba(255,255,255,0.08)' }}>
+          <p className="text-sm mb-5" style={{ color:'rgba(196,181,253,0.4)' }}>Muốn xem lại con số chính?</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button onClick={() => { setResultSubPhase('hero'); window.scrollTo({ top:0, behavior:'smooth' }); }}
-              className="inline-flex items-center gap-2 px-6 py-3 text-white font-bold rounded-2xl transition-all duration-200 cursor-pointer text-sm"
-              style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)' }}>
+              className="inline-flex items-center gap-2 px-6 py-3 text-white font-bold rounded-2xl transition-all duration-200 cursor-pointer text-sm hover:scale-105"
+              style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow:'0 0 24px rgba(124,58,237,0.4)' }}>
               <Star size={14}/> Xem số đường đời
             </button>
             <button onClick={handleReset}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer text-sm">
+              className="inline-flex items-center gap-2 px-6 py-3 font-bold rounded-2xl transition-all duration-200 cursor-pointer text-sm hover:scale-105"
+              style={{ background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.1)', color:'rgba(196,181,253,0.8)' }}>
               <RotateCcw size={14}/> Tính lại từ đầu
             </button>
           </div>
