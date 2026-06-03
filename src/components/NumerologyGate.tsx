@@ -1,16 +1,16 @@
 /**
  * NumerologyGate
- *
- * Renders as a modal overlay on top of the blurred result page.
  * Flow:
- *   1. Not logged in  → AuthModal (login / register)
- *   2. Logged in, 0 credits → PaywallModal (buy credits)
- *   3. Logged in, credits ≥ 1 → calls onUnlock() to deduct & show detail
+ *   1. Not logged in  → AuthModal
+ *   2. Logged in, 0 credits → PaywallModal → QRModal (PayOS real payment)
+ *   3. Logged in, credits ≥ 1 → deduct 1 → onUnlock()
  */
-import { useState, useEffect } from 'react';
-import { Sparkles, X, Eye, EyeOff, Star, Zap, CheckCircle2, Loader2, LogIn } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Sparkles, X, Eye, EyeOff, Star, Zap, CheckCircle2, Loader2, LogIn, ExternalLink, RefreshCw } from 'lucide-react';
+import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
-import { getCredits, addCredits, consumeCredit, CREDIT_PACKAGES } from '../lib/numerologyCredits';
+import { getCredits, consumeCredit, CREDIT_PACKAGES } from '../lib/numerologyCredits';
 
 /* ── CSS injected once ── */
 const GATE_STYLES = `
@@ -151,25 +151,163 @@ function AuthModal({ onClose }: { onClose?: () => void }) {
   );
 }
 
+/* ══════════════ QR PAYMENT MODAL ══════════════ */
+interface QRData { orderCode: number; qrCode: string; checkoutUrl: string; amount: number; credits: number }
+
+function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () => void; onBack: () => void }) {
+  const [status, setStatus] = useState<'waiting' | 'paid' | 'expired'>('waiting');
+  const [seconds, setSeconds] = useState(300); // 5 min timeout
+  const unsubRef = useRef<(() => void) | null>(null);
+
+  // Realtime Firestore listener
+  useEffect(() => {
+    const ref = doc(db, 'payment_orders', String(qrData.orderCode));
+    unsubRef.current = onSnapshot(ref, snap => {
+      if (snap.exists() && snap.data()?.status === 'PAID') {
+        setStatus('paid');
+        setTimeout(onSuccess, 1200);
+      }
+    });
+    return () => unsubRef.current?.();
+  }, [qrData.orderCode]);
+
+  // Countdown
+  useEffect(() => {
+    if (status !== 'waiting') return;
+    const t = setInterval(() => setSeconds(s => {
+      if (s <= 1) { setStatus('expired'); clearInterval(t); return 0; }
+      return s - 1;
+    }), 1000);
+    return () => clearInterval(t);
+  }, [status]);
+
+  const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const sec = String(seconds % 60).padStart(2, '0');
+  const qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrData.qrCode)}`;
+
+  return (
+    <div className="gate-overlay">
+      <style>{GATE_STYLES}</style>
+      <div className="gate-card" style={{ maxWidth: 380, animation: 'fade-up .4s ease-out' }}>
+        <div className="relative p-5 text-center" style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.2),rgba(124,58,237,0.15))' }}>
+          <button onClick={onBack} className="absolute left-4 top-4 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/10">
+            <X size={15} style={{ color: 'rgba(196,181,253,0.5)' }} />
+          </button>
+          <h2 style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1rem', fontWeight: 700 }}>
+            {status === 'paid' ? 'Thanh Toán Thành Công!' : 'Quét QR để thanh toán'}
+          </h2>
+          <p style={{ color: 'rgba(196,181,253,0.55)', fontSize: '.78rem', marginTop: 4 }}>
+            {status === 'waiting' && `Số tiền: `}
+            {status === 'waiting' && <strong style={{ color: '#fbbf24' }}>{qrData.amount.toLocaleString('vi')}₫</strong>}
+            {status === 'paid' && <span style={{ color: '#4ade80' }}>+{qrData.credits} credits đã được cộng!</span>}
+            {status === 'expired' && <span style={{ color: '#fb7185' }}>Hết thời gian. Vui lòng thử lại.</span>}
+          </p>
+        </div>
+
+        <div className="p-5 flex flex-col items-center gap-4">
+          {status === 'paid' ? (
+            <CheckCircle2 size={64} style={{ color: '#4ade80' }} />
+          ) : status === 'expired' ? (
+            <div className="text-center space-y-3">
+              <p style={{ color: 'rgba(196,181,253,0.6)', fontSize: '.85rem' }}>Mã QR đã hết hạn</p>
+              <button onClick={onBack} className="gate-btn-primary">Tạo mã mới</button>
+            </div>
+          ) : (
+            <>
+              {/* QR image */}
+              <div className="p-2 rounded-2xl" style={{ background: '#fff', boxShadow: '0 0 30px rgba(201,168,76,0.2)' }}>
+                <img src={qrImgUrl} alt="QR thanh toán" width={220} height={220} style={{ display: 'block', borderRadius: 12 }} />
+              </div>
+
+              {/* Countdown */}
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)' }}>
+                <RefreshCw size={12} style={{ color: '#fbbf24' }} className="animate-spin" />
+                <span style={{ color: '#fbbf24', fontSize: '.8rem', fontFamily: 'monospace', fontWeight: 700 }}>
+                  Hết hạn sau {min}:{sec}
+                </span>
+              </div>
+
+              {/* Instructions */}
+              <div className="w-full space-y-1.5 text-left">
+                {['Mở app ngân hàng bất kỳ', 'Chọn "Quét QR" / "Chuyển tiền QR"', 'Quét mã trên → Xác nhận thanh toán'].map((s, i) => (
+                  <div key={i} className="flex items-center gap-2.5">
+                    <span className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
+                      style={{ background: 'rgba(201,168,76,0.2)', color: '#fbbf24' }}>{i + 1}</span>
+                    <span style={{ color: 'rgba(196,181,253,0.75)', fontSize: '.82rem' }}>{s}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Open checkout link */}
+              <a href={qrData.checkoutUrl} target="_blank" rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl transition-all hover:opacity-80"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(196,181,253,0.7)', fontSize: '.82rem', textDecoration: 'none' }}>
+                <ExternalLink size={13} /> Mở trang thanh toán PayOS
+              </a>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ══════════════ PAYWALL MODAL ══════════════ */
 function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnlock: () => void; onClose?: () => void }) {
   const { user, logout } = useAuth();
   const [selected, setSelected] = useState(CREDIT_PACKAGES[0].id);
-  const [paying, setPaying] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [qrData, setQrData] = useState<QRData | null>(null);
+  const [error, setError] = useState('');
 
-  const handleDemoPay = async () => {
+  const handlePay = async () => {
     if (!user) return;
-    const pkg = CREDIT_PACKAGES.find(p => p.id === selected)!;
-    setPaying(true);
+    setLoading(true);
+    setError('');
     try {
-      await new Promise(r => setTimeout(r, 1800)); // simulate network
-      await addCredits(user.uid, pkg.credits, 'demo', pkg.priceVnd);
-      setSuccess(true);
-      setTimeout(() => onUnlock(), 1200);
-    } catch { /* noop */ }
-    finally { setPaying(false); }
+      // Create pending order in Firestore first
+      const pkg = CREDIT_PACKAGES.find(p => p.id === selected)!;
+      const tempOrderCode = Number(String(Date.now()).slice(-10));
+
+      // Call Vercel API to create PayOS payment link
+      const res = await fetch('/api/payos-create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: user.uid, packageId: selected }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Lỗi tạo thanh toán');
+
+      // Store pending order in Firestore (for webhook to update)
+      await setDoc(doc(db, 'payment_orders', String(data.orderCode)), {
+        uid: user.uid,
+        packageId: selected,
+        credits: data.credits,
+        amount: data.amount,
+        status: 'PENDING',
+        createdAt: serverTimestamp(),
+      });
+
+      setQrData(data);
+    } catch (e: unknown) {
+      setError((e as Error).message || 'Có lỗi xảy ra, vui lòng thử lại');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // After QR payment success → refresh credits → unlock
+  const handleQRSuccess = async () => {
+    const fresh = await getCredits(user!.uid);
+    if (fresh >= 1) {
+      const ok = await consumeCredit(user!.uid);
+      if (ok) onUnlock();
+    }
+  };
+
+  if (qrData) {
+    return <QRModal qrData={qrData} onSuccess={handleQRSuccess} onBack={() => setQrData(null)} />;
+  }
 
   return (
     <div className="gate-overlay">
@@ -177,25 +315,21 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
       <div className="gate-card" style={{ maxWidth: 460, animation: 'fade-up .4s ease-out' }}>
         {/* Header */}
         <div className="relative p-6 text-center" style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.2),rgba(124,58,237,0.2))' }}>
-          {onClose && !success && (
+          {onClose && (
             <button onClick={onClose} className="absolute right-4 top-4 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/10">
               <X size={16} style={{ color: 'rgba(196,181,253,0.6)' }} />
             </button>
           )}
           <div className="flex justify-center mb-3">
-            {success
-              ? <CheckCircle2 size={40} style={{ color: '#4ade80' }} />
-              : <Star size={36} style={{ color: '#fbbf24', filter: 'drop-shadow(0 0 12px #fbbf24)' }} />}
+            <Star size={36} style={{ color: '#fbbf24', filter: 'drop-shadow(0 0 12px #fbbf24)' }} />
           </div>
           <h2 style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1.15rem', fontWeight: 700 }}>
-            {success ? 'Thanh Toán Thành Công!' : 'Mở Khóa Bản Đồ Linh Hồn'}
+            Mở Khóa Bản Đồ Linh Hồn
           </h2>
           <p style={{ fontFamily: "'Raleway',sans-serif", color: 'rgba(196,181,253,0.65)', fontSize: '.84rem', marginTop: 6 }}>
-            {success
-              ? 'Credits đã được cộng vào tài khoản. Đang mở...'
-              : `Bạn đang đăng nhập với ${user?.email ?? ''}`}
+            {user?.email}
           </p>
-          {credits > 0 && !success && (
+          {credits > 0 && (
             <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.3)' }}>
               <Zap size={13} style={{ color: '#4ade80' }} />
               <span style={{ color: '#4ade80', fontSize: '.78rem', fontWeight: 600 }}>Bạn còn {credits} lượt xem</span>
@@ -203,54 +337,47 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
           )}
         </div>
 
-        {!success && (
-          <div className="p-6 space-y-4">
-            {/* Feature list */}
-            <div className="space-y-2 mb-2">
-              {['Phân tích 6 chỉ số chuyên sâu', 'Tâm lý · Tình yêu · Nghề nghiệp · Tâm linh', 'Biểu đồ năng lượng cá nhân', 'Tóm tắt bản đồ linh hồn riêng'].map(f => (
-                <div key={f} className="flex items-center gap-2.5">
-                  <CheckCircle2 size={14} style={{ color: '#4ade80', flexShrink: 0 }} />
-                  <span style={{ fontFamily: "'Raleway',sans-serif", color: 'rgba(196,181,253,0.8)', fontSize: '.84rem' }}>{f}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Package picker */}
-            <p style={{ fontFamily: "'Cinzel',serif", color: '#c9a84c', fontSize: '.72rem', letterSpacing: '.15em', textTransform: 'uppercase', marginBottom: 8 }}>Chọn gói lượt xem</p>
-            <div className="grid grid-cols-3 gap-3">
-              {CREDIT_PACKAGES.map(pkg => (
-                <div key={pkg.id} className={`pkg-card ${selected === pkg.id ? 'selected' : ''}`} onClick={() => setSelected(pkg.id)}>
-                  {pkg.badge && (
-                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: 'linear-gradient(135deg,#ec4899,#8b5cf6)', color: '#fff' }}>{pkg.badge}</span>
-                  )}
-                  <div style={{ fontFamily: "'Cinzel',serif", color: '#fbbf24', fontSize: '1.4rem', fontWeight: 900, textAlign: 'center' }}>{pkg.credits}</div>
-                  <div style={{ textAlign: 'center', color: 'rgba(196,181,253,0.6)', fontSize: '.72rem', marginTop: 2 }}>lượt</div>
-                  <div style={{ textAlign: 'center', color: '#e2d9f3', fontSize: '.85rem', fontWeight: 700, marginTop: 6 }}>{pkg.label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Demo notice */}
-            <div className="flex items-start gap-2 p-3 rounded-xl" style={{ background: 'rgba(251,191,36,0.07)', border: '1px solid rgba(251,191,36,0.2)' }}>
-              <Zap size={14} style={{ color: '#fbbf24', flexShrink: 0, marginTop: 2 }} />
-              <p style={{ fontFamily: "'Raleway',sans-serif", color: 'rgba(253,230,138,0.8)', fontSize: '.78rem', lineHeight: 1.5 }}>
-                <strong>Demo mode:</strong> Nhấn "Thanh Toán Demo" để nhận credits miễn phí. Tích hợp VNPay / MoMo thật sẽ được cập nhật sau.
-              </p>
-            </div>
-
-            {/* Pay button */}
-            <button onClick={handleDemoPay} disabled={paying} className="gate-btn-primary" style={{ background: 'linear-gradient(135deg,#c9a84c,#f59e0b)', borderColor: 'rgba(201,168,76,0.6)', color: '#0a0617' }}>
-              {paying
-                ? <><Loader2 size={15} className="animate-spin inline mr-2" />Đang xử lý...</>
-                : <>Thanh Toán Demo · {CREDIT_PACKAGES.find(p => p.id === selected)?.label}</>}
-            </button>
-
-            {/* Logout */}
-            <button onClick={logout} style={{ width: '100%', background: 'none', border: 'none', color: 'rgba(196,181,253,0.35)', fontFamily: "'Raleway',sans-serif", fontSize: '.78rem', cursor: 'pointer', marginTop: 4 }}>
-              Đăng xuất ({user?.email})
-            </button>
+        <div className="p-6 space-y-4">
+          {/* Features */}
+          <div className="space-y-2">
+            {['Phân tích 6 chỉ số chuyên sâu', 'Tâm lý · Tình yêu · Nghề nghiệp · Tâm linh', 'Biểu đồ năng lượng cá nhân', 'Tóm tắt bản đồ linh hồn riêng'].map(f => (
+              <div key={f} className="flex items-center gap-2.5">
+                <CheckCircle2 size={14} style={{ color: '#4ade80', flexShrink: 0 }} />
+                <span style={{ fontFamily: "'Raleway',sans-serif", color: 'rgba(196,181,253,0.8)', fontSize: '.84rem' }}>{f}</span>
+              </div>
+            ))}
           </div>
-        )}
+
+          {/* Package picker */}
+          <p style={{ fontFamily: "'Cinzel',serif", color: '#c9a84c', fontSize: '.72rem', letterSpacing: '.15em', textTransform: 'uppercase' }}>Chọn gói lượt xem</p>
+          <div className="grid grid-cols-3 gap-3">
+            {CREDIT_PACKAGES.map(pkg => (
+              <div key={pkg.id} className={`pkg-card ${selected === pkg.id ? 'selected' : ''}`} onClick={() => setSelected(pkg.id)}>
+                {pkg.badge && (
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-bold"
+                    style={{ background: 'linear-gradient(135deg,#ec4899,#8b5cf6)', color: '#fff' }}>{pkg.badge}</span>
+                )}
+                <div style={{ fontFamily: "'Cinzel',serif", color: '#fbbf24', fontSize: '1.4rem', fontWeight: 900, textAlign: 'center' }}>{pkg.credits}</div>
+                <div style={{ textAlign: 'center', color: 'rgba(196,181,253,0.6)', fontSize: '.72rem', marginTop: 2 }}>lượt</div>
+                <div style={{ textAlign: 'center', color: '#e2d9f3', fontSize: '.85rem', fontWeight: 700, marginTop: 6 }}>{pkg.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {error && <div className="gate-error">{error}</div>}
+
+          {/* Pay button */}
+          <button onClick={handlePay} disabled={loading} className="gate-btn-primary"
+            style={{ background: 'linear-gradient(135deg,#c9a84c,#f59e0b)', borderColor: 'rgba(201,168,76,0.6)', color: '#0a0617' }}>
+            {loading
+              ? <><Loader2 size={15} className="animate-spin inline mr-2" />Đang tạo mã QR...</>
+              : <>Thanh toán qua QR · {CREDIT_PACKAGES.find(p => p.id === selected)?.label}</>}
+          </button>
+
+          <button onClick={logout} style={{ width: '100%', background: 'none', border: 'none', color: 'rgba(196,181,253,0.3)', fontFamily: "'Raleway',sans-serif", fontSize: '.75rem', cursor: 'pointer' }}>
+            Đăng xuất
+          </button>
+        </div>
       </div>
     </div>
   );

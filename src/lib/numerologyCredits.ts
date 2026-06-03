@@ -66,7 +66,7 @@ export async function getUserTransactions(uid: string): Promise<Transaction[]> {
 
 /** Gói credits demo */
 export const CREDIT_PACKAGES = [
-  { id: 'starter', name: 'Khởi đầu', credits: 3, priceVnd: 29000, label: '29K' },
-  { id: 'popular', name: 'Phổ biến', credits: 10, priceVnd: 79000, label: '79K', badge: 'Hot' },
-  { id: 'premium', name: 'Cao cấp', credits: 30, priceVnd: 199000, label: '199K' },
+  { id: 'starter', name: 'Khởi đầu', credits: 3,  priceVnd: 15000, label: '15K' },
+  { id: 'popular', name: 'Phổ biến', credits: 10, priceVnd: 49000, label: '49K', badge: 'Hot' },
+  { id: 'premium', name: 'Cao cấp', credits: 30, priceVnd: 129000, label: '129K' },
 ];
