@@ -395,52 +395,64 @@ export default function NumerologyGate({ onUnlock, inline }: NumerologyGateProps
   const { user, loading } = useAuth();
   const [credits, setCredits] = useState<number | null>(null);
   const [step, setStep] = useState<'auth' | 'paywall' | 'ready' | 'idle'>('idle');
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [btnError, setBtnError] = useState('');
 
   // Fetch credits whenever user changes
   useEffect(() => {
     if (!user) { setCredits(null); return; }
-    getCredits(user.uid).then(setCredits);
+    getCredits(user.uid)
+      .then(setCredits)
+      .catch(() => setCredits(0));
   }, [user]);
 
-  // Decide which step to show
-  useEffect(() => {
-    if (loading) return;
-    if (!user) setStep('auth');
-    else if (credits === null) setStep('idle'); // still loading credits
-    else if (credits < 1) setStep('paywall');
-    else setStep('ready');
-  }, [user, credits, loading]);
-
   const handleTrigger = async () => {
+    setBtnError('');
     if (!user) { setStep('auth'); return; }
-    const fresh = await getCredits(user.uid);
-    setCredits(fresh);
-    if (fresh < 1) { setStep('paywall'); return; }
-    // has credits — consume 1 and unlock
-    const ok = await consumeCredit(user.uid);
-    if (ok) { setCredits(fresh - 1); onUnlock(); }
+    setBtnLoading(true);
+    try {
+      const fresh = await getCredits(user.uid);
+      setCredits(fresh);
+      if (fresh < 1) { setStep('paywall'); return; }
+      const ok = await consumeCredit(user.uid);
+      if (ok) { setCredits(fresh - 1); onUnlock(); }
+    } catch (e: unknown) {
+      console.error('NumerologyGate error:', e);
+      setBtnError('Có lỗi xảy ra. Vui lòng thử lại.');
+      setStep('auth'); // fallback: prompt login
+    } finally {
+      setBtnLoading(false);
+    }
   };
 
   const handleUnlockAfterPay = async () => {
     if (!user) return;
-    const fresh = await getCredits(user.uid);
-    setCredits(fresh);
-    const ok = await consumeCredit(user.uid);
-    if (ok) onUnlock();
+    try {
+      const fresh = await getCredits(user.uid);
+      setCredits(fresh);
+      const ok = await consumeCredit(user.uid);
+      if (ok) onUnlock();
+    } catch { /* noop */ }
   };
 
   if (inline) {
     if (loading) return null;
     return (
       <>
-        <button onClick={handleTrigger}
-          className="group inline-flex items-center gap-3 px-8 py-4 font-black text-white rounded-2xl text-base transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden w-full sm:w-auto justify-center"
+        {btnError && (
+          <p style={{ color: '#fb7185', fontSize: '.8rem', textAlign: 'center', marginBottom: 8 }}>{btnError}</p>
+        )}
+        <button onClick={handleTrigger} disabled={btnLoading}
+          className="group inline-flex items-center gap-3 px-8 py-4 font-black text-white rounded-2xl text-base transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden w-full sm:w-auto justify-center disabled:opacity-60"
           style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow: '0 0 30px rgba(124,58,237,0.5)' }}>
-          {user ? <Zap size={18} className="relative z-10 flex-shrink-0" /> : <LogIn size={18} className="relative z-10 flex-shrink-0" />}
+          {btnLoading
+            ? <Loader2 size={18} className="relative z-10 flex-shrink-0 animate-spin" />
+            : user ? <Zap size={18} className="relative z-10 flex-shrink-0" /> : <LogIn size={18} className="relative z-10 flex-shrink-0" />}
           <span className="relative z-10">
-            {user
-              ? credits !== null && credits > 0 ? `Xem phân tích chi tiết (${credits} lượt)` : 'Mở khóa phân tích chi tiết'
-              : 'Đăng nhập để xem chi tiết'}
+            {btnLoading ? 'Đang kiểm tra...'
+              : user
+                ? credits !== null && credits > 0 ? `Xem phân tích chi tiết (${credits} lượt)` : 'Mở khóa phân tích chi tiết'
+                : 'Đăng nhập để xem chi tiết'}
           </span>
         </button>
 
