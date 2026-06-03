@@ -6,9 +6,25 @@ const PROJECT_ID    = process.env.VITE_FIREBASE_PROJECT_ID || 'exe-labantuyensin
 const FS_BASE       = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 const SIGN_IN_URL   = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_KEY}`;
 
-function verifySig(data, sig) {
-  const expected = crypto.createHmac('sha256', CHECKSUM_KEY).update(data).digest('hex');
-  return expected === sig;
+/**
+ * PayOS signature: sort data object keys alphabetically, join as key=value&...
+ * https://payos.vn/docs/tich-hop-webhook/kiem-tra-du-lieu-voi-signature
+ */
+function buildSigStr(dataObj) {
+  return Object.entries(dataObj)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([k, v]) => `${k}=${v ?? ''}`)
+    .join('&');
+}
+
+function verifySig(dataObj, sig) {
+  const sigStr   = buildSigStr(dataObj);
+  const expected = crypto.createHmac('sha256', CHECKSUM_KEY).update(sigStr).digest('hex');
+  try {
+    return crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(sig, 'hex'));
+  } catch {
+    return false;
+  }
 }
 
 /** Get anonymous Firebase ID token (for Firestore REST auth) */
@@ -59,15 +75,15 @@ export default async function handler(req, res) {
     const { code, desc, data, signature } = req.body || {};
     if (!data) return res.status(200).json({ message: 'no data' });
 
-    // 1. Verify PayOS signature
-    const signStr = `code=${code}&desc=${desc}&orderCode=${data.orderCode}&status=${data.status}`;
-    if (!verifySig(signStr, signature)) {
+    // 1. Verify PayOS signature (sign from data object, sort alphabetically)
+    if (!verifySig(data, signature)) {
       console.warn('Bad signature, orderCode:', data.orderCode);
+      console.warn('Sig string was:', buildSigStr(data));
       return res.status(200).json({ message: 'signature mismatch' });
     }
 
     if (data.status !== 'PAID') {
-      return res.status(200).json({ message: 'not PAID' });
+      return res.status(200).json({ message: `status is ${data.status}, not PAID` });
     }
 
     const token    = await getAnonToken();
