@@ -7,10 +7,10 @@
  */
 import { useState, useEffect, useRef } from 'react';
 import { Sparkles, X, Eye, EyeOff, Star, Zap, CheckCircle2, Loader2, LogIn, ExternalLink, RefreshCw } from 'lucide-react';
-import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
-import { getCredits, consumeCredit, CREDIT_PACKAGES } from '../lib/numerologyCredits';
+import { getCredits, consumeCredit, addCredits, CREDIT_PACKAGES } from '../lib/numerologyCredits';
 
 /* ── CSS injected once ── */
 const GATE_STYLES = `
@@ -154,21 +154,68 @@ function AuthModal({ onClose }: { onClose?: () => void }) {
 /* ══════════════ QR PAYMENT MODAL ══════════════ */
 interface QRData { orderCode: number; qrCode: string; checkoutUrl: string; amount: number; credits: number }
 
-function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () => void; onBack: () => void }) {
+function QRModal({ qrData, uid, onSuccess, onBack }: { qrData: QRData; uid: string; onSuccess: () => void; onBack: () => void }) {
   const [status, setStatus] = useState<'waiting' | 'paid' | 'expired'>('waiting');
   const [seconds, setSeconds] = useState(300);
+  const [checking, setChecking] = useState(false);
   const unsubRef = useRef<(() => void) | null>(null);
+  const statusRef = useRef(status);
+  statusRef.current = status;
+
+  const handlePaid = async (snapData: Record<string, unknown>) => {
+    if (statusRef.current === 'paid') return;
+    try {
+      const ref = doc(db, 'payment_orders', String(qrData.orderCode));
+      if (!snapData.credited) {
+        await addCredits(uid, (snapData.credits as number) ?? qrData.credits, 'vnpay', (snapData.amount as number) ?? qrData.amount);
+        await updateDoc(ref, { credited: true });
+      }
+    } catch (e) {
+      console.error('addCredits error:', e);
+    }
+    setStatus('paid');
+    setTimeout(onSuccess, 1500);
+  };
 
   useEffect(() => {
     const ref = doc(db, 'payment_orders', String(qrData.orderCode));
-    unsubRef.current = onSnapshot(ref, snap => {
-      if (snap.exists() && snap.data()?.status === 'PAID') {
-        setStatus('paid');
-        setTimeout(onSuccess, 1500);
-      }
+    unsubRef.current = onSnapshot(ref, async snap => {
+      const data = snap.data();
+      if (snap.exists() && data?.status === 'PAID') handlePaid(data as Record<string, unknown>);
     });
-    return () => unsubRef.current?.();
+
+    // Khi tab được focus lại (user từ tab PayOS quay về), check thủ công
+    const onVisible = async () => {
+      if (document.visibilityState !== 'visible' || statusRef.current === 'paid') return;
+      const { getDoc } = await import('firebase/firestore');
+      const snap = await getDoc(ref);
+      const data = snap.data();
+      if (snap.exists() && data?.status === 'PAID') handlePaid(data as Record<string, unknown>);
+    };
+    document.addEventListener('visibilitychange', onVisible);
+
+    return () => {
+      unsubRef.current?.();
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, [qrData.orderCode]);
+
+  const handleManualCheck = async () => {
+    setChecking(true);
+    try {
+      const { getDoc } = await import('firebase/firestore');
+      const ref = doc(db, 'payment_orders', String(qrData.orderCode));
+      const snap = await getDoc(ref);
+      const data = snap.data();
+      if (snap.exists() && data?.status === 'PAID') {
+        await handlePaid(data as Record<string, unknown>);
+      }
+    } catch (e) {
+      console.error('manual check error:', e);
+    } finally {
+      setChecking(false);
+    }
+  };
 
   useEffect(() => {
     if (status !== 'waiting') return;
@@ -273,6 +320,14 @@ function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () 
             <ExternalLink size={13} /> Hoặc mở trang thanh toán PayOS
           </a>
 
+          {/* Manual check fallback */}
+          <button onClick={handleManualCheck} disabled={checking}
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl transition-all hover:opacity-80"
+            style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.3)', color: '#4ade80', fontSize: '.82rem', fontWeight: 600, cursor: checking ? 'not-allowed' : 'pointer' }}>
+            {checking ? <Loader2 size={13} className="animate-spin" /> : <CheckCircle2 size={13} />}
+            {checking ? 'Đang kiểm tra...' : 'Tôi đã thanh toán xong'}
+          </button>
+
           <p style={{ color: 'rgba(196,181,253,0.3)', fontSize: '.72rem', textAlign: 'center' }}>
             Trang sẽ tự động mở khóa sau khi thanh toán thành công
           </p>
@@ -282,12 +337,30 @@ function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () 
   );
 }
 
+const QR_SESSION_KEY = 'payos_pending_qr';
+
 /* ══════════════ PAYWALL MODAL ══════════════ */
 function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnlock: () => void; onClose?: () => void }) {
   const { user, logout } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [qrData, setQrData] = useState<QRData | null>(null);
   const [error, setError] = useState('');
+
+  // Khôi phục QR từ sessionStorage nếu user reload giữa chừng
+  const [qrData, setQrData] = useState<QRData | null>(() => {
+    try {
+      const saved = sessionStorage.getItem(QR_SESSION_KEY);
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  });
+
+  const saveQR = (data: QRData) => {
+    sessionStorage.setItem(QR_SESSION_KEY, JSON.stringify(data));
+    setQrData(data);
+  };
+  const clearQR = () => {
+    sessionStorage.removeItem(QR_SESSION_KEY);
+    setQrData(null);
+  };
 
   const handlePay = async () => {
     if (!user) return;
@@ -302,7 +375,6 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
       const data = await res.json();
       if (!res.ok || data.error) throw new Error(data.error || 'Lỗi tạo thanh toán');
 
-      // Lưu order vào Firestore để webhook cập nhật
       await setDoc(doc(db, 'payment_orders', String(data.orderCode)), {
         uid: user.uid,
         packageId: 'starter',
@@ -312,7 +384,7 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
         createdAt: serverTimestamp(),
       });
 
-      setQrData(data);
+      saveQR(data);
     } catch (e: unknown) {
       setError((e as Error).message || 'Có lỗi xảy ra, vui lòng thử lại');
     } finally {
@@ -321,6 +393,7 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
   };
 
   const handleQRSuccess = async () => {
+    clearQR();
     try {
       const fresh = await getCredits(user!.uid);
       if (fresh >= 1) {
@@ -331,7 +404,7 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
   };
 
   if (qrData) {
-    return <QRModal qrData={qrData} onSuccess={handleQRSuccess} onBack={() => setQrData(null)} />;
+    return <QRModal qrData={qrData} uid={user!.uid} onSuccess={handleQRSuccess} onBack={clearQR} />;
   }
 
   return (
