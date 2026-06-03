@@ -29,14 +29,12 @@ export default async function handler(req, res) {
   if (req.method !== 'POST')    return res.status(405).end();
 
   try {
-    console.log('BODY:', JSON.stringify(req.body));
     const { code, desc, data, signature } = req.body || {};
     if (!data) return res.status(200).json({ message: 'no data' });
 
-    console.log('DATA:', JSON.stringify(data));
-
-    if (data.status !== 'PAID') {
-      return res.status(200).json({ message: `status=${data.status}` });
+    // PayOS báo thành công bằng code='00', không có field status trong data
+    if (code !== '00') {
+      return res.status(200).json({ message: `code=${code}` });
     }
 
     const orderKey = String(data.orderCode);
