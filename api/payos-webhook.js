@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from "node:crypto";
 
 const CHECKSUM_KEY  = process.env.PAYOS_CHECKSUM_KEY;
 const FIREBASE_KEY  = process.env.VITE_FIREBASE_API_KEY;
