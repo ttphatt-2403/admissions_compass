@@ -29,13 +29,11 @@ export default async function handler(req, res) {
   if (req.method !== 'POST')    return res.status(405).end();
 
   try {
+    console.log('BODY:', JSON.stringify(req.body));
     const { code, desc, data, signature } = req.body || {};
     if (!data) return res.status(200).json({ message: 'no data' });
 
-    // 1. Verify PayOS signature
-    if (!verifySig(data, signature)) {
-      console.warn('Bad signature, orderCode:', data.orderCode, 'sig:', signature?.slice(0,8));
-    }
+    console.log('DATA:', JSON.stringify(data));
 
     if (data.status !== 'PAID') {
       return res.status(200).json({ message: `status=${data.status}` });
