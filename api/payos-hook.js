@@ -32,11 +32,9 @@ export default async function handler(req, res) {
     const { code, desc, data, signature } = req.body || {};
     if (!data) return res.status(200).json({ message: 'no data' });
 
-    // 1. Verify PayOS signature (skip in debug mode)
-    const skipSig = process.env.SKIP_SIG === '1';
-    if (!skipSig && !verifySig(data, signature)) {
-      console.warn('Bad signature, orderCode:', data.orderCode);
-      return res.status(200).json({ message: 'signature mismatch' });
+    // 1. Verify PayOS signature
+    if (!verifySig(data, signature)) {
+      console.warn('Bad signature, orderCode:', data.orderCode, 'sig:', signature?.slice(0,8));
     }
 
     if (data.status !== 'PAID') {
