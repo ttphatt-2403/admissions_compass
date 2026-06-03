@@ -519,12 +519,10 @@ export default function NumerologyGate({ onUnlock, inline }: NumerologyGateProps
 
   const handleUnlockAfterPay = async () => {
     if (!user) return;
-    try {
-      const fresh = await getCredits(user.uid);
-      setCredits(fresh);
-      const ok = await consumeCredit(user.uid);
-      if (ok) onUnlock();
-    } catch { /* noop */ }
+    // Không trừ credit ở đây — user vừa thanh toán, lần xem này miễn phí
+    const fresh = await getCredits(user.uid).catch(() => 0);
+    setCredits(fresh);
+    onUnlock();
   };
 
   if (inline) {
