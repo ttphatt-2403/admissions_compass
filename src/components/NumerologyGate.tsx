@@ -270,7 +270,7 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
       const tempOrderCode = Number(String(Date.now()).slice(-10));
 
       // Call Vercel API to create PayOS payment link
-      const res = await fetch('/api/payos-create', {
+      const res = await fetch('/api/pc', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uid: user.uid, packageId: selected }),
