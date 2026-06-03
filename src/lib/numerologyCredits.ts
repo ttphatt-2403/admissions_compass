@@ -1,5 +1,5 @@
 import {
-  doc, getDoc, updateDoc, increment,
+  doc, getDoc, updateDoc, setDoc, increment,
   collection, addDoc, serverTimestamp, query, orderBy, getDocs,
 } from 'firebase/firestore';
 import { db } from './firebase';
@@ -31,10 +31,11 @@ export async function getCredits(uid: string): Promise<number> {
 /** Thêm credits sau khi thanh toán thành công */
 export async function addCredits(uid: string, amount: number, method: Transaction['method'] = 'demo', priceVnd = 0) {
   const userRef = doc(db, 'users', uid);
-  await updateDoc(userRef, {
+  // setDoc với merge:true để tạo document nếu chưa tồn tại
+  await setDoc(userRef, {
     credits: increment(amount),
     totalPurchased: increment(amount),
-  });
+  }, { merge: true });
   await addDoc(collection(db, 'users', uid, 'transactions'), {
     credits: amount,
     method,

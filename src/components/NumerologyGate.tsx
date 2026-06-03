@@ -395,12 +395,15 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
   const handleQRSuccess = async () => {
     clearQR();
     try {
+      const ok = await consumeCredit(user!.uid);
+      if (ok) { onUnlock(); return; }
+      // Fallback: nếu consumeCredit fail thì đọc lại credits
       const fresh = await getCredits(user!.uid);
       if (fresh >= 1) {
-        const ok = await consumeCredit(user!.uid);
-        if (ok) onUnlock();
+        const ok2 = await consumeCredit(user!.uid);
+        if (ok2) onUnlock();
       }
-    } catch { /* noop */ }
+    } catch (e) { console.error('handleQRSuccess error:', e); }
   };
 
   if (qrData) {
