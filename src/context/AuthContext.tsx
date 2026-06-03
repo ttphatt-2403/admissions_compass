@@ -11,7 +11,7 @@ import {
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, googleProvider, db } from '../lib/firebase';
 
-export const ADMIN_EMAILS = ['admin@thansohoc.vn', 'hoanglong27404@gmail.com'];
+export const ADMIN_EMAILS = ['adminlabantuyensinh@gmail.com', 'hoanglong27404@gmail.com'];
 
 interface AuthContextType {
   user: User | null;
