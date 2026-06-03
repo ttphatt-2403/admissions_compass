@@ -394,10 +394,7 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
 
   const handleQRSuccess = async () => {
     clearQR();
-    // User vừa trả tiền → unlock ngay, không gate qua credit check
     onUnlock();
-    // Trừ 1 credit trong background (nếu có)
-    consumeCredit(user!.uid).catch(() => {});
   };
 
   if (qrData) {
