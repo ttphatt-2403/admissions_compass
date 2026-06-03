@@ -156,22 +156,20 @@ interface QRData { orderCode: number; qrCode: string; checkoutUrl: string; amoun
 
 function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () => void; onBack: () => void }) {
   const [status, setStatus] = useState<'waiting' | 'paid' | 'expired'>('waiting');
-  const [seconds, setSeconds] = useState(300); // 5 min timeout
+  const [seconds, setSeconds] = useState(300);
   const unsubRef = useRef<(() => void) | null>(null);
 
-  // Realtime Firestore listener
   useEffect(() => {
     const ref = doc(db, 'payment_orders', String(qrData.orderCode));
     unsubRef.current = onSnapshot(ref, snap => {
       if (snap.exists() && snap.data()?.status === 'PAID') {
         setStatus('paid');
-        setTimeout(onSuccess, 1200);
+        setTimeout(onSuccess, 1500);
       }
     });
     return () => unsubRef.current?.();
   }, [qrData.orderCode]);
 
-  // Countdown
   useEffect(() => {
     if (status !== 'waiting') return;
     const t = setInterval(() => setSeconds(s => {
@@ -183,69 +181,101 @@ function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () 
 
   const min = String(Math.floor(seconds / 60)).padStart(2, '0');
   const sec = String(seconds % 60).padStart(2, '0');
-  const qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrData.qrCode)}`;
+  const qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(qrData.qrCode)}&bgcolor=ffffff&color=000000&margin=10`;
+
+  if (status === 'paid') {
+    return (
+      <div className="gate-overlay">
+        <style>{GATE_STYLES}</style>
+        <div className="gate-card" style={{ maxWidth: 360, animation: 'fade-up .4s ease-out', textAlign: 'center', padding: 40 }}>
+          <CheckCircle2 size={72} style={{ color: '#4ade80', margin: '0 auto 16px' }} />
+          <h2 style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1.2rem', fontWeight: 700, marginBottom: 8 }}>
+            Thanh Toán Thành Công!
+          </h2>
+          <p style={{ color: '#4ade80', fontSize: '.9rem' }}>+{qrData.credits} lượt xem đã được cộng</p>
+          <p style={{ color: 'rgba(196,181,253,0.5)', fontSize: '.8rem', marginTop: 8 }}>Đang mở bản đồ linh hồn...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === 'expired') {
+    return (
+      <div className="gate-overlay">
+        <style>{GATE_STYLES}</style>
+        <div className="gate-card" style={{ maxWidth: 360, animation: 'fade-up .4s ease-out', padding: 32, textAlign: 'center' }}>
+          <p style={{ color: '#fb7185', fontSize: '1rem', marginBottom: 16 }}>Mã QR đã hết hạn</p>
+          <button onClick={onBack} className="gate-btn-primary">Tạo mã QR mới</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="gate-overlay">
       <style>{GATE_STYLES}</style>
       <div className="gate-card" style={{ maxWidth: 380, animation: 'fade-up .4s ease-out' }}>
-        <div className="relative p-5 text-center" style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.2),rgba(124,58,237,0.15))' }}>
+
+        {/* Header */}
+        <div className="relative px-5 pt-5 pb-4 text-center" style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.15),rgba(124,58,237,0.12))' }}>
           <button onClick={onBack} className="absolute left-4 top-4 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/10">
             <X size={15} style={{ color: 'rgba(196,181,253,0.5)' }} />
           </button>
-          <h2 style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1rem', fontWeight: 700 }}>
-            {status === 'paid' ? 'Thanh Toán Thành Công!' : 'Quét QR để thanh toán'}
-          </h2>
-          <p style={{ color: 'rgba(196,181,253,0.55)', fontSize: '.78rem', marginTop: 4 }}>
-            {status === 'waiting' && `Số tiền: `}
-            {status === 'waiting' && <strong style={{ color: '#fbbf24' }}>{qrData.amount.toLocaleString('vi')}₫</strong>}
-            {status === 'paid' && <span style={{ color: '#4ade80' }}>+{qrData.credits} credits đã được cộng!</span>}
-            {status === 'expired' && <span style={{ color: '#fb7185' }}>Hết thời gian. Vui lòng thử lại.</span>}
+          <p style={{ fontFamily: "'Cinzel',serif", color: '#c9a84c', fontSize: '.68rem', letterSpacing: '.25em', textTransform: 'uppercase', marginBottom: 4 }}>
+            Thanh toán qua VietQR
+          </p>
+          <div className="flex items-baseline justify-center gap-1">
+            <span style={{ fontFamily: "'Cinzel',serif", color: '#fbbf24', fontSize: '1.8rem', fontWeight: 900 }}>
+              {qrData.amount.toLocaleString('vi')}₫
+            </span>
+          </div>
+          <p style={{ color: 'rgba(196,181,253,0.5)', fontSize: '.75rem', marginTop: 2 }}>
+            {qrData.credits} lượt xem bản đồ thần số học
           </p>
         </div>
 
         <div className="p-5 flex flex-col items-center gap-4">
-          {status === 'paid' ? (
-            <CheckCircle2 size={64} style={{ color: '#4ade80' }} />
-          ) : status === 'expired' ? (
-            <div className="text-center space-y-3">
-              <p style={{ color: 'rgba(196,181,253,0.6)', fontSize: '.85rem' }}>Mã QR đã hết hạn</p>
-              <button onClick={onBack} className="gate-btn-primary">Tạo mã mới</button>
+
+          {/* QR code */}
+          <div className="relative">
+            <div className="p-3 rounded-2xl" style={{ background: '#fff', boxShadow: '0 0 40px rgba(201,168,76,0.25), 0 8px 32px rgba(0,0,0,0.4)' }}>
+              <img src={qrImgUrl} alt="QR thanh toán" width={240} height={240} style={{ display: 'block', borderRadius: 8 }} />
             </div>
-          ) : (
-            <>
-              {/* QR image */}
-              <div className="p-2 rounded-2xl" style={{ background: '#fff', boxShadow: '0 0 30px rgba(201,168,76,0.2)' }}>
-                <img src={qrImgUrl} alt="QR thanh toán" width={220} height={220} style={{ display: 'block', borderRadius: 12 }} />
-              </div>
+            {/* Countdown badge */}
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+              style={{ background: 'linear-gradient(135deg,#0f0c29,#1a1040)', border: '1px solid rgba(251,191,36,0.4)', whiteSpace: 'nowrap' }}>
+              <RefreshCw size={10} style={{ color: '#fbbf24' }} className="animate-spin" />
+              <span style={{ color: '#fbbf24', fontSize: '.75rem', fontFamily: 'monospace', fontWeight: 700 }}>
+                {min}:{sec}
+              </span>
+            </div>
+          </div>
 
-              {/* Countdown */}
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)' }}>
-                <RefreshCw size={12} style={{ color: '#fbbf24' }} className="animate-spin" />
-                <span style={{ color: '#fbbf24', fontSize: '.8rem', fontFamily: 'monospace', fontWeight: 700 }}>
-                  Hết hạn sau {min}:{sec}
-                </span>
+          {/* Steps */}
+          <div className="w-full mt-2 space-y-2">
+            {[
+              'Mở app ngân hàng bất kỳ',
+              'Chọn "Quét QR" hoặc "Chuyển tiền"',
+              'Quét mã và xác nhận thanh toán',
+            ].map((s, i) => (
+              <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
+                  style={{ background: 'rgba(201,168,76,0.2)', color: '#fbbf24' }}>{i + 1}</span>
+                <span style={{ color: 'rgba(196,181,253,0.75)', fontSize: '.82rem' }}>{s}</span>
               </div>
+            ))}
+          </div>
 
-              {/* Instructions */}
-              <div className="w-full space-y-1.5 text-left">
-                {['Mở app ngân hàng bất kỳ', 'Chọn "Quét QR" / "Chuyển tiền QR"', 'Quét mã trên → Xác nhận thanh toán'].map((s, i) => (
-                  <div key={i} className="flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
-                      style={{ background: 'rgba(201,168,76,0.2)', color: '#fbbf24' }}>{i + 1}</span>
-                    <span style={{ color: 'rgba(196,181,253,0.75)', fontSize: '.82rem' }}>{s}</span>
-                  </div>
-                ))}
-              </div>
+          {/* Alternative: open PayOS page */}
+          <a href={qrData.checkoutUrl} target="_blank" rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl transition-all hover:opacity-80"
+            style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd', fontSize: '.82rem', textDecoration: 'none', fontWeight: 600 }}>
+            <ExternalLink size={13} /> Hoặc mở trang thanh toán PayOS
+          </a>
 
-              {/* Open checkout link */}
-              <a href={qrData.checkoutUrl} target="_blank" rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl transition-all hover:opacity-80"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(196,181,253,0.7)', fontSize: '.82rem', textDecoration: 'none' }}>
-                <ExternalLink size={13} /> Mở trang thanh toán PayOS
-              </a>
-            </>
-          )}
+          <p style={{ color: 'rgba(196,181,253,0.3)', fontSize: '.72rem', textAlign: 'center' }}>
+            Trang sẽ tự động mở khóa sau khi thanh toán thành công
+          </p>
         </div>
       </div>
     </div>
@@ -255,7 +285,6 @@ function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () 
 /* ══════════════ PAYWALL MODAL ══════════════ */
 function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnlock: () => void; onClose?: () => void }) {
   const { user, logout } = useAuth();
-  const [selected, setSelected] = useState(CREDIT_PACKAGES[0].id);
   const [loading, setLoading] = useState(false);
   const [qrData, setQrData] = useState<QRData | null>(null);
   const [error, setError] = useState('');
@@ -265,23 +294,18 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
     setLoading(true);
     setError('');
     try {
-      // Create pending order in Firestore first
-      const pkg = CREDIT_PACKAGES.find(p => p.id === selected)!;
-      const tempOrderCode = Number(String(Date.now()).slice(-10));
-
-      // Call Vercel API to create PayOS payment link
       const res = await fetch('/api/pc', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid: user.uid, packageId: selected }),
+        body: JSON.stringify({ uid: user.uid, packageId: 'starter' }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Lỗi tạo thanh toán');
+      if (!res.ok || data.error) throw new Error(data.error || 'Lỗi tạo thanh toán');
 
-      // Store pending order in Firestore (for webhook to update)
+      // Lưu order vào Firestore để webhook cập nhật
       await setDoc(doc(db, 'payment_orders', String(data.orderCode)), {
         uid: user.uid,
-        packageId: selected,
+        packageId: 'starter',
         credits: data.credits,
         amount: data.amount,
         status: 'PENDING',
@@ -296,13 +320,14 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
     }
   };
 
-  // After QR payment success → refresh credits → unlock
   const handleQRSuccess = async () => {
-    const fresh = await getCredits(user!.uid);
-    if (fresh >= 1) {
-      const ok = await consumeCredit(user!.uid);
-      if (ok) onUnlock();
-    }
+    try {
+      const fresh = await getCredits(user!.uid);
+      if (fresh >= 1) {
+        const ok = await consumeCredit(user!.uid);
+        if (ok) onUnlock();
+      }
+    } catch { /* noop */ }
   };
 
   if (qrData) {
@@ -312,69 +337,69 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
   return (
     <div className="gate-overlay">
       <style>{GATE_STYLES}</style>
-      <div className="gate-card" style={{ maxWidth: 460, animation: 'fade-up .4s ease-out' }}>
+      <div className="gate-card" style={{ maxWidth: 420, animation: 'fade-up .4s ease-out' }}>
+
         {/* Header */}
-        <div className="relative p-6 text-center" style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.2),rgba(124,58,237,0.2))' }}>
+        <div className="relative p-6 text-center" style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.18),rgba(124,58,237,0.18))' }}>
           {onClose && (
             <button onClick={onClose} className="absolute right-4 top-4 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/10">
-              <X size={16} style={{ color: 'rgba(196,181,253,0.6)' }} />
+              <X size={16} style={{ color: 'rgba(196,181,253,0.5)' }} />
             </button>
           )}
           <div className="flex justify-center mb-3">
-            <Star size={36} style={{ color: '#fbbf24', filter: 'drop-shadow(0 0 12px #fbbf24)' }} />
+            <div className="w-14 h-14 rounded-full flex items-center justify-center"
+              style={{ background: 'radial-gradient(circle,rgba(201,168,76,0.4),rgba(124,58,237,0.3))', boxShadow: '0 0 30px rgba(201,168,76,0.3)' }}>
+              <Star size={28} style={{ color: '#fbbf24' }} />
+            </div>
           </div>
-          <h2 style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1.15rem', fontWeight: 700 }}>
+          <h2 style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1.2rem', fontWeight: 700, marginBottom: 6 }}>
             Mở Khóa Bản Đồ Linh Hồn
           </h2>
-          <p style={{ fontFamily: "'Raleway',sans-serif", color: 'rgba(196,181,253,0.65)', fontSize: '.84rem', marginTop: 6 }}>
-            {user?.email}
-          </p>
-          {credits > 0 && (
-            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.3)' }}>
-              <Zap size={13} style={{ color: '#4ade80' }} />
-              <span style={{ color: '#4ade80', fontSize: '.78rem', fontWeight: 600 }}>Bạn còn {credits} lượt xem</span>
-            </div>
-          )}
+          <p style={{ color: 'rgba(196,181,253,0.5)', fontSize: '.8rem' }}>{user?.email}</p>
         </div>
 
-        <div className="p-6 space-y-4">
-          {/* Features */}
-          <div className="space-y-2">
-            {['Phân tích 6 chỉ số chuyên sâu', 'Tâm lý · Tình yêu · Nghề nghiệp · Tâm linh', 'Biểu đồ năng lượng cá nhân', 'Tóm tắt bản đồ linh hồn riêng'].map(f => (
-              <div key={f} className="flex items-center gap-2.5">
-                <CheckCircle2 size={14} style={{ color: '#4ade80', flexShrink: 0 }} />
-                <span style={{ fontFamily: "'Raleway',sans-serif", color: 'rgba(196,181,253,0.8)', fontSize: '.84rem' }}>{f}</span>
-              </div>
-            ))}
+        <div className="p-6 space-y-5">
+
+          {/* Offer card */}
+          <div className="rounded-2xl p-5 text-center relative overflow-hidden"
+            style={{ background: 'linear-gradient(135deg,rgba(201,168,76,0.1),rgba(124,58,237,0.08))', border: '1px solid rgba(201,168,76,0.3)' }}>
+            <div style={{ fontFamily: "'Cinzel',serif", color: '#fbbf24', fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>
+              3
+            </div>
+            <div style={{ color: 'rgba(196,181,253,0.7)', fontSize: '.8rem', margin: '4px 0 12px' }}>lượt xem phân tích chi tiết</div>
+            <div className="flex items-center justify-center gap-2">
+              <span style={{ fontFamily: "'Cinzel',serif", color: '#e2d9f3', fontSize: '1.5rem', fontWeight: 900 }}>15.000₫</span>
+            </div>
+            <div style={{ color: 'rgba(196,181,253,0.4)', fontSize: '.72rem', marginTop: 4 }}>≈ 5.000₫ / lượt xem</div>
           </div>
 
-          {/* Package picker */}
-          <p style={{ fontFamily: "'Cinzel',serif", color: '#c9a84c', fontSize: '.72rem', letterSpacing: '.15em', textTransform: 'uppercase' }}>Chọn gói lượt xem</p>
-          <div className="grid grid-cols-3 gap-3">
-            {CREDIT_PACKAGES.map(pkg => (
-              <div key={pkg.id} className={`pkg-card ${selected === pkg.id ? 'selected' : ''}`} onClick={() => setSelected(pkg.id)}>
-                {pkg.badge && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-bold"
-                    style={{ background: 'linear-gradient(135deg,#ec4899,#8b5cf6)', color: '#fff' }}>{pkg.badge}</span>
-                )}
-                <div style={{ fontFamily: "'Cinzel',serif", color: '#fbbf24', fontSize: '1.4rem', fontWeight: 900, textAlign: 'center' }}>{pkg.credits}</div>
-                <div style={{ textAlign: 'center', color: 'rgba(196,181,253,0.6)', fontSize: '.72rem', marginTop: 2 }}>lượt</div>
-                <div style={{ textAlign: 'center', color: '#e2d9f3', fontSize: '.85rem', fontWeight: 700, marginTop: 6 }}>{pkg.label}</div>
+          {/* What you get */}
+          <div className="space-y-2">
+            {[
+              'Phân tích 6 chỉ số số học chuyên sâu',
+              'Tâm lý · Tình yêu · Nghề nghiệp · Tâm linh',
+              'Biểu đồ năng lượng số cá nhân',
+              'Tóm tắt bản đồ linh hồn riêng của bạn',
+            ].map(f => (
+              <div key={f} className="flex items-center gap-2.5">
+                <CheckCircle2 size={14} style={{ color: '#4ade80', flexShrink: 0 }} />
+                <span style={{ color: 'rgba(196,181,253,0.8)', fontSize: '.84rem' }}>{f}</span>
               </div>
             ))}
           </div>
 
           {error && <div className="gate-error">{error}</div>}
 
-          {/* Pay button */}
+          {/* CTA */}
           <button onClick={handlePay} disabled={loading} className="gate-btn-primary"
-            style={{ background: 'linear-gradient(135deg,#c9a84c,#f59e0b)', borderColor: 'rgba(201,168,76,0.6)', color: '#0a0617' }}>
+            style={{ background: 'linear-gradient(135deg,#c9a84c,#f59e0b)', borderColor: 'rgba(201,168,76,0.5)', color: '#0a0617', fontWeight: 900 }}>
             {loading
               ? <><Loader2 size={15} className="animate-spin inline mr-2" />Đang tạo mã QR...</>
-              : <>Thanh toán qua QR · {CREDIT_PACKAGES.find(p => p.id === selected)?.label}</>}
+              : <>Thanh toán 15.000₫ · Nhận QR ngay</>}
           </button>
 
-          <button onClick={logout} style={{ width: '100%', background: 'none', border: 'none', color: 'rgba(196,181,253,0.3)', fontFamily: "'Raleway',sans-serif", fontSize: '.75rem', cursor: 'pointer' }}>
+          <button onClick={logout}
+            style={{ width: '100%', background: 'none', border: 'none', color: 'rgba(196,181,253,0.25)', fontSize: '.75rem', cursor: 'pointer' }}>
             Đăng xuất
           </button>
         </div>
