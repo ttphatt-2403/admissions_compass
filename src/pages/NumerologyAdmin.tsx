@@ -96,11 +96,19 @@ export default function NumerologyAdmin() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
+  const [error, setError] = useState('');
+
   const load = async () => {
     setLoading(true);
-    const data = await getAllUsers();
-    setUsers(data.sort((a, b) => b.totalPurchased - a.totalPurchased));
-    setLoading(false);
+    setError('');
+    try {
+      const data = await getAllUsers();
+      setUsers(data.sort((a, b) => b.totalPurchased - a.totalPurchased));
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Lỗi tải dữ liệu');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { load(); }, []);
@@ -182,6 +190,12 @@ export default function NumerologyAdmin() {
 
           {loading ? (
             <div className="text-center py-16" style={{ color: 'rgba(196,181,253,0.4)' }}>Đang tải...</div>
+          ) : error ? (
+            <div className="text-center py-16 space-y-2">
+              <p style={{ color: '#fb7185', fontSize: '.9rem', fontWeight: 600 }}>Lỗi tải dữ liệu</p>
+              <p style={{ color: 'rgba(196,181,253,0.5)', fontSize: '.8rem' }}>{error}</p>
+              <p style={{ color: 'rgba(196,181,253,0.4)', fontSize: '.75rem' }}>Kiểm tra Firestore Rules đã được publish chưa</p>
+            </div>
           ) : users.length === 0 ? (
             <div className="text-center py-16" style={{ color: 'rgba(196,181,253,0.35)' }}>Chưa có người dùng nào.</div>
           ) : (
