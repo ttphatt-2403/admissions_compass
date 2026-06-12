@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import NumerologyGate from './NumerologyGate';
+
 import {
   Sparkles, Star, RotateCcw, Calendar, ArrowRight,
   Heart, Briefcase, Brain, Zap, BookOpen, Shield, ChevronRight,
@@ -45,7 +46,7 @@ function gradientStyle(from: string, to: string) {
 }
 
 const DOB_DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
-const DOB_MONTHS = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+const DOB_MONTHS = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 const DOB_YEARS = Array.from({ length: 80 }, (_, i) => String(2005 - i));
 
 /* ─── CSS Animations (injected once) ─── */
@@ -211,6 +212,10 @@ function ImageWithFallback({ src, alt, className, style }: { src?: string; alt: 
   return <img src={src} alt={alt} className={className} style={style} onError={() => setErr(true)} />;
 }
 
+const HERO_IMAGE_SRC = 'https://lh3.googleusercontent.com/aida/AP1WRLsW-TOaWRhDc7fYhkrx_tZRckPPu4ZcVR9uOn3PQUheXaZblmf1ldMpZSlnT0qfCs-pAlfGA5xprIi7BjBh3sT9-DeeqrMIPK8hqHZReQZ9gl8ogUXeYZRuNVt-P6RnQw5Rxp6xOSSxkfRdXER5o1rLp9L3mH-eVE_P3UNVnLUFBnTWT8EFsPwjLZx7-DdGlM1VEc_xoe3Noy8M4lfAvVBAGAOgNiTir4QE38fDh_cM0Zbx1nYUwGwxOzQ';
+const BOOK_IMAGE_SRC = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8Ox14SYXcgdDeypWcAwSTqWXABrqUiXryoLVQPcG9AtGDGocN2OJuNgA86gk5_8Eq34brzdcGglwQRI8UtVifeMUOe3ywWtPhrnhA1SWUYTRTL9QpfppSKqLTo06Bsy3LnVNr-XpOIw68EtuGpSR4ONSSd8VabU7_jbyHr1JbugrD-ZPMKKWJ6SDJXtbdDV3lzDPLsctYfgOshcZHU6tyR85moqUsI4dh6SsXCCZaV8j5GMfVhvEzMCld0qKh0MiEv1KyqUQf0qRn';
+const WHEEL_IMAGE_SRC = HERO_IMAGE_SRC;
+
 function CosmicButton({ onClick, children, size = 'md', variant = 'violet' }: {
   onClick?: () => void; children: React.ReactNode; size?: 'sm' | 'md' | 'lg'; variant?: 'gold' | 'violet';
 }) {
@@ -287,10 +292,10 @@ function LandingHero({ onStart }: { onStart: () => void }) {
               style={{ boxShadow: '0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(124,58,237,0.2)' }}>
               <ImageWithFallback alt="Sacred numerology wheel" className="w-full h-full object-cover" />
             </div>
-            {[1,2,3,4,5,6,7,8,9].map((n, i) => {
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n, i) => {
               const angle = (i / 9) * Math.PI * 2 - Math.PI / 2;
               const r = 47;
-              const palette = ['#fbbf24','#a78bfa','#60a5fa','#34d399','#f87171','#fb923c','#c084fc','#38bdf8','#facc15'];
+              const palette = ['#fbbf24', '#a78bfa', '#60a5fa', '#34d399', '#f87171', '#fb923c', '#c084fc', '#38bdf8', '#facc15'];
               const col = palette[i];
               return (
                 <div key={n} className="absolute flex items-center justify-center rounded-full cs-orbit-glow"
@@ -307,7 +312,7 @@ function LandingHero({ onStart }: { onStart: () => void }) {
                 </div>
               );
             })}
-            {[1,2,3].map(i => (
+            {[1, 2, 3].map(i => (
               <div key={i} className="absolute inset-0 rounded-full pointer-events-none"
                 style={{ border: '1px solid rgba(124,58,237,0.2)', animation: `ripple-out 3s ease-out ${i}s infinite` }} />
             ))}
@@ -334,7 +339,7 @@ function LandingAwakening() {
           <div className="absolute -inset-8 cs-spin-slow opacity-30"><SacredRings size={460} gold /></div>
           <div className="relative rounded-2xl overflow-hidden"
             style={{ boxShadow: '0 0 40px rgba(124,58,237,0.4), 0 0 80px rgba(201,168,76,0.15), 0 30px 60px rgba(0,0,0,0.6)', height: 360 }}>
-            <ImageWithFallback alt="Sacred numerology book" className="w-full h-full object-cover" style={{ height: 360 }} />
+            <ImageWithFallback src={BOOK_IMAGE_SRC} alt="Sacred numerology book" className="w-full h-full object-cover" style={{ height: 360 }} />
             <div className="absolute inset-0 pointer-events-none"
               style={{ background: 'linear-gradient(135deg, transparent 30%, rgba(201,168,76,0.12) 60%, transparent 80%)' }} />
           </div>
@@ -354,7 +359,7 @@ function LandingAwakening() {
           <div className="space-y-4">
             {[
               { n: '11', label: 'Số Chủ — Con đường khai sáng', col: '#fbbf24' },
-              { n: '7',  label: 'Số Linh Hồn — Trí tuệ bí ẩn', col: '#c084fc' },
+              { n: '7', label: 'Số Linh Hồn — Trí tuệ bí ẩn', col: '#c084fc' },
               { n: '33', label: 'Số Sứ Mệnh — Thầy của thầy', col: '#60a5fa' },
             ].map(({ n, label, col }, idx) => (
               <div key={n} className="flex items-center gap-4 glass rounded-xl px-5 py-3 group transition-all duration-300 hover:-translate-y-0.5">
@@ -404,9 +409,9 @@ function LandingCosmicEngine() {
           {/* Center image */}
           <div className="absolute rounded-full overflow-hidden"
             style={{ inset: 120, boxShadow: '0 0 80px rgba(124,58,237,0.5), 0 0 160px rgba(59,130,246,0.2)' }}>
-            <div className="w-full h-full cs-spin-med">
-              <ImageWithFallback alt="Numerology wheel" className="w-full h-full object-cover" />
-            </div>
+            {/* <div className="w-full h-full cs-spin-med">
+              <ImageWithFallback src={WHEEL_IMAGE_SRC} alt="Numerology wheel" className="w-full h-full object-cover" />
+            </div> */}
           </div>
           {/* Center glow */}
           <div className="absolute cs-pulse-glow"
@@ -438,12 +443,12 @@ function LandingCosmicEngine() {
 
 function LandingAnalysis() {
   const cards = [
-    { icon: '①', title: 'Số Đường Đời', desc: 'Tính từ ngày tháng năm sinh — chỉ số cốt lõi định nghĩa hành trình và sứ mệnh của bạn.' },
-    { icon: '②', title: 'Số Linh Hồn', desc: 'Rút ra từ nguyên âm trong tên — ước muốn sâu thẳm nhất của tâm hồn bạn.' },
-    { icon: '③', title: 'Số Biểu Hiện', desc: 'Từ toàn bộ tên đầy đủ — tài năng thiên bẩm và năng lực tiềm ẩn chờ được khai mở.' },
-    { icon: '④', title: 'Phân Tích 5 Chiều', desc: 'Khám phá tình yêu, sự nghiệp, tài chính, sức khỏe và tâm linh qua lăng kính số học.' },
-    { icon: '⑤', title: 'Chu Kỳ Cá Nhân', desc: 'Dự đoán các giai đoạn quan trọng trong cuộc sống theo vòng quay số học 9 năm.' },
-    { icon: '⑥', title: 'AI Giải Mã', desc: 'Trí tuệ nhân tạo phân tích bản đồ hoàn chỉnh và tạo ra bản tường giải cá nhân hóa sâu sắc.' },
+    { icon: <Calendar size={24} style={{ color: '#fbbf24' }} />, title: 'Số Đường Đời', desc: 'Tính từ ngày tháng năm sinh — chỉ số cốt lõi định nghĩa hành trình và sứ mệnh của bạn.' },
+    { icon: <Heart size={24} style={{ color: '#a78bfa' }} />, title: 'Số Linh Hồn', desc: 'Rút ra từ nguyên âm trong tên — ước muốn sâu thẳm nhất của tâm hồn bạn.' },
+    { icon: <User size={24} style={{ color: '#60a5fa' }} />, title: 'Số Biểu Hiện', desc: 'Từ toàn bộ tên đầy đủ — tài năng thiên bẩm và năng lực tiềm ẩn chờ được khai mở.' },
+    { icon: <Target size={24} style={{ color: '#fbbf24' }} />, title: 'Phân Tích 5 Chiều', desc: 'Khám phá tình yêu, sự nghiệp, tài chính, sức khỏe và tâm linh qua lăng kính số học.' },
+    { icon: <RotateCcw size={24} style={{ color: '#38bdf8' }} />, title: 'Chu Kỳ Cá Nhân', desc: 'Dự đoán các giai đoạn quan trọng trong cuộc sống theo vòng quay số học 9 năm.' },
+    { icon: <Brain size={24} style={{ color: '#c4b5fd' }} />, title: 'AI Giải Mã', desc: 'Trí tuệ nhân tạo phân tích bản đồ hoàn chỉnh và tạo ra bản tường giải cá nhân hóa sâu sắc.' },
   ];
   return (
     <section className="relative py-24 px-6 overflow-hidden">
@@ -462,9 +467,11 @@ function LandingAnalysis() {
               style={{ boxShadow: '0 4px 40px rgba(0,0,0,0.3)', borderColor: i % 2 === 0 ? 'rgba(124,58,237,0.2)' : 'rgba(201,168,76,0.15)' }}>
               <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.15), transparent 70%)' }} />
-              <div className="mb-4 text-3xl gold-text" style={{ fontFamily: "'Cinzel', serif" }}>{card.icon}</div>
-              <h3 className="mb-3 font-semibold" style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', color: '#e2d9f3', letterSpacing: '0.05em' }}>{card.title}</h3>
-              <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: '0.875rem', lineHeight: 1.7, color: 'rgba(196,181,253,0.65)', fontWeight: 300 }}>{card.desc}</p>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 ml-2 mt-2" style={{ background: 'rgba(248,203,54,0.12)' }}>
+                {card.icon}
+              </div>
+              <h3 className="mb-3 font-semibold ml-2" style={{ fontFamily: "'Cinzel', serif", fontSize: '1rem', color: '#e2d9f3', letterSpacing: '0.05em' }}>{card.title}</h3>
+              <p className="mb-3 ml-2" style={{ fontFamily: "'Raleway', sans-serif", fontSize: '0.875rem', lineHeight: 1.7, color: 'rgba(196,181,253,0.65)', fontWeight: 300 }}>{card.desc}</p>
               <div className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent)' }} />
             </div>
@@ -484,8 +491,9 @@ function LandingInsights() {
             Thư <span className="violet-text">Viện Số Học</span>
           </h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{ gridAutoRows: 160 }}>
-          <div className="glass-gold rounded-2xl p-6 row-span-2 col-span-1 flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300">
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{ gridAutoRows: "100px" }}>
+          <div className="glass-gold rounded-2xl p-6 row-span-3 flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300">
             <div className="relative">
               <div className="absolute -top-2 -left-2 w-14 h-14 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.25), transparent 70%)' }} />
               <div className="text-5xl gold-text font-black cs-insight-num relative z-10" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 12px rgba(201,168,76,0.6))' }}>1</div>
@@ -494,7 +502,7 @@ function LandingInsights() {
               <p className="text-xs leading-relaxed" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.65)', fontWeight: 300 }}>Lãnh đạo bẩm sinh, ý chí sắt đá — không gì ngăn cản được hành trình chinh phục.</p>
             </div>
           </div>
-          <div className="glass rounded-2xl p-6 col-span-2 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+          <div className="glass rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
             <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(196,181,253,0.15), transparent 70%)' }} />
             <div className="text-4xl violet-text font-black cs-insight-num relative z-10" style={{ fontFamily: "'Cinzel', serif", filter: 'drop-shadow(0 0 10px rgba(196,181,253,0.5))', animationDelay: '0.5s' }}>7</div>
             <div><h4 className="font-semibold mb-1 text-sm" style={{ fontFamily: "'Cinzel', serif", color: '#c4b5fd' }}>Người Tìm Kiếm Chân Lý</h4>
@@ -510,7 +518,7 @@ function LandingInsights() {
             <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Trí tuệ nhân loại.</p>
           </div>
           <div className="glass-gold rounded-2xl p-6 col-span-2 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
-            <div className="text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Năm 2026</div>
+            <div className="text-xs tracking-widest uppercase mb-2" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c' }}>Năm 2024</div>
             <div><h4 className="font-semibold mb-1 text-sm" style={{ fontFamily: "'Cinzel', serif", color: '#fbbf24' }}>Chu Kỳ Số 9</h4>
               <p className="text-xs" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontWeight: 300 }}>Năm hoàn kết — buông bỏ, chuyển hóa và chuẩn bị cho vòng sinh mới.</p>
             </div>
@@ -548,7 +556,7 @@ function LandingCTA({ onStart }: { onStart: () => void }) {
         <div className="absolute inset-0 cs-spin-rev"><SacredRings size={240} /></div>
         <div className="absolute inset-[40px] rounded-full cs-pulse-glow"
           style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.6) 0%, rgba(124,58,237,0.4) 40%, rgba(59,130,246,0.2) 70%, transparent 100%)', filter: 'blur(2px)', boxShadow: '0 0 80px rgba(201,168,76,0.4), 0 0 160px rgba(124,58,237,0.3)' }} />
-        {[1,2,3].map(i => (
+        {[1, 2, 3].map(i => (
           <div key={i} className="absolute inset-0 rounded-full pointer-events-none"
             style={{ border: '1px solid rgba(201,168,76,0.15)', animation: `ripple-out 4s ease-out ${i * 1.2}s infinite` }} />
         ))}
@@ -570,12 +578,12 @@ function LandingCTA({ onStart }: { onStart: () => void }) {
 
 /* ─── INDEX_CONTEXT ─── */
 const INDEX_CONTEXT: Record<string, { title: string; desc: string; color: string }> = {
-  lifepath:    { title: 'Số Đường Đời',  desc: 'Tấm bản đồ chính của cuộc đời — bản chất thực sự, định hướng cốt lõi, thử thách trọng tâm và cơ hội sẽ đến. Đây là chỉ số quan trọng nhất.', color: 'bg-indigo-50 border-indigo-200 text-indigo-800' },
-  birthday:    { title: 'Số Ngày Sinh',  desc: 'Món quà tự nhiên, tài năng bẩm sinh mà bạn được Vũ trụ trang bị khi chào đời để hỗ trợ Đường Đời.', color: 'bg-sky-50 border-sky-200 text-sky-800' },
-  attitude:    { title: 'Số Thái Độ',    desc: 'Lăng kính bạn dùng để nhìn nhận thế giới và cách bạn đối mặt, giải quyết các rắc rối — cũng là ấn tượng đầu tiên người khác có về bạn.', color: 'bg-violet-50 border-violet-200 text-violet-800' },
-  destiny:     { title: 'Số Sứ Mệnh',    desc: 'Nhiệm vụ lớn mà cuộc đời đã giao phó — tính từ Họ và Tên đầy đủ. Đây là vai trò bạn sinh ra để đóng.', color: 'bg-amber-50 border-amber-200 text-amber-800' },
-  soul:        { title: 'Số Linh Hồn',   desc: 'Khát khao, động lực và nhu cầu tận cùng của trái tim — tính từ các nguyên âm trong tên. Bạn chỉ hạnh phúc khi sống trọn với bản chất này.', color: 'bg-rose-50 border-rose-200 text-rose-800' },
-  personality: { title: 'Số Nhân Cách',  desc: 'Chiếc "mặt nạ" bạn đeo ra xã hội — tính từ các phụ âm trong tên. Cách thế giới nhìn nhận bạn trước khi thực sự hiểu bạn.', color: 'bg-emerald-50 border-emerald-200 text-emerald-800' },
+  lifepath: { title: 'Số Đường Đời', desc: 'Tấm bản đồ chính của cuộc đời — bản chất thực sự, định hướng cốt lõi, thử thách trọng tâm và cơ hội sẽ đến. Đây là chỉ số quan trọng nhất.', color: 'bg-indigo-50 border-indigo-200 text-indigo-800' },
+  birthday: { title: 'Số Ngày Sinh', desc: 'Món quà tự nhiên, tài năng bẩm sinh mà bạn được Vũ trụ trang bị khi chào đời để hỗ trợ Đường Đời.', color: 'bg-sky-50 border-sky-200 text-sky-800' },
+  attitude: { title: 'Số Thái Độ', desc: 'Lăng kính bạn dùng để nhìn nhận thế giới và cách bạn đối mặt, giải quyết các rắc rối — cũng là ấn tượng đầu tiên người khác có về bạn.', color: 'bg-violet-50 border-violet-200 text-violet-800' },
+  destiny: { title: 'Số Sứ Mệnh', desc: 'Nhiệm vụ lớn mà cuộc đời đã giao phó — tính từ Họ và Tên đầy đủ. Đây là vai trò bạn sinh ra để đóng.', color: 'bg-amber-50 border-amber-200 text-amber-800' },
+  soul: { title: 'Số Linh Hồn', desc: 'Khát khao, động lực và nhu cầu tận cùng của trái tim — tính từ các nguyên âm trong tên. Bạn chỉ hạnh phúc khi sống trọn với bản chất này.', color: 'bg-rose-50 border-rose-200 text-rose-800' },
+  personality: { title: 'Số Nhân Cách', desc: 'Chiếc "mặt nạ" bạn đeo ra xã hội — tính từ các phụ âm trong tên. Cách thế giới nhìn nhận bạn trước khi thực sự hiểu bạn.', color: 'bg-emerald-50 border-emerald-200 text-emerald-800' },
 };
 
 /* ─── NumberCard ─── */
@@ -587,11 +595,11 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
   const ctx = INDEX_CONTEXT[indexType];
 
   const tabs: { id: TabId; label: string; icon: React.ReactNode }[] = [
-    { id: 'overview',   label: 'Tổng quan',   icon: <Brain size={11} /> },
-    { id: 'psychology', label: 'Tâm lý',       icon: <Zap size={11} /> },
-    { id: 'love',       label: 'Quan hệ',      icon: <Heart size={11} /> },
-    { id: 'career',     label: 'Nghề nghiệp',  icon: <Briefcase size={11} /> },
-    { id: 'spiritual',  label: 'Tâm linh',     icon: <Compass size={11} /> },
+    { id: 'overview', label: 'Tổng quan', icon: <Brain size={11} /> },
+    { id: 'psychology', label: 'Tâm lý', icon: <Zap size={11} /> },
+    { id: 'love', label: 'Quan hệ', icon: <Heart size={11} /> },
+    { id: 'career', label: 'Nghề nghiệp', icon: <Briefcase size={11} /> },
+    { id: 'spiritual', label: 'Tâm linh', icon: <Compass size={11} /> },
   ];
 
   return (
@@ -600,8 +608,10 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
       <div className="relative overflow-hidden" style={{ ...grad, padding: '28px 24px 22px' }}>
         {/* Watermark giant number */}
         <div className="absolute right-3 top-1/2 -translate-y-1/2 select-none pointer-events-none leading-none"
-          style={{ fontSize: 'clamp(5rem,14vw,8rem)', fontWeight: 900,
-            color: 'rgba(255,255,255,0.11)', fontFamily: "'Cinzel', serif" }}>
+          style={{
+            fontSize: 'clamp(5rem,14vw,8rem)', fontWeight: 900,
+            color: 'rgba(255,255,255,0.11)', fontFamily: "'Cinzel', serif"
+          }}>
           {number}
         </div>
         <div className="absolute inset-0 pointer-events-none"
@@ -658,41 +668,41 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
         {tab === 'overview' && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <DarkInfoSection icon={<Sun size={14} style={{ color: '#fbbf24' }}/>} title="Góc Sáng" accentColor="#fbbf24">
+              <DarkInfoSection icon={<Sun size={14} style={{ color: '#fbbf24' }} />} title="Góc Sáng" accentColor="#fbbf24">
                 <p className="text-sm leading-relaxed" style={{ color: 'rgba(253,230,138,0.85)' }}>{profile.lightSide}</p>
               </DarkInfoSection>
-              <DarkInfoSection icon={<Moon size={14} style={{ color: '#94a3b8' }}/>} title="Góc Tối" accentColor="#94a3b8">
+              <DarkInfoSection icon={<Moon size={14} style={{ color: '#94a3b8' }} />} title="Góc Tối" accentColor="#94a3b8">
                 <p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.75)' }}>{profile.darkSide}</p>
               </DarkInfoSection>
             </div>
             {profile.giftToWorld && (
-              <DarkInfoSection icon={<Gift size={14} style={{ color: '#34d399' }}/>} title="Món Quà Cho Thế Giới" accentColor="#34d399">
+              <DarkInfoSection icon={<Gift size={14} style={{ color: '#34d399' }} />} title="Món Quà Cho Thế Giới" accentColor="#34d399">
                 <p className="text-sm leading-relaxed font-medium" style={{ color: 'rgba(167,243,208,0.85)' }}>{profile.giftToWorld}</p>
               </DarkInfoSection>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <DarkInfoSection icon={<TrendingUp size={14} style={{ color: '#4ade80' }}/>} title="Ưu Điểm" accentColor="#4ade80">
-                <ul className="space-y-2">{profile.strengths.map((s,i)=>(
+              <DarkInfoSection icon={<TrendingUp size={14} style={{ color: '#4ade80' }} />} title="Ưu Điểm" accentColor="#4ade80">
+                <ul className="space-y-2">{profile.strengths.map((s, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm" style={{ color: 'rgba(187,247,208,0.8)' }}>
-                    <ChevronRight size={13} style={{ color: '#4ade80' }} className="flex-shrink-0 mt-0.5"/><span>{s}</span>
+                    <ChevronRight size={13} style={{ color: '#4ade80' }} className="flex-shrink-0 mt-0.5" /><span>{s}</span>
                   </li>))}</ul>
               </DarkInfoSection>
-              <DarkInfoSection icon={<AlertTriangle size={14} style={{ color: '#fb923c' }}/>} title="Thử Thách" accentColor="#fb923c">
-                <ul className="space-y-2">{profile.weaknesses.map((w,i)=>(
+              <DarkInfoSection icon={<AlertTriangle size={14} style={{ color: '#fb923c' }} />} title="Thử Thách" accentColor="#fb923c">
+                <ul className="space-y-2">{profile.weaknesses.map((w, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm" style={{ color: 'rgba(254,215,170,0.8)' }}>
-                    <ChevronRight size={13} style={{ color: '#fb923c' }} className="flex-shrink-0 mt-0.5"/><span>{w}</span>
+                    <ChevronRight size={13} style={{ color: '#fb923c' }} className="flex-shrink-0 mt-0.5" /><span>{w}</span>
                   </li>))}</ul>
               </DarkInfoSection>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <DarkInfoSection icon={<Users size={14} style={{ color: '#60a5fa' }}/>} title="Hợp với số" accentColor="#60a5fa">
-                <div className="flex flex-wrap gap-2 mt-1">{profile.compatible.map(n=>(
+              <DarkInfoSection icon={<Users size={14} style={{ color: '#60a5fa' }} />} title="Hợp với số" accentColor="#60a5fa">
+                <div className="flex flex-wrap gap-2 mt-1">{profile.compatible.map(n => (
                   <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black" style={grad}>{n}</span>
                 ))}</div>
               </DarkInfoSection>
-              <DarkInfoSection icon={<Zap size={14} style={{ color: '#f472b6' }}/>} title="Thách thức" accentColor="#f472b6">
-                <div className="flex flex-wrap gap-2 mt-1">{profile.challenging.map(n=>(
-                  <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black" style={{ background:'linear-gradient(135deg,#ec4899,#8b5cf6)' }}>{n}</span>
+              <DarkInfoSection icon={<Zap size={14} style={{ color: '#f472b6' }} />} title="Thách thức" accentColor="#f472b6">
+                <div className="flex flex-wrap gap-2 mt-1">{profile.challenging.map(n => (
+                  <span key={n} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-white flex items-center justify-center text-xs sm:text-sm font-black" style={{ background: 'linear-gradient(135deg,#ec4899,#8b5cf6)' }}>{n}</span>
                 ))}</div>
               </DarkInfoSection>
             </div>
@@ -701,73 +711,73 @@ function NumberCard({ number, label, labelIcon, profile, indexType }: {
 
         {tab === 'psychology' && (
           <>
-            <DarkInfoSection icon={<Brain size={14} style={{ color: '#c084fc' }}/>} title="Phân Tích Tâm Lý Chuyên Sâu" accentColor="#c084fc">
-              <ul className="space-y-3 mt-1">{profile.deepAnalysis.map((item,i)=>(
+            <DarkInfoSection icon={<Brain size={14} style={{ color: '#c084fc' }} />} title="Phân Tích Tâm Lý Chuyên Sâu" accentColor="#c084fc">
+              <ul className="space-y-3 mt-1">{profile.deepAnalysis.map((item, i) => (
                 <li key={i} className="flex gap-3 text-sm leading-relaxed" style={{ color: 'rgba(233,213,255,0.8)' }}>
                   <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 text-xs font-black"
-                    style={{ background: 'rgba(192,132,252,0.2)', color: '#c084fc' }}>{i+1}</span>
+                    style={{ background: 'rgba(192,132,252,0.2)', color: '#c084fc' }}>{i + 1}</span>
                   <span>{item}</span>
                 </li>))}</ul>
             </DarkInfoSection>
-            {profile.childhood && <DarkInfoSection icon={<Baby size={14} style={{ color: '#2dd4bf' }}/>} title="Dấu Ấn Tuổi Thơ" accentColor="#2dd4bf"><p className="text-sm leading-relaxed" style={{ color: 'rgba(153,246,228,0.8)' }}>{profile.childhood}</p></DarkInfoSection>}
-            {profile.mindset && <DarkInfoSection icon={<Lightbulb size={14} style={{ color: '#38bdf8' }}/>} title="Mô Thức Tư Duy" accentColor="#38bdf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.mindset}</p></DarkInfoSection>}
-            {profile.stressResponse && <DarkInfoSection icon={<Zap size={14} style={{ color: '#fb923c' }}/>} title="Phản Ứng Khi Căng Thẳng" accentColor="#fb923c"><p className="text-sm leading-relaxed" style={{ color: 'rgba(254,215,170,0.8)' }}>{profile.stressResponse}</p></DarkInfoSection>}
-            {profile.shadowWork && <DarkInfoSection icon={<Shield size={14} style={{ color: '#94a3b8' }}/>} title="Góc Khuất Cần Chữa Lành (Shadow Work)" accentColor="#94a3b8"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(196,181,253,0.7)' }}>{profile.shadowWork}</p></DarkInfoSection>}
+            {profile.childhood && <DarkInfoSection icon={<Baby size={14} style={{ color: '#2dd4bf' }} />} title="Dấu Ấn Tuổi Thơ" accentColor="#2dd4bf"><p className="text-sm leading-relaxed" style={{ color: 'rgba(153,246,228,0.8)' }}>{profile.childhood}</p></DarkInfoSection>}
+            {profile.mindset && <DarkInfoSection icon={<Lightbulb size={14} style={{ color: '#38bdf8' }} />} title="Mô Thức Tư Duy" accentColor="#38bdf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.mindset}</p></DarkInfoSection>}
+            {profile.stressResponse && <DarkInfoSection icon={<Zap size={14} style={{ color: '#fb923c' }} />} title="Phản Ứng Khi Căng Thẳng" accentColor="#fb923c"><p className="text-sm leading-relaxed" style={{ color: 'rgba(254,215,170,0.8)' }}>{profile.stressResponse}</p></DarkInfoSection>}
+            {profile.shadowWork && <DarkInfoSection icon={<Shield size={14} style={{ color: '#94a3b8' }} />} title="Góc Khuất Cần Chữa Lành (Shadow Work)" accentColor="#94a3b8"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(196,181,253,0.7)' }}>{profile.shadowWork}</p></DarkInfoSection>}
           </>
         )}
 
         {tab === 'love' && (
           <>
-            <DarkInfoSection icon={<Heart size={14} style={{ color: '#fb7185' }}/>} title="Phong Cách Tình Yêu" accentColor="#fb7185"><p className="text-sm leading-relaxed" style={{ color: 'rgba(253,164,175,0.85)' }}>{profile.loveStyle}</p></DarkInfoSection>
-            {profile.relationshipDynamics && <DarkInfoSection icon={<Link2 size={14} style={{ color: '#f9a8d4' }}/>} title="Động Lực Trong Các Mối Quan Hệ" accentColor="#f9a8d4"><p className="text-sm leading-relaxed" style={{ color: 'rgba(249,168,212,0.8)' }}>{profile.relationshipDynamics}</p></DarkInfoSection>}
-            {profile.communicationStyle && <DarkInfoSection icon={<MessageCircle size={14} style={{ color: '#60a5fa' }}/>} title="Phong Cách Giao Tiếp" accentColor="#60a5fa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.communicationStyle}</p></DarkInfoSection>}
-            <DarkInfoSection icon={<Activity size={14} style={{ color: '#2dd4bf' }}/>} title="Sức Khỏe Cần Chú Ý" accentColor="#2dd4bf"><p className="text-sm leading-relaxed" style={{ color: 'rgba(153,246,228,0.8)' }}>{profile.healthFocus}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Heart size={14} style={{ color: '#fb7185' }} />} title="Phong Cách Tình Yêu" accentColor="#fb7185"><p className="text-sm leading-relaxed" style={{ color: 'rgba(253,164,175,0.85)' }}>{profile.loveStyle}</p></DarkInfoSection>
+            {profile.relationshipDynamics && <DarkInfoSection icon={<Link2 size={14} style={{ color: '#f9a8d4' }} />} title="Động Lực Trong Các Mối Quan Hệ" accentColor="#f9a8d4"><p className="text-sm leading-relaxed" style={{ color: 'rgba(249,168,212,0.8)' }}>{profile.relationshipDynamics}</p></DarkInfoSection>}
+            {profile.communicationStyle && <DarkInfoSection icon={<MessageCircle size={14} style={{ color: '#60a5fa' }} />} title="Phong Cách Giao Tiếp" accentColor="#60a5fa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.communicationStyle}</p></DarkInfoSection>}
+            <DarkInfoSection icon={<Activity size={14} style={{ color: '#2dd4bf' }} />} title="Sức Khỏe Cần Chú Ý" accentColor="#2dd4bf"><p className="text-sm leading-relaxed" style={{ color: 'rgba(153,246,228,0.8)' }}>{profile.healthFocus}</p></DarkInfoSection>
           </>
         )}
 
         {tab === 'career' && (
           <>
-            <DarkInfoSection icon={<Target size={14} style={{ color: '#818cf8' }}/>} title="Phong Cách Làm Việc" accentColor="#818cf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(199,210,254,0.8)' }}>{profile.workStyle}</p></DarkInfoSection>
-            <DarkInfoSection icon={<Building2 size={14} style={{ color: '#60a5fa' }}/>} title="Môi Trường Làm Việc Lý Tưởng" accentColor="#60a5fa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.workEnv}</p></DarkInfoSection>
-            <DarkInfoSection icon={<Users size={14} style={{ color: '#c084fc' }}/>} title="Phong Cách Lãnh Đạo" accentColor="#c084fc"><p className="text-sm leading-relaxed" style={{ color: 'rgba(233,213,255,0.8)' }}>{profile.leadershipStyle}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Target size={14} style={{ color: '#818cf8' }} />} title="Phong Cách Làm Việc" accentColor="#818cf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(199,210,254,0.8)' }}>{profile.workStyle}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Building2 size={14} style={{ color: '#60a5fa' }} />} title="Môi Trường Làm Việc Lý Tưởng" accentColor="#60a5fa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(186,230,253,0.8)' }}>{profile.workEnv}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Users size={14} style={{ color: '#c084fc' }} />} title="Phong Cách Lãnh Đạo" accentColor="#c084fc"><p className="text-sm leading-relaxed" style={{ color: 'rgba(233,213,255,0.8)' }}>{profile.leadershipStyle}</p></DarkInfoSection>
             {profile.majors?.length > 0 && (
-              <DarkInfoSection icon={<GraduationCap size={14} style={{ color: '#a78bfa' }}/>} title="Gợi Ý Ngành Học" accentColor="#a78bfa">
-                <div className="flex flex-wrap gap-2 mt-1">{profile.majors.map((m,i)=>(
-                  <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background:'rgba(167,139,250,0.15)', color:'#c4b5fd', border:'1px solid rgba(167,139,250,0.25)' }}>{m}</span>
+              <DarkInfoSection icon={<GraduationCap size={14} style={{ color: '#a78bfa' }} />} title="Gợi Ý Ngành Học" accentColor="#a78bfa">
+                <div className="flex flex-wrap gap-2 mt-1">{profile.majors.map((m, i) => (
+                  <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background: 'rgba(167,139,250,0.15)', color: '#c4b5fd', border: '1px solid rgba(167,139,250,0.25)' }}>{m}</span>
                 ))}</div>
               </DarkInfoSection>
             )}
-            <DarkInfoSection icon={<Briefcase size={14} style={{ color: '#94a3b8' }}/>} title="Gợi Ý Nghề Nghiệp" accentColor="#94a3b8">
-              <div className="flex flex-wrap gap-2 mt-1">{profile.careers.map((c,i)=>(
+            <DarkInfoSection icon={<Briefcase size={14} style={{ color: '#94a3b8' }} />} title="Gợi Ý Nghề Nghiệp" accentColor="#94a3b8">
+              <div className="flex flex-wrap gap-2 mt-1">{profile.careers.map((c, i) => (
                 <span key={i} className="px-2.5 py-1 rounded-full text-xs font-semibold text-white" style={grad}>{c}</span>
               ))}</div>
             </DarkInfoSection>
-            <DarkInfoSection icon={<Lightbulb size={14} style={{ color: '#fbbf24' }}/>} title="Lời Khuyên Phát Triển Sự Nghiệp" accentColor="#fbbf24"><p className="text-sm leading-relaxed" style={{ color: 'rgba(253,230,138,0.85)' }}>{profile.careerAdvice}</p></DarkInfoSection>
-            <DarkInfoSection icon={<Wallet size={14} style={{ color: '#4ade80' }}/>} title="Phong Cách Tài Chính" accentColor="#4ade80"><p className="text-sm leading-relaxed" style={{ color: 'rgba(187,247,208,0.8)' }}>{profile.moneyStyle}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Lightbulb size={14} style={{ color: '#fbbf24' }} />} title="Lời Khuyên Phát Triển Sự Nghiệp" accentColor="#fbbf24"><p className="text-sm leading-relaxed" style={{ color: 'rgba(253,230,138,0.85)' }}>{profile.careerAdvice}</p></DarkInfoSection>
+            <DarkInfoSection icon={<Wallet size={14} style={{ color: '#4ade80' }} />} title="Phong Cách Tài Chính" accentColor="#4ade80"><p className="text-sm leading-relaxed" style={{ color: 'rgba(187,247,208,0.8)' }}>{profile.moneyStyle}</p></DarkInfoSection>
           </>
         )}
 
         {tab === 'spiritual' && (
           <>
-            <DarkInfoSection icon={<Compass size={14} style={{ color: '#a78bfa' }}/>} title="Con Đường Tâm Linh" accentColor="#a78bfa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.85)' }}>{profile.spiritualPath}</p></DarkInfoSection>
-            <DarkInfoSection icon={<BookOpen size={14} style={{ color: '#c084fc' }}/>} title="Bài Học Cuộc Đời" accentColor="#c084fc"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(233,213,255,0.8)' }}>"{profile.lesson}"</p></DarkInfoSection>
-            {profile.karmicLesson && <DarkInfoSection icon={<Shield size={14} style={{ color: '#818cf8' }}/>} title="Bài Học Nghiệp (Karmic Lesson)" accentColor="#818cf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(199,210,254,0.8)' }}>{profile.karmicLesson}</p></DarkInfoSection>}
+            <DarkInfoSection icon={<Compass size={14} style={{ color: '#a78bfa' }} />} title="Con Đường Tâm Linh" accentColor="#a78bfa"><p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.85)' }}>{profile.spiritualPath}</p></DarkInfoSection>
+            <DarkInfoSection icon={<BookOpen size={14} style={{ color: '#c084fc' }} />} title="Bài Học Cuộc Đời" accentColor="#c084fc"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(233,213,255,0.8)' }}>"{profile.lesson}"</p></DarkInfoSection>
+            {profile.karmicLesson && <DarkInfoSection icon={<Shield size={14} style={{ color: '#818cf8' }} />} title="Bài Học Nghiệp (Karmic Lesson)" accentColor="#818cf8"><p className="text-sm leading-relaxed" style={{ color: 'rgba(199,210,254,0.8)' }}>{profile.karmicLesson}</p></DarkInfoSection>}
             {profile.lifeThemes?.length > 0 && (
-              <DarkInfoSection icon={<Map size={14} style={{ color: '#fbbf24' }}/>} title="Các Chủ Đề Lớn Của Cuộc Đời" accentColor="#fbbf24">
-                <ul className="space-y-2 mt-1">{profile.lifeThemes.map((theme,i)=>(
+              <DarkInfoSection icon={<Map size={14} style={{ color: '#fbbf24' }} />} title="Các Chủ Đề Lớn Của Cuộc Đời" accentColor="#fbbf24">
+                <ul className="space-y-2 mt-1">{profile.lifeThemes.map((theme, i) => (
                   <li key={i} className="flex gap-2 text-sm" style={{ color: 'rgba(253,230,138,0.8)' }}>
-                    <ChevronRight size={13} style={{ color: '#fbbf24' }} className="flex-shrink-0 mt-0.5"/><span>{theme}</span>
+                    <ChevronRight size={13} style={{ color: '#fbbf24' }} className="flex-shrink-0 mt-0.5" /><span>{theme}</span>
                   </li>))}</ul>
               </DarkInfoSection>
             )}
             {profile.affirmations?.length > 0 && (
-              <DarkInfoSection icon={<Sparkles size={14} style={{ color: '#f0abfc' }}/>} title="Khẳng Định Tích Cực" accentColor="#f0abfc">
-                <div className="space-y-2 mt-1">{profile.affirmations.map((aff,i)=>(
-                  <p key={i} className="text-sm font-semibold italic rounded-xl p-3 leading-relaxed" style={{ background:'rgba(240,171,252,0.08)', border:'1px solid rgba(240,171,252,0.15)', color:'rgba(240,171,252,0.9)' }}>"{aff}"</p>
+              <DarkInfoSection icon={<Sparkles size={14} style={{ color: '#f0abfc' }} />} title="Khẳng Định Tích Cực" accentColor="#f0abfc">
+                <div className="space-y-2 mt-1">{profile.affirmations.map((aff, i) => (
+                  <p key={i} className="text-sm font-semibold italic rounded-xl p-3 leading-relaxed" style={{ background: 'rgba(240,171,252,0.08)', border: '1px solid rgba(240,171,252,0.15)', color: 'rgba(240,171,252,0.9)' }}>"{aff}"</p>
                 ))}</div>
               </DarkInfoSection>
             )}
-            <DarkInfoSection icon={<Flame size={14} style={{ color: '#fbbf24' }}/>} title="Lời Khuyên Thực Tế" accentColor="#fbbf24"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(253,230,138,0.85)' }}>"{profile.advice}"</p></DarkInfoSection>
+            <DarkInfoSection icon={<Flame size={14} style={{ color: '#fbbf24' }} />} title="Lời Khuyên Thực Tế" accentColor="#fbbf24"><p className="text-sm leading-relaxed italic" style={{ color: 'rgba(253,230,138,0.85)' }}>"{profile.advice}"</p></DarkInfoSection>
           </>
         )}
       </div>
@@ -813,11 +823,11 @@ function OrbitalVisual() {
 
       {/* Ring 1 radius guide (invisible) */}
       <div className="absolute rounded-full border border-white/5"
-        style={{ width: r1*2, height: r1*2, left: cx-r1, top: cy-r1 }} />
+        style={{ width: r1 * 2, height: r1 * 2, left: cx - r1, top: cy - r1 }} />
 
       {/* Ring 2 radius guide */}
       <div className="absolute rounded-full border border-white/5"
-        style={{ width: r2*2, height: r2*2, left: cx-r2, top: cy-r2 }} />
+        style={{ width: r2 * 2, height: r2 * 2, left: cx - r2, top: cy - r2 }} />
 
       {/* Inner ring numbers */}
       {inner.map((num, i) => {
@@ -878,12 +888,14 @@ export default function NumerologyTest() {
   const [year, setYear] = useState('');
   const [error, setError] = useState('');
   const [result, setResult] = useState<NumerologyResult | null>(null);
+  const [expandedNumberIndex, setExpandedNumberIndex] = useState<number>(0);
+  const [detailsOpenIndex, setDetailsOpenIndex] = useState<number | null>(null);
 
   const validate = (): boolean => {
     const d = parseInt(day), m = parseInt(month), y = parseInt(year);
     if (!fullName.trim()) { setError('Vui lòng nhập Họ và Tên của bạn.'); return false; }
     if (!day || !month || !year) { setError('Vui lòng chọn đầy đủ ngày tháng năm sinh.'); return false; }
-    if (new Date(y, m-1, d).getMonth() !== m-1) { setError('Ngày tháng không hợp lệ.'); return false; }
+    if (new Date(y, m - 1, d).getMonth() !== m - 1) { setError('Ngày tháng không hợp lệ.'); return false; }
     setError('');
     return true;
   };
@@ -891,18 +903,18 @@ export default function NumerologyTest() {
   const handleCalculate = () => {
     if (!validate()) return;
     const d = parseInt(day), m = parseInt(month), y = parseInt(year);
-    const lifePathNum    = calcLifePath(d, m, y);
-    const birthdayNum    = calcBirthdayNumber(d);
-    const attitudeNum    = calcAttitudeNumber(d, m);
-    const destinyNum     = calcDestinyNumber(fullName);
-    const soulUrgeNum    = calcSoulUrgeNumber(fullName);
+    const lifePathNum = calcLifePath(d, m, y);
+    const birthdayNum = calcBirthdayNumber(d);
+    const attitudeNum = calcAttitudeNumber(d, m);
+    const destinyNum = calcDestinyNumber(fullName);
+    const soulUrgeNum = calcSoulUrgeNumber(fullName);
     const personalityNum = calcPersonalityNumber(fullName);
     setResult({
       lifePath: NUMEROLOGY_PROFILES[lifePathNum], birthday: NUMEROLOGY_PROFILES[birthdayNum],
       attitude: NUMEROLOGY_PROFILES[attitudeNum], destiny: NUMEROLOGY_PROFILES[destinyNum],
       soulUrge: NUMEROLOGY_PROFILES[soulUrgeNum], personality: NUMEROLOGY_PROFILES[personalityNum],
       lifePathNum, birthdayNum, attitudeNum, destinyNum, soulUrgeNum, personalityNum,
-      dob: `${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}/${y}`,
+      dob: `${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}/${y}`,
       fullName: fullName.trim().toUpperCase(),
     });
     setResultSubPhase('loading');
@@ -936,10 +948,12 @@ export default function NumerologyTest() {
         <style>{ANIM_STYLES}</style>
         {/* Stars */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-          {[...Array(90)].map((_,i) => (
+          {[...Array(90)].map((_, i) => (
             <div key={i} className="absolute rounded-full bg-white"
-              style={{ width: i%7===0?2.5:i%3===0?1.5:1, height: i%7===0?2.5:i%3===0?1.5:1,
-                opacity: 0.04+(i%9)*0.04, top:`${(i*11+7)%100}%`, left:`${(i*17+3)%100}%` }} />
+              style={{
+                width: i % 7 === 0 ? 2.5 : i % 3 === 0 ? 1.5 : 1, height: i % 7 === 0 ? 2.5 : i % 3 === 0 ? 1.5 : 1,
+                opacity: 0.04 + (i % 9) * 0.04, top: `${(i * 11 + 7) % 100}%`, left: `${(i * 17 + 3) % 100}%`
+              }} />
           ))}
         </div>
         {/* Nav */}
@@ -987,9 +1001,9 @@ export default function NumerologyTest() {
 
         {/* Stars */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-          {[...Array(80)].map((_,i) => (
+          {[...Array(80)].map((_, i) => (
             <div key={i} className="absolute rounded-full bg-white"
-              style={{ width: i%9===0?2.5:i%4===0?1.5:1, height: i%9===0?2.5:i%4===0?1.5:1, opacity: 0.03+(i%8)*0.04, top:`${(i*13+5)%100}%`, left:`${(i*17+3)%100}%` }} />
+              style={{ width: i % 9 === 0 ? 2.5 : i % 4 === 0 ? 1.5 : 1, height: i % 9 === 0 ? 2.5 : i % 4 === 0 ? 1.5 : 1, opacity: 0.03 + (i % 8) * 0.04, top: `${(i * 13 + 5) % 100}%`, left: `${(i * 17 + 3) % 100}%` }} />
           ))}
         </div>
 
@@ -1003,117 +1017,117 @@ export default function NumerologyTest() {
 
         {/* Main content */}
         <div className="relative z-10 flex-1 flex items-center justify-center w-full">
-        <div className="w-full max-w-lg mx-auto px-6 py-6 cs-fade-up" style={{ animationDelay: '0.1s' }}>
+          <div className="w-full max-w-lg mx-auto px-6 py-6 cs-fade-up" style={{ animationDelay: '0.1s' }}>
 
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-5">
-              <div className="relative" style={{ width: 64, height: 64 }}>
-                <div className="absolute inset-0 cs-spin-slow opacity-70"><SacredRings size={64} gold /></div>
-                <div className="absolute inset-[10px] rounded-full cs-pulse-glow"
-                  style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.6), rgba(124,58,237,0.4))', filter: 'blur(2px)' }} />
-                <div className="absolute inset-0 flex items-center justify-center" style={{ color: '#fbbf24', fontSize: '1.1rem' }}>✦</div>
-              </div>
-            </div>
-            <p className="text-xs tracking-[0.35em] uppercase mb-3" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c', textShadow: '0 0 20px rgba(201,168,76,0.5)' }}>
-              Giải Mã Vũ Trụ
-            </p>
-            <h1 className="whitespace-nowrap" style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.4rem,3.5vw,2.2rem)', fontWeight: 700, color: '#e2d9f3', textShadow: '0 0 40px rgba(226,217,243,0.3)' }}>
-              Nhập Thông Tin <span className="gold-text">Của Bạn</span>
-            </h1>
-            <p className="mt-3" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontSize: '0.88rem', fontWeight: 300 }}>
-              Chúng tôi sẽ tạo bản đồ số học cá nhân hóa dành riêng cho bạn
-            </p>
-          </div>
-
-          {/* Form card */}
-          <div className="form-card p-8 relative overflow-hidden">
-            {/* Card inner glow corners */}
-            <div className="absolute -top-16 -left-16 w-52 h-52 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%)' }} />
-            <div className="absolute -bottom-16 -right-16 w-52 h-52 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.14), transparent 70%)' }} />
-            {/* Top border glow */}
-            <div className="absolute top-0 left-8 right-8 h-px pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), rgba(124,58,237,0.3), transparent)' }} />
-
-            <div className="space-y-5 relative z-10">
-              {/* Full Name */}
-              <div>
-                <label className="form-field-label">Họ Và Tên Đầy Đủ</label>
-                <div className="relative">
-                  <span className="field-icon">✦</span>
-                  <input type="text" value={fullName} onChange={e => { setFullName(e.target.value); setError(''); }}
-                    placeholder="Nguyễn Văn An" className="cosmic-input has-icon" />
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="flex justify-center mb-5">
+                <div className="relative" style={{ width: 64, height: 64 }}>
+                  <div className="absolute inset-0 cs-spin-slow opacity-70"><SacredRings size={64} gold /></div>
+                  <div className="absolute inset-[10px] rounded-full cs-pulse-glow"
+                    style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.6), rgba(124,58,237,0.4))', filter: 'blur(2px)' }} />
+                  <div className="absolute inset-0 flex items-center justify-center" style={{ color: '#fbbf24', fontSize: '1.1rem' }}>✦</div>
                 </div>
               </div>
-
-              {/* Date of Birth */}
-              <div>
-                <label className="form-field-label">Ngày Tháng Năm Sinh</label>
-                <div className="grid grid-cols-3 gap-3">
-                  <div>
-                    <span className="select-label">Ngày</span>
-                    <select value={day} onChange={e => { setDay(e.target.value); setError(''); }}
-                      className="cosmic-select" style={{ color: day ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
-                      <option value="" disabled>--</option>
-                      {DOB_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <span className="select-label">Tháng</span>
-                    <select value={month} onChange={e => { setMonth(e.target.value); setError(''); }}
-                      className="cosmic-select" style={{ color: month ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
-                      <option value="" disabled>--</option>
-                      {DOB_MONTHS.map((m, i) => <option key={i} value={String(i + 1).padStart(2, '0')}>{m}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <span className="select-label">Năm</span>
-                    <select value={year} onChange={e => { setYear(e.target.value); setError(''); }}
-                      className="cosmic-select" style={{ color: year ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
-                      <option value="" disabled>--</option>
-                      {DOB_YEARS.map(y => <option key={y} value={y}>{y}</option>)}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Error */}
-              {error && (
-                <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)' }}>
-                  <AlertTriangle size={13} className="text-red-400 flex-shrink-0" />
-                  <p className="text-xs" style={{ color: 'rgba(252,165,165,0.9)', fontFamily: "'Raleway', sans-serif" }}>{error}</p>
-                </div>
-              )}
-
-              <div className="divider-line" />
-
-              {/* Submit */}
-              <button onClick={handleCalculate} className="submit-btn" disabled={!isComplete}>
-                <span className="relative z-10 flex items-center justify-center gap-3">
-                  <Star size={13} style={{ color: 'rgba(253,230,138,0.7)' }} />
-                  Giải Mã Bản Đồ Của Tôi
-                  <Star size={13} style={{ color: 'rgba(253,230,138,0.7)' }} />
-                </span>
-              </button>
-
-              <p className="text-center" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.28)', fontSize: '0.7rem', letterSpacing: '0.06em' }}>
-                Thông tin của bạn được bảo mật tuyệt đối · Không chia sẻ bên thứ ba
+              <p className="text-xs tracking-[0.35em] uppercase mb-3" style={{ fontFamily: "'Cinzel', serif", color: '#c9a84c', textShadow: '0 0 20px rgba(201,168,76,0.5)' }}>
+                Giải Mã Vũ Trụ
+              </p>
+              <h1 className="whitespace-nowrap" style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(1.4rem,3.5vw,2.2rem)', fontWeight: 700, color: '#e2d9f3', textShadow: '0 0 40px rgba(226,217,243,0.3)' }}>
+                Nhập Thông Tin <span className="gold-text">Của Bạn</span>
+              </h1>
+              <p className="mt-3" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.6)', fontSize: '0.88rem', fontWeight: 300 }}>
+                Chúng tôi sẽ tạo bản đồ số học cá nhân hóa dành riêng cho bạn
               </p>
             </div>
-          </div>
 
-          {/* Number indicators */}
-          <div className="flex justify-center gap-6 mt-8">
-            {['①','②','③','④','⑤'].map((n, i) => (
-              <div key={i} className="cs-pulse-glow text-sm"
-                style={{ fontFamily: "'Cinzel', serif", color: i < 3 ? 'rgba(201,168,76,0.5)' : 'rgba(124,58,237,0.3)', animationDelay: `${i * 0.4}s` }}>
-                {n}
+            {/* Form card */}
+            <div className="form-card p-8 relative overflow-hidden">
+              {/* Card inner glow corners */}
+              <div className="absolute -top-16 -left-16 w-52 h-52 rounded-full pointer-events-none"
+                style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%)' }} />
+              <div className="absolute -bottom-16 -right-16 w-52 h-52 rounded-full pointer-events-none"
+                style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.14), transparent 70%)' }} />
+              {/* Top border glow */}
+              <div className="absolute top-0 left-8 right-8 h-px pointer-events-none"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), rgba(124,58,237,0.3), transparent)' }} />
+
+              <div className="space-y-5 relative z-10">
+                {/* Full Name */}
+                <div>
+                  <label className="form-field-label">Họ Và Tên Đầy Đủ</label>
+                  <div className="relative">
+                    <span className="field-icon">✦</span>
+                    <input type="text" value={fullName} onChange={e => { setFullName(e.target.value); setError(''); }}
+                      placeholder="Nguyễn Văn An" className="cosmic-input has-icon" />
+                  </div>
+                </div>
+
+                {/* Date of Birth */}
+                <div>
+                  <label className="form-field-label">Ngày Tháng Năm Sinh</label>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div>
+                      <span className="select-label">Ngày</span>
+                      <select value={day} onChange={e => { setDay(e.target.value); setError(''); }}
+                        className="cosmic-select" style={{ color: day ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
+                        <option value="" disabled>--</option>
+                        {DOB_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <span className="select-label">Tháng</span>
+                      <select value={month} onChange={e => { setMonth(e.target.value); setError(''); }}
+                        className="cosmic-select" style={{ color: month ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
+                        <option value="" disabled>--</option>
+                        {DOB_MONTHS.map((m, i) => <option key={i} value={String(i + 1).padStart(2, '0')}>{m}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <span className="select-label">Năm</span>
+                      <select value={year} onChange={e => { setYear(e.target.value); setError(''); }}
+                        className="cosmic-select" style={{ color: year ? '#e2d9f3' : 'rgba(167,139,250,0.3)' }}>
+                        <option value="" disabled>--</option>
+                        {DOB_YEARS.map(y => <option key={y} value={y}>{y}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Error */}
+                {error && (
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)' }}>
+                    <AlertTriangle size={13} className="text-red-400 flex-shrink-0" />
+                    <p className="text-xs" style={{ color: 'rgba(252,165,165,0.9)', fontFamily: "'Raleway', sans-serif" }}>{error}</p>
+                  </div>
+                )}
+
+                <div className="divider-line" />
+
+                {/* Submit */}
+                <button onClick={handleCalculate} className="submit-btn" disabled={!isComplete}>
+                  <span className="relative z-10 flex items-center justify-center gap-3">
+                    <Star size={13} style={{ color: 'rgba(253,230,138,0.7)' }} />
+                    Giải Mã Bản Đồ Của Tôi
+                    <Star size={13} style={{ color: 'rgba(253,230,138,0.7)' }} />
+                  </span>
+                </button>
+
+                <p className="text-center" style={{ fontFamily: "'Raleway', sans-serif", color: 'rgba(196,181,253,0.28)', fontSize: '0.7rem', letterSpacing: '0.06em' }}>
+                  Thông tin của bạn được bảo mật tuyệt đối · Không chia sẻ bên thứ ba
+                </p>
               </div>
-            ))}
+            </div>
+
+            {/* Number indicators */}
+            <div className="flex justify-center gap-6 mt-8">
+              {['①', '②', '③', '④', '⑤'].map((n, i) => (
+                <div key={i} className="cs-pulse-glow text-sm"
+                  style={{ fontFamily: "'Cinzel', serif", color: i < 3 ? 'rgba(201,168,76,0.5)' : 'rgba(124,58,237,0.3)', animationDelay: `${i * 0.4}s` }}>
+                  {n}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
         </div>
 
         <GoldParticles count={18} />
@@ -1134,19 +1148,19 @@ export default function NumerologyTest() {
 
         {/* Glow behind spinner */}
         <div className="absolute rounded-full pointer-events-none"
-          style={{ width:'min(400px,80vw)', height:'min(400px,80vw)', background:'radial-gradient(circle,rgba(139,92,246,0.2) 0%,transparent 70%)', animation:'pulse-glow 2s ease-in-out infinite' }}/>
+          style={{ width: 'min(400px,80vw)', height: 'min(400px,80vw)', background: 'radial-gradient(circle,rgba(139,92,246,0.2) 0%,transparent 70%)', animation: 'pulse-glow 2s ease-in-out infinite' }} />
 
         <div className="relative z-10 text-center px-4">
           {/* Spinning ring */}
           <div className="relative mx-auto mb-8"
             style={{ width: 120, height: 120 }}>
-            <div className="absolute inset-0 rounded-full border-2 border-purple-500/20"/>
+            <div className="absolute inset-0 rounded-full border-2 border-purple-500/20" />
             <div className="absolute inset-0 rounded-full border-t-2 border-purple-400"
-              style={{ animation:'spin-slow 1.2s linear infinite' }}/>
+              style={{ animation: 'spin-slow 1.2s linear infinite' }} />
             <div className="absolute inset-[12px] rounded-full border-t-2 border-indigo-400/60"
-              style={{ animation:'spin-reverse 0.9s linear infinite' }}/>
+              style={{ animation: 'spin-reverse 0.9s linear infinite' }} />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-3xl font-black text-white" style={{ animation:'pulse-glow 1.5s ease-in-out infinite' }}>
+              <span className="text-3xl font-black text-white" style={{ animation: 'pulse-glow 1.5s ease-in-out infinite' }}>
                 {result.lifePathNum}
               </span>
             </div>
@@ -1157,9 +1171,9 @@ export default function NumerologyTest() {
 
           {/* Loading dots */}
           <div className="flex items-center justify-center gap-2">
-            {[0,1,2].map(i => (
+            {[0, 1, 2].map(i => (
               <div key={i} className="w-2 h-2 rounded-full bg-purple-400"
-                style={{ animation:`loading-dots 1.4s ease-in-out ${i*0.16}s infinite` }}/>
+                style={{ animation: `loading-dots 1.4s ease-in-out ${i * 0.16}s infinite` }} />
             ))}
           </div>
         </div>
@@ -1174,11 +1188,11 @@ export default function NumerologyTest() {
     const lp = result.lifePath;
     const grad = gradientStyle(lp.colorFrom, lp.colorTo);
     const others = [
-      { num: result.destinyNum,     p: result.destiny,     label:'Sứ Mệnh' },
-      { num: result.soulUrgeNum,    p: result.soulUrge,    label:'Linh Hồn' },
-      { num: result.personalityNum, p: result.personality, label:'Nhân Cách' },
-      { num: result.birthdayNum,    p: result.birthday,    label:'Ngày Sinh' },
-      { num: result.attitudeNum,    p: result.attitude,    label:'Thái Độ' },
+      { num: result.destinyNum, p: result.destiny, label: 'Sứ Mệnh' },
+      { num: result.soulUrgeNum, p: result.soulUrge, label: 'Linh Hồn' },
+      { num: result.personalityNum, p: result.personality, label: 'Nhân Cách' },
+      { num: result.birthdayNum, p: result.birthday, label: 'Ngày Sinh' },
+      { num: result.attitudeNum, p: result.attitude, label: 'Thái Độ' },
     ];
 
     return (
@@ -1189,20 +1203,22 @@ export default function NumerologyTest() {
         {/* Ambient glow layers */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ width:'min(800px,130vw)', height:'min(800px,130vw)', background:`radial-gradient(circle, ${lp.colorFrom}22 0%, transparent 60%)` }}/>
+            style={{ width: 'min(800px,130vw)', height: 'min(800px,130vw)', background: `radial-gradient(circle, ${lp.colorFrom}22 0%, transparent 60%)` }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ width:'min(400px,70vw)', height:'min(400px,70vw)', background:`radial-gradient(circle, ${lp.colorFrom}35 0%, transparent 70%)` }}/>
+            style={{ width: 'min(400px,70vw)', height: 'min(400px,70vw)', background: `radial-gradient(circle, ${lp.colorFrom}35 0%, transparent 70%)` }} />
         </div>
 
         {/* Star field */}
-        {[...Array(50)].map((_,i) => (
+        {[...Array(50)].map((_, i) => (
           <div key={i} className="absolute rounded-full bg-white pointer-events-none"
-            style={{ width:i%5===0?2:1, height:i%5===0?2:1, opacity:0.05+(i%7)*0.04,
-              top:`${(i*13+5)%100}%`, left:`${(i*19+7)%97}%` }}/>
+            style={{
+              width: i % 5 === 0 ? 2 : 1, height: i % 5 === 0 ? 2 : 1, opacity: 0.05 + (i % 7) * 0.04,
+              top: `${(i * 13 + 5) % 100}%`, left: `${(i * 19 + 7) % 97}%`
+            }} />
         ))}
 
         <div className="relative z-10 flex flex-col items-center w-full max-w-sm mx-auto"
-          style={{ animation:'reveal-hero 0.9s cubic-bezier(0.16,1,0.3,1) forwards' }}>
+          style={{ animation: 'reveal-hero 0.9s cubic-bezier(0.16,1,0.3,1) forwards' }}>
 
           {/* Top info: name + dob */}
           <div className="text-center mb-8">
@@ -1212,8 +1228,8 @@ export default function NumerologyTest() {
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-white text-xs font-bold mb-6 tracking-widest uppercase"
-            style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.18)' }}>
-            <Sparkles size={11}/> Số Đường Đời của bạn
+            style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.18)' }}>
+            <Sparkles size={11} /> Số Đường Đời của bạn
           </div>
 
           {/* Big number — perfectly centered */}
@@ -1221,13 +1237,13 @@ export default function NumerologyTest() {
             style={{ width: 'min(240px,65vw)', height: 'min(240px,65vw)' }}>
             {/* Blur glow behind */}
             <div className="absolute inset-0 rounded-full"
-              style={{ ...grad, opacity: 0.3, filter: 'blur(32px)', transform: 'scale(1.1)' }}/>
+              style={{ ...grad, opacity: 0.3, filter: 'blur(32px)', transform: 'scale(1.1)' }} />
             {/* Outer decorative ring */}
             <div className="absolute inset-0 rounded-full border border-white/10"
-              style={{ animation: 'spin-slow 20s linear infinite' }}/>
+              style={{ animation: 'spin-slow 20s linear infinite' }} />
             {/* Dashed inner ring */}
             <div className="absolute rounded-full border border-dashed border-white/10"
-              style={{ inset: 10, animation: 'spin-reverse 15s linear infinite' }}/>
+              style={{ inset: 10, animation: 'spin-reverse 15s linear infinite' }} />
             {/* Main filled circle */}
             <div className="absolute rounded-full flex items-center justify-center overflow-hidden"
               style={{ inset: 18, ...grad, boxShadow: `0 0 40px ${lp.colorFrom}88, 0 0 80px ${lp.colorFrom}44, 0 8px 32px rgba(0,0,0,0.5)` }}>
@@ -1247,9 +1263,9 @@ export default function NumerologyTest() {
 
           {/* Divider */}
           <div className="w-full flex items-center gap-3 mb-6">
-            <div className="flex-1 h-px" style={{ background:'rgba(255,255,255,0.15)' }}/>
+            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
             <span className="text-white/50 text-xs font-semibold tracking-widest uppercase">5 chỉ số khác</span>
-            <div className="flex-1 h-px" style={{ background:'rgba(255,255,255,0.15)' }}/>
+            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
           </div>
 
           {/* 5 other numbers — horizontal row */}
@@ -1283,45 +1299,45 @@ export default function NumerologyTest() {
      RESULT — DETAIL (6 cards đầy đủ)
   ══════════════════════════════════════════ */
   const summaryItems = [
-    { icon: <Map size={14}/>,      label: 'Đường Đời', num: result.lifePathNum,    p: result.lifePath,    main: true  },
-    { icon: <Target size={14}/>,   label: 'Sứ Mệnh',   num: result.destinyNum,     p: result.destiny,     main: false },
-    { icon: <Heart size={14}/>,    label: 'Linh Hồn',  num: result.soulUrgeNum,    p: result.soulUrge,    main: false },
-    { icon: <User size={14}/>,     label: 'Nhân Cách', num: result.personalityNum, p: result.personality, main: false },
-    { icon: <Calendar size={14}/>, label: 'Ngày Sinh', num: result.birthdayNum,    p: result.birthday,    main: false },
-    { icon: <Eye size={14}/>,      label: 'Thái Độ',   num: result.attitudeNum,    p: result.attitude,    main: false },
+    { icon: <Map size={14} />, label: 'Đường Đời', num: result.lifePathNum, p: result.lifePath, main: true },
+    { icon: <Target size={14} />, label: 'Sứ Mệnh', num: result.destinyNum, p: result.destiny, main: false },
+    { icon: <Heart size={14} />, label: 'Linh Hồn', num: result.soulUrgeNum, p: result.soulUrge, main: false },
+    { icon: <User size={14} />, label: 'Nhân Cách', num: result.personalityNum, p: result.personality, main: false },
+    { icon: <Calendar size={14} />, label: 'Ngày Sinh', num: result.birthdayNum, p: result.birthday, main: false },
+    { icon: <Eye size={14} />, label: 'Thái Độ', num: result.attitudeNum, p: result.attitude, main: false },
   ];
 
   const energyItems = [
-    { label: 'Đường Đời', num: result.lifePathNum,    color: result.lifePath.colorFrom },
-    { label: 'Sứ Mệnh',   num: result.destinyNum,     color: result.destiny.colorFrom },
-    { label: 'Linh Hồn',  num: result.soulUrgeNum,    color: result.soulUrge.colorFrom },
+    { label: 'Đường Đời', num: result.lifePathNum, color: result.lifePath.colorFrom },
+    { label: 'Sứ Mệnh', num: result.destinyNum, color: result.destiny.colorFrom },
+    { label: 'Linh Hồn', num: result.soulUrgeNum, color: result.soulUrge.colorFrom },
     { label: 'Nhân Cách', num: result.personalityNum, color: result.personality.colorFrom },
-    { label: 'Ngày Sinh', num: result.birthdayNum,    color: result.birthday.colorFrom },
-    { label: 'Thái Độ',   num: result.attitudeNum,    color: result.attitude.colorFrom },
+    { label: 'Ngày Sinh', num: result.birthdayNum, color: result.birthday.colorFrom },
+    { label: 'Thái Độ', num: result.attitudeNum, color: result.attitude.colorFrom },
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background:'linear-gradient(160deg,#06040f 0%,#0e0627 35%,#140a35 65%,#0b1033 100%)' }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(160deg,#06040f 0%,#0e0627 35%,#140a35 65%,#0b1033 100%)' }}>
       <style>{ANIM_STYLES}</style>
 
       {/* Twinkling star field */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-        {[...Array(110)].map((_,i) => {
-          const size = i%9===0 ? 3 : i%4===0 ? 2 : 1;
-          const minOp = 0.05 + (i%5)*0.04;
-          const maxOp = minOp + 0.35 + (i%7)*0.08;
-          const dur = 2 + (i%11)*0.45;
-          const delay = (i*0.17)%4;
+        {[...Array(110)].map((_, i) => {
+          const size = i % 9 === 0 ? 3 : i % 4 === 0 ? 2 : 1;
+          const minOp = 0.05 + (i % 5) * 0.04;
+          const maxOp = minOp + 0.35 + (i % 7) * 0.08;
+          const dur = 2 + (i % 11) * 0.45;
+          const delay = (i * 0.17) % 4;
           const scale = size >= 2 ? 1.6 : 1.3;
-          const colors = ['#ffffff','#ffffff','#ffffff','#c4b5fd','#fbbf24','#ffffff','#ffffff','#38bdf8'];
+          const colors = ['#ffffff', '#ffffff', '#ffffff', '#c4b5fd', '#fbbf24', '#ffffff', '#ffffff', '#38bdf8'];
           const color = colors[i % colors.length];
           return (
             <div key={i} className="absolute rounded-full star-twinkle"
               style={{
                 width: size, height: size,
                 background: color,
-                top:`${(i*11+7)%100}%`, left:`${(i*17+3)%100}%`,
-                boxShadow: size >= 2 ? `0 0 ${size*3}px ${color}` : 'none',
+                top: `${(i * 11 + 7) % 100}%`, left: `${(i * 17 + 3) % 100}%`,
+                boxShadow: size >= 2 ? `0 0 ${size * 3}px ${color}` : 'none',
                 '--min-op': minOp, '--max-op': maxOp,
                 '--dur': `${dur}s`, '--delay': `${delay}s`,
                 '--scale': scale,
@@ -1332,35 +1348,174 @@ export default function NumerologyTest() {
 
       {/* ── Hero summary bar ── */}
       <div className="relative pb-8 sm:pb-10 pt-10 sm:pt-12 px-4 sm:px-6 overflow-hidden"
-        style={{ background:'linear-gradient(160deg,#0f0c29,#302b63,#24243e)' }}>
+        style={{ background: 'linear-gradient(160deg,#0f0c29,#302b63,#24243e)' }}>
         {/* Sacred ring bg decoration */}
         <div className="absolute pointer-events-none opacity-10" style={{ width: 600, height: 600, right: -150, top: -150 }}>
           <div className="w-full h-full cs-spin-slow"><SacredRings size={600} gold /></div>
         </div>
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-purple-200 text-xs font-semibold mb-4 border border-purple-400/30"
-            style={{ background:'rgba(139,92,246,0.2)' }}>
-            <Sparkles size={12}/> Bản Đồ Thần Số Học
+          <div
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-4"
+            style={{
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(196,181,253,0.25)",
+              backdropFilter: "blur(12px)",
+              boxShadow:
+                "0 0 20px rgba(196,181,253,0.08), inset 0 0 12px rgba(196,181,253,0.03)",
+            }}
+          >
+            <Sparkles
+              size={14}
+              style={{
+                color: "#c4b5fd",
+                filter: "drop-shadow(0 0 6px rgba(196,181,253,0.5))",
+              }}
+            />
+
+            <span
+              style={{
+                fontFamily: "'Cinzel', serif",
+                color: "#e9ddff",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                letterSpacing: "0.05em",
+                textShadow: "0 0 8px rgba(196,181,253,0.35)",
+              }}
+            >
+              Bản Đồ Thần Số Học
+            </span>
           </div>
-          <h1 className="font-black text-white mb-1 tracking-tight uppercase leading-tight"
-            style={{ fontSize:'clamp(1.1rem,3.5vw,2rem)', fontFamily:"'Cinzel', serif" }}>
-            {result.fullName}
-          </h1>
-          <p className="text-purple-300/70 text-xs sm:text-sm mb-7">
-            Ngày sinh: <span className="font-bold text-amber-400">{result.dob}</span>
+          <div
+            className="flex items-center justify-center px-6 py-3 rounded-full mb-4"
+            style={{
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(196,181,253,0.25)",
+              backdropFilter: "blur(12px)",
+              boxShadow:
+                "0 0 25px rgba(196,181,253,0.08), inset 0 0 20px rgba(196,181,253,0.03)",
+            }}
+          >
+            <h1
+              className="font-black uppercase"
+              style={{
+                fontSize: "clamp(1.1rem,3.5vw,2rem)",
+                fontFamily: "'Cinzel', serif",
+                color: "#ffffff",
+                letterSpacing: "0.05em",
+                textShadow:
+                  "0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(196,181,253,0.25)",
+              }}
+            >
+              {result.fullName}
+            </h1>
+          </div>
+          <p
+            className=" text-sm mb-7"
+            style={{
+              color: "#c4b5fd",
+              textShadow: "0 0 10px rgba(196,181,253,0.4)"
+            }}
+          >
+            Ngày sinh:
+            <span
+              className="font-bold ml-1"
+              style={{
+                color: "#ffffff",
+                textShadow: "0 0 12px rgba(255,255,255,0.6)"
+              }}
+            >
+              {result.dob}
+            </span>
           </p>
 
           {/* 6 tiles */}
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 max-w-xs sm:max-w-3xl mx-auto">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 max-w-xs sm:max-w-3xl mx-auto mt-2">
             {summaryItems.map(({ icon, label, num, p, main }, i) => (
-              <div key={i}
-                className={`rounded-xl sm:rounded-2xl py-3 sm:py-4 px-1.5 sm:px-2 text-white text-center shadow-lg border border-white/10 relative overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 ${main ? 'ring-2 ring-amber-400/60' : ''}`}
-                style={{ ...gradientStyle(p.colorFrom, p.colorTo), boxShadow: `0 0 20px ${p.colorFrom}55` }}>
-                <div className="flex justify-center mb-1 opacity-80">{icon}</div>
-                <p className={`font-black leading-none ${main ? 'text-3xl sm:text-4xl' : 'text-2xl sm:text-3xl'}`}
-                  style={{ textShadow: '0 0 20px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.3)' }}>{num}</p>
-                <p className="text-[10px] sm:text-xs font-semibold opacity-80 mt-1 leading-tight">{label}</p>
-                {main && <p className="text-[9px] opacity-60 mt-0.5 font-medium">Core</p>}
+              <div
+                key={i}
+                className={`
+        rounded-xl sm:rounded-2xl
+        py-3 sm:py-4
+        px-1.5 sm:px-2
+        text-white text-center
+        border border-white/10
+        relative overflow-hidden
+        cursor-pointer
+        transition-all duration-300
+        hover:-translate-y-1
+
+        ${main
+                    ? "scale-105 ring-4 ring-amber-300/80 z-10"
+                    : ""
+                  }
+      `}
+                style={{
+                  ...gradientStyle(p.colorFrom, p.colorTo),
+                  boxShadow: main
+                    ? `
+            0 0 30px ${p.colorFrom},
+            0 0 60px ${p.colorFrom}99,
+            inset 0 0 25px rgba(255,255,255,0.08)
+          `
+                    : `0 0 20px ${p.colorFrom}55`,
+                }}
+              >
+                {/* Glow nền cho card chính */}
+                {main && (
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(circle at center, rgba(255,255,255,0.18), transparent 70%)",
+                    }}
+                  />
+                )}
+
+                {/* Huy hiệu card chính */}
+                {main && (
+                  <div className="absolute top-2 right-2 z-20">
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                      style={{
+                        background: "rgba(255,255,255,0.2)",
+                        backdropFilter: "blur(10px)",
+                        boxShadow: "0 0 10px rgba(251,191,36,0.6)",
+                      }}
+                    >
+                      ⭐
+                    </div>
+                  </div>
+                )}
+
+                {/* Icon */}
+                <div className="flex justify-center mb-1 opacity-90 relative z-10">
+                  {icon}
+                </div>
+
+                {/* Số */}
+                <p
+                  className={`font-black leading-none relative z-10 ${main
+                    ? "text-4xl sm:text-5xl"
+                    : "text-2xl sm:text-3xl"
+                    }`}
+                  style={{
+                    textShadow: main
+                      ? "0 0 25px rgba(255,255,255,0.8), 0 0 40px rgba(251,191,36,0.5)"
+                      : "0 0 15px rgba(255,255,255,0.4)",
+                  }}
+                >
+                  {num}
+                </p>
+
+                {/* Tên */}
+                <p
+                  className={`mt-1 leading-tight relative z-10 ${main
+                    ? "text-xs sm:text-sm font-bold"
+                    : "text-[10px] sm:text-xs font-semibold opacity-90"
+                    }`}
+                >
+                  {label}
+                </p>
               </div>
             ))}
           </div>
@@ -1372,18 +1527,18 @@ export default function NumerologyTest() {
 
         {/* Soul Summary block */}
         <div className="rounded-3xl p-6 sm:p-8 relative overflow-hidden"
-          style={{ background:'linear-gradient(135deg,rgba(91,33,182,0.35),rgba(124,58,237,0.2),rgba(219,39,119,0.15))', border:'1px solid rgba(139,92,246,0.3)', boxShadow:'0 20px 60px rgba(124,58,237,0.2)' }}>
+          style={{ background: 'linear-gradient(135deg,rgba(91,33,182,0.35),rgba(124,58,237,0.2),rgba(219,39,119,0.15))', border: '1px solid rgba(139,92,246,0.3)', boxShadow: '0 20px 60px rgba(124,58,237,0.2)' }}>
           <div className="absolute -right-10 -top-10 w-48 h-48 pointer-events-none opacity-10">
             <div className="w-full h-full cs-spin-slow"><SacredRings size={192} gold /></div>
           </div>
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-4">
-              <Sparkles size={15} style={{ color:'#c9a84c' }}/>
-              <span className="text-xs tracking-[0.25em] uppercase font-bold" style={{ fontFamily:"'Cinzel',serif", color:'#c9a84c' }}>Tóm Tắt Bản Đồ Linh Hồn</span>
+              <Sparkles size={15} style={{ color: '#c9a84c' }} />
+              <span className="text-xs tracking-[0.25em] uppercase font-bold" style={{ fontFamily: "'Cinzel',serif", color: '#c9a84c' }}>Tóm Tắt Bản Đồ Linh Hồn</span>
             </div>
-            <p className="text-sm sm:text-base leading-relaxed" style={{ color:'rgba(226,217,243,0.9)', fontFamily:"'Raleway',sans-serif", fontWeight:300 }}>
-              Bạn mang năng lượng của <span className="font-semibold" style={{ color:'#fbbf24' }}>{result.lifePath.name}</span> — {result.lifePath.essence}.{' '}
-              Số {result.attitudeNum} bổ sung chiều sâu <span style={{ color:'#c4b5fd' }}>{result.attitude.keyword?.split('·')[0]?.trim()}</span>, giúp bạn tiếp cận thế giới bằng cái nhìn của {result.attitude.name}.
+            <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(226,217,243,0.9)', fontFamily: "'Raleway',sans-serif", fontWeight: 300 }}>
+              Bạn mang năng lượng của <span className="font-semibold" style={{ color: '#fbbf24' }}>{result.lifePath.name}</span> — {result.lifePath.essence}.{' '}
+              Số {result.attitudeNum} bổ sung chiều sâu <span style={{ color: '#c4b5fd' }}>{result.attitude.keyword?.split('·')[0]?.trim()}</span>, giúp bạn tiếp cận thế giới bằng cái nhìn của {result.attitude.name}.
             </p>
           </div>
         </div>
@@ -1391,65 +1546,441 @@ export default function NumerologyTest() {
         {/* Energy Chart */}
         <div className="mystic-num-card p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-5">
-            <Activity size={15} style={{ color:'#c9a84c' }}/>
-            <h3 className="text-sm font-bold tracking-wider uppercase" style={{ fontFamily:"'Cinzel',serif", color:'#c9a84c' }}>Biểu Đồ Năng Lượng Số</h3>
+            <Activity size={15} style={{ color: '#c9a84c' }} />
+            <h3 className="text-sm font-bold tracking-wider uppercase" style={{ fontFamily: "'Cinzel',serif", color: '#c9a84c' }}>Biểu Đồ Năng Lượng Số</h3>
           </div>
           <div className="space-y-3">
             {energyItems.map(({ label, num, color }) => (
               <div key={label} className="flex items-center gap-3">
-                <span className="text-xs w-20 flex-shrink-0 text-right" style={{ color:'rgba(196,181,253,0.55)', fontFamily:"'Cinzel',serif" }}>{label}</span>
-                <div className="flex-1 h-7 rounded-full relative overflow-hidden" style={{ background:'rgba(255,255,255,0.05)' }}>
+                <span className="text-xs w-20 flex-shrink-0 text-right" style={{ color: 'rgba(196,181,253,0.55)', fontFamily: "'Cinzel',serif" }}>{label}</span>
+                <div className="flex-1 h-7 rounded-full relative overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
                   <div className="h-full rounded-full energy-bar flex items-center px-3"
-                    style={{ '--target-w':`${(num/11)*100}%`, width:`${(num/11)*100}%`, background:`linear-gradient(90deg, ${color}cc, ${color}55)`, boxShadow:`0 0 10px ${color}44` } as React.CSSProperties}>
-                    <span className="text-white text-xs font-black ml-auto" style={{ textShadow:`0 0 8px ${color}` }}>{num}</span>
+                    style={{ '--target-w': `${(num / 11) * 100}%`, width: `${(num / 11) * 100}%`, background: `linear-gradient(90deg, ${color}cc, ${color}55)`, boxShadow: `0 0 10px ${color}44` } as React.CSSProperties}>
+                    <span className="text-white text-xs font-black ml-auto" style={{ textShadow: `0 0 8px ${color}` }}>{num}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Cards — Nhóm Ngày Sinh */}
-        <section className="space-y-4 sm:space-y-5">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-1 h-8 rounded-full flex-shrink-0" style={{ background:'linear-gradient(#6366f1,#8b5cf6)' }}/>
-            <div>
-              <h2 className="text-base sm:text-xl font-black" style={{ color:'#e2d9f3', fontFamily:"'Cinzel',serif" }}>Nhóm Ngày Sinh</h2>
-              <p className="text-xs mt-0.5" style={{ color:'rgba(196,181,253,0.45)' }}>Thiên hướng tự nhiên · Con đường sống · Tài năng bẩm sinh</p>
+      {/* Cards — Accordion Layout (Full Width) */}
+
+      <div className="relative z-10 w-full py-8 sm:py-12">
+        <section className="space-y-8">
+          {/* Số danh sách - 6 numbered buttons */}
+          <div className="px-4 sm:px-6 space-y-4">
+            <div className="text-center mb-10">
+              {/* Accent */}
+              <div className="flex justify-center mb-4">
+                <div
+                  className="w-1 h-10 rounded-full"
+                  style={{
+                    background:
+                      'linear-gradient(to bottom,#fbbf24,#ec4899,#8b5cf6)',
+                    boxShadow: '0 0 20px rgba(251,191,36,0.4)',
+                  }}
+                />
+              </div>
+
+              {/* Title */}
+              <h2
+                className="text-3xl sm:text-4xl font-black"
+                style={{
+                  color: '#f8fafc',
+                  fontFamily: "'Cinzel', serif",
+                  textShadow: '0 0 20px rgba(255,255,255,0.15)',
+                }}
+              >
+                Chỉ Số Cốt Lõi
+              </h2>
+
+              <h3
+                className="text-xl sm:text-2xl font-bold mt-1"
+                style={{
+                  color: '#fbbf24',
+                  fontFamily: "'Cinzel', serif",
+                }}
+              >
+                Của Bạn
+              </h3>
+
+              {/* Divider */}
+              <div className="flex justify-center mt-4">
+                <div
+                  className="w-24 h-px"
+                  style={{
+                    background:
+                      'linear-gradient(to right, transparent, rgba(251,191,36,0.8), transparent)',
+                  }}
+                />
+              </div>
+
+              {/* Subtitle */}
+              <p
+                className="mt-5 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
+                style={{
+                  color: 'rgba(196,181,253,0.75)',
+                }}
+              >
+                Mỗi con số phản ánh một khía cạnh quan trọng trong hành trình cuộc đời.
+                Hãy chọn một chỉ số để khám phá ý nghĩa sâu sắc và tiềm năng ẩn bên trong bạn.
+              </p>
+            </div>
+
+            {/* 6 numbered buttons horizontal - evenly distributed */}
+            <div className="flex justify-center">
+              <div className="flex gap-3 sm:gap-4 flex-wrap justify-center text-white">
+                {[
+                  { num: 0, label: 'Đường Đời', icon: <Map size={26} strokeWidth={2.2} />, number: result.lifePathNum },
+                  { num: 1, label: 'Sứ Mệnh', icon: <Target size={26} strokeWidth={2.2} />, number: result.destinyNum },
+                  { num: 2, label: 'Linh Hồn', icon: <Heart size={26} strokeWidth={2.2} />, number: result.soulUrgeNum },
+                  { num: 3, label: 'Nhân Cách', icon: <User size={26} strokeWidth={2.2} />, number: result.personalityNum },
+                  { num: 4, label: 'Ngày Sinh', icon: <Calendar size={26} strokeWidth={2.2} />, number: result.birthdayNum },
+                  { num: 5, label: 'Thái Độ', icon: <Eye size={26} strokeWidth={2.2} />, number: result.attitudeNum },
+                ].map(({ num, label, icon, number }, idx) => {
+                  const isActive = expandedNumberIndex === idx;
+                  const profiles = [result.lifePath, result.destiny, result.soulUrge, result.personality, result.birthday, result.attitude];
+                  const profile = profiles[idx];
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setExpandedNumberIndex(idx)}
+                      className="group relative rounded-2xl w-32 sm:w-36 h-32 sm:h-36 px-3 py-2 text-left transition-all duration-300 hover:scale-105 flex-shrink-0"
+                      style={{
+                        ...gradientStyle(profile.colorFrom, profile.colorTo),
+                        border: isActive ? '2px solid rgba(251,191,36,0.8)' : '1.5px solid rgba(255,255,255,0.2)',
+                        boxShadow: isActive
+                          ? `0 0 30px ${profile.colorFrom}, 0 0 50px ${profile.colorFrom}66, inset 0 0 20px rgba(255,255,255,0.1)`
+                          : `0 0 15px ${profile.colorFrom}55`,
+                        transform: isActive ? 'scale(1.02)' : 'scale(1)',
+                      }}
+                    >
+                      {/* Badge for active button */}
+                      {isActive && (
+                        <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-amber-300 text-black z-10">
+                          ✓
+                        </div>
+                      )}
+
+                      {/* Button content */}
+                      <div className="relative z-10 h-full flex flex-col items-center justify-between py-2">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div
+                            className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                            style={{
+                              background: isActive
+                                ? 'rgba(255,255,255,0.25)'
+                                : 'rgba(255,255,255,0.15)',
+
+                              boxShadow: isActive
+                                ? `0 0 25px rgba(255,255,255,0.4),
+       0 0 40px ${profile.colorFrom}`
+                                : '0 0 15px rgba(255,255,255,0.15)',
+                            }}
+                          >
+                            {icon}
+                          </div>
+
+                          <span
+                            className="text-xs font-bold tracking-wide"
+                            style={{
+                              color: 'rgba(255,255,255,0.9)',
+                            }}
+                          >
+                          </span>
+                        </div>
+                        <p className="text-2xl sm:text-3xl font-extrabold leading-none text-white" style={{
+                          textShadow: '0 0 10px rgba(255,255,255,0.4)'
+                        }}>{number}</p>
+                        <p
+                          className="text-sm tracking-wide uppercase mt-2 font-semibold text-center"
+                          style={{
+                            color: 'rgba(255,255,255,0.92)'
+                          }}
+                        >
+                          {label}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
-          <NumberCard number={result.lifePathNum} label="Số Đường Đời — Core"  labelIcon={<Map size={14}/>}      profile={result.lifePath}  indexType="lifepath"/>
-          <NumberCard number={result.birthdayNum} label="Số Ngày Sinh"          labelIcon={<Calendar size={14}/>} profile={result.birthday}  indexType="birthday"/>
-          <NumberCard number={result.attitudeNum} label="Số Thái Độ"             labelIcon={<Eye size={14}/>}      profile={result.attitude}  indexType="attitude"/>
-        </section>
 
-        {/* Cards — Nhóm Họ Tên */}
-        <section className="space-y-4 sm:space-y-5">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-1 h-8 rounded-full flex-shrink-0" style={{ background:'linear-gradient(#f59e0b,#ef4444)' }}/>
-            <div>
-              <h2 className="text-base sm:text-xl font-black" style={{ color:'#e2d9f3', fontFamily:"'Cinzel',serif" }}>Nhóm Họ Tên</h2>
-              <p className="text-xs mt-0.5" style={{ color:'rgba(196,181,253,0.45)' }}>Khát vọng sâu thẳm · Vai trò cuộc đời · Vỏ bọc xã hội</p>
-            </div>
+          {/* Expanded content - Full width */}
+          <div className="mt-6 sm:mt-8 w-full">
+            {[
+              { num: result.lifePathNum, profile: result.lifePath, label: 'Đường Đời', indexType: 'lifepath' },
+              { num: result.destinyNum, profile: result.destiny, label: 'Sứ Mệnh', indexType: 'destiny' },
+              { num: result.soulUrgeNum, profile: result.soulUrge, label: 'Linh Hồn', indexType: 'soul' },
+              { num: result.personalityNum, profile: result.personality, label: 'Nhân Cách', indexType: 'personality' },
+              { num: result.birthdayNum, profile: result.birthday, label: 'Ngày Sinh', indexType: 'birthday' },
+              { num: result.attitudeNum, profile: result.attitude, label: 'Thái Độ', indexType: 'attitude' },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="transition-all duration-300 overflow-hidden"
+                style={{
+                  maxHeight: expandedNumberIndex === idx ? '5000px' : '0px',
+                  opacity: expandedNumberIndex === idx ? 1 : 0,
+                  visibility: expandedNumberIndex === idx ? 'visible' : 'hidden',
+                }}
+              >
+                {/* Custom layout wrapper - Full width */}
+                <div className="px-4 sm:px-8 py-8">
+                  <div className="rounded-3xl p-6 sm:p-10 border max-w-5xl mx-auto"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(15,12,41,0.8) 0%, rgba(30,22,60,0.6) 50%, rgba(15,10,33,0.8) 100%)',
+                      borderColor: 'rgba(255,255,255,0.08)',
+                      boxShadow: `0 20px 60px rgba(${parseInt(item.profile.colorFrom.slice(1, 3), 16)},${parseInt(item.profile.colorFrom.slice(3, 5), 16)},${parseInt(item.profile.colorFrom.slice(5, 7), 16)}, 0.15)`
+                    }}>
+
+                    {/* Two column layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+
+                      {/* Left column: Number + Title + Essence */}
+                      <div className="lg:col-span-1 flex flex-col justify-start">
+                        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 mb-8 shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
+                          style={{
+                            borderColor: item.profile.colorFrom + '22',
+                            background: 'rgba(255,255,255,0.06)',
+                            boxShadow: `0 22px 60px ${item.profile.colorFrom}15, inset 0 0 1px rgba(255,255,255,0.05)`,
+                          }}>
+
+
+                          <div className="text-center">
+                            <span
+                              className="inline-flex items-center justify-center rounded-full px-6 py-5 text-xl font-black"
+                              style={{
+                                color: item.profile.colorFrom,
+                                background: item.profile.colorFrom + '20',
+                                boxShadow: `0 0 20px ${item.profile.colorFrom}33`,
+                              }}
+                            >
+                              {item.num}
+                            </span>
+                            <p className="mt-4 text-sm sm:text-base font-semibold uppercase tracking-[0.35em]"
+                              style={{ color: 'rgba(226,217,243,0.85)', letterSpacing: '0.22em' }}>
+                              SỐ {item.label.toUpperCase()}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <div>
+                            <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: item.profile.colorFrom }}>— Tính Chất</p>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(226,217,243,0.9)' }}>
+                              {item.profile.essence}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: item.profile.colorFrom }}>— Năng Lực Cốt Lõi</p>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(226,217,243,0.85)' }}>
+                              {item.profile.keyword}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right column: Overview content */}
+                      <div className="lg:col-span-2">
+                        <div className="space-y-4">
+                          {/* Light side */}
+                          <div className="rounded-2xl p-4 sm:p-5 border"
+                            style={{
+                              background: 'rgba(255,255,255,0.03)',
+                              borderColor: 'rgba(255,255,255,0.07)'
+                            }}>
+                            <div className="flex items-center gap-2 mb-3">
+                              <Sun size={14} style={{ color: '#fbbf24' }} />
+                              <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#fbbf24' }}>Góc Sáng</span>
+                            </div>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(253,230,138,0.85)' }}>
+                              {item.profile.lightSide}
+                            </p>
+                          </div>
+
+                          {/* Dark side */}
+                          <div className="rounded-2xl p-4 sm:p-5 border"
+                            style={{
+                              background: 'rgba(255,255,255,0.03)',
+                              borderColor: 'rgba(255,255,255,0.07)'
+                            }}>
+                            <div className="flex items-center gap-2 mb-3">
+                              <Moon size={14} style={{ color: '#94a3b8' }} />
+                              <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Góc Tối</span>
+                            </div>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(196,181,253,0.75)' }}>
+                              {item.profile.darkSide}
+                            </p>
+                          </div>
+
+                          {/* Gift to world */}
+                          {item.profile.giftToWorld && (
+                            <div className="rounded-2xl p-4 sm:p-5 border"
+                              style={{
+                                background: 'rgba(255,255,255,0.03)',
+                                borderColor: 'rgba(255,255,255,0.07)'
+                              }}>
+                              <div className="flex items-center gap-2 mb-3">
+                                <Gift size={14} style={{ color: '#34d399' }} />
+                                <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#34d399' }}>Món Quà Cho Thế Giới</span>
+                              </div>
+                              <p className="text-sm leading-relaxed font-medium" style={{ color: 'rgba(167,243,208,0.85)' }}>
+                                {item.profile.giftToWorld}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Footer: Deep analysis CTA and NumberCard reveal */}
+                    <div className="mt-8">
+                      {(() => {
+                        const isDetailOpen = detailsOpenIndex === idx;
+                        return (
+                          <>
+                            <div
+                              onClick={() => setDetailsOpenIndex(isDetailOpen ? null : idx)}
+                              className="group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 sm:p-6 transition-transform duration-200 hover:scale-[1.01] cursor-pointer"
+                              style={{
+                                borderColor: item.profile.colorFrom + '33',
+                                boxShadow: `0 20px 45px ${item.profile.colorFrom}20`,
+                              }}
+                            >
+                              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                                {/* Left Content */}
+                                <div className="flex items-start gap-4">
+                                  <div
+                                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                                    style={{
+                                      background: `linear-gradient(135deg,
+          ${item.profile.colorFrom}55,
+          ${item.profile.colorTo}55)`,
+                                      boxShadow: `0 0 25px ${item.profile.colorFrom}55`,
+                                    }}
+                                  >
+                                    <Sparkles size={26} className="text-white" />
+                                  </div>
+
+                                  <div>
+                                    <h3 className="text-lg font-black text-white tracking-wide">
+                                      Phân Tích Chuyên Sâu
+                                    </h3>
+
+                                    <p className="text-sm text-slate-300 mt-1 leading-relaxed">
+                                      Khám phá chiều sâu về{" "}
+                                      <span className="font-semibold text-white">tâm lý</span>,
+                                      <span className="font-semibold text-white"> các mối quan hệ</span>,
+                                      <span className="font-semibold text-white"> sự nghiệp</span>
+                                      {" "}và hành trình
+                                      <span className="font-semibold text-white"> phát triển tâm linh</span>.
+                                    </p>
+
+                                    <div className="flex flex-wrap gap-2 mt-3">
+                                      {[
+                                        "Tâm lý",
+                                        "Quan hệ",
+                                        "Sự nghiệp",
+                                        "Tâm linh"
+                                      ].map((tag) => (
+                                        <span
+                                          key={tag}
+                                          className="px-3 py-1 rounded-full text-xs font-semibold"
+                                          style={{
+                                            background: 'rgba(255,255,255,0.08)',
+                                            color: 'rgba(255,255,255,0.85)',
+                                          }}
+                                        >
+                                          {tag}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* CTA */}
+                                <div className="absolute top-6 right-6"></div>
+                                <button
+                                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 backdrop-blur-xl"
+                                  style={{
+                                    background: 'rgba(255,255,255,0.06)',
+                                    border: `1px solid ${item.profile.colorFrom}55`,
+                                  }}
+                                >
+                                  <Sparkles
+                                    size={14}
+                                    style={{
+                                      color: item.profile.colorFrom,
+                                    }}
+                                  />
+
+                                  <span className="text-sm font-medium text-white">
+                                    {isDetailOpen
+                                      ? 'Thu gọn'
+                                      : 'Xem Chi Tiết'}
+                                  </span>
+
+                                  <ChevronDown
+                                    size={15}
+                                    className={`transition-transform duration-300 ${isDetailOpen ? 'rotate-180' : ''}`}
+                                    style={{
+                                      color: item.profile.colorFrom,
+                                    }}
+                                  />
+                                </button>
+                              </div>
+                            </div>
+
+                            <div
+                              className="overflow-hidden transition-all duration-300"
+                              style={{
+                                maxHeight: isDetailOpen ? '5000px' : '0px',
+                                opacity: isDetailOpen ? 1 : 0,
+                                transform: isDetailOpen ? 'translateY(0)' : 'translateY(-12px)',
+                              }}
+                            >
+                              <div className="mt-4">
+                                <NumberCard
+                                  number={item.num}
+                                  label={`Số ${item.label}`}
+                                  labelIcon={[<Map size={14} />, <Target size={14} />, <Heart size={14} />, <User size={14} />, <Calendar size={14} />, <Eye size={14} />][idx]}
+                                  profile={item.profile}
+                                  indexType={item.indexType}
+                                />
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <NumberCard number={result.destinyNum}     label="Số Sứ Mệnh (Biểu Đạt)" labelIcon={<Target size={14}/>} profile={result.destiny}     indexType="destiny"/>
-          <NumberCard number={result.soulUrgeNum}    label="Số Linh Hồn"             labelIcon={<Heart size={14}/>}  profile={result.soulUrge}    indexType="soul"/>
-          <NumberCard number={result.personalityNum} label="Số Nhân Cách"            labelIcon={<User size={14}/>}   profile={result.personality} indexType="personality"/>
         </section>
+      </div>
 
-        {/* Reset */}
-        <div className="text-center py-6 border-t" style={{ borderColor:'rgba(255,255,255,0.08)' }}>
-          <p className="text-sm mb-5" style={{ color:'rgba(196,181,253,0.4)' }}>Muốn xem lại con số chính?</p>
+      {/* Reset button section - Below */}
+      <div className="relative z-10 px-4 sm:px-6 py-12">
+        <div className="text-center">
+          <p className="text-sm mb-5" style={{ color: 'rgba(196,181,253,0.4)' }}>Muốn xem lại con số chính?</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button onClick={() => { setResultSubPhase('hero'); window.scrollTo({ top:0, behavior:'smooth' }); }}
+            <button onClick={() => { setResultSubPhase('hero'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="inline-flex items-center gap-2 px-6 py-3 text-white font-bold rounded-2xl transition-all duration-200 cursor-pointer text-sm hover:scale-105"
-              style={{ background:'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow:'0 0 24px rgba(124,58,237,0.4)' }}>
-              <Star size={14}/> Xem số đường đời
+              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow: '0 0 24px rgba(124,58,237,0.4)' }}>
+              <Star size={14} /> Xem số đường đời
             </button>
             <button onClick={handleReset}
               className="inline-flex items-center gap-2 px-6 py-3 font-bold rounded-2xl transition-all duration-200 cursor-pointer text-sm hover:scale-105"
-              style={{ background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.1)', color:'rgba(196,181,253,0.8)' }}>
-              <RotateCcw size={14}/> Tính lại từ đầu
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(196,181,253,0.8)' }}>
+              <RotateCcw size={14} /> Tính lại từ đầu
             </button>
           </div>
         </div>
