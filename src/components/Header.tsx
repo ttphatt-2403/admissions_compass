@@ -1,4 +1,4 @@
-import { Menu, X, LogIn, LogOut, ShieldCheck } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, ShieldCheck, BarChart2 } from 'lucide-react';
 import { useState } from 'react';
 import { TabType } from '../types';
 import { useAuth } from '../context/AuthContext';
@@ -108,14 +108,24 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
                   {user.displayName?.split(' ')[0] || 'User'}
                 </span>
                 {isAdmin && (
-                  <button
-                    onClick={() => setActiveTab('numerology-admin' as TabType)}
-                    title="Trang Admin"
-                    className="px-2 py-1 text-xs font-bold text-purple-600 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg transition-all flex items-center gap-1"
-                  >
-                    <ShieldCheck size={14} />
-                    Admin
-                  </button>
+                  <>
+                    <button
+                      onClick={() => setActiveTab('numerology-admin' as TabType)}
+                      title="Quản lý Users"
+                      className="px-2 py-1 text-xs font-bold text-purple-600 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg transition-all flex items-center gap-1"
+                    >
+                      <ShieldCheck size={14} />
+                      Admin
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('admin-traffic' as TabType)}
+                      title="Traffic Analytics"
+                      className="px-2 py-1 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all flex items-center gap-1"
+                    >
+                      <BarChart2 size={14} />
+                      Traffic
+                    </button>
+                  </>
                 )}
                 <button
                   onClick={logout}
@@ -193,16 +203,22 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
                   </div>
                   <div className="flex items-center gap-2">
                     {isAdmin && (
-                      <button
-                        onClick={() => {
-                          setActiveTab('numerology-admin' as TabType);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="px-2 py-1 text-xs font-bold text-purple-600 bg-purple-50 border border-purple-200 rounded-lg flex items-center gap-1"
-                      >
-                        <ShieldCheck size={14} />
-                        Admin
-                      </button>
+                      <>
+                        <button
+                          onClick={() => { setActiveTab('numerology-admin' as TabType); setIsMobileMenuOpen(false); }}
+                          className="px-2 py-1 text-xs font-bold text-purple-600 bg-purple-50 border border-purple-200 rounded-lg flex items-center gap-1"
+                        >
+                          <ShieldCheck size={14} />
+                          Admin
+                        </button>
+                        <button
+                          onClick={() => { setActiveTab('admin-traffic' as TabType); setIsMobileMenuOpen(false); }}
+                          className="px-2 py-1 text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-1"
+                        >
+                          <BarChart2 size={14} />
+                          Traffic
+                        </button>
+                      </>
                     )}
                     <button
                       onClick={() => {

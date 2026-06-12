@@ -10,4 +10,6 @@ export type TabType = 'home' | 'documents' | 'universities' | 'calculator' | 'st
   // Landing Pages - Khác
   | 'hueuni-landing' | 'dut-landing' | 'due-landing' | 'dtu-landing' | 'ctu-landing'
   // Other
-  | 'cnit-landing' | 'marketing-sales-landing' | 'logistics-supply-chain-landing' | 'design-creative-landing' | 'economics-finance-landing' | 'languages-tourism-landing' | 'b2b-landing';
+  | 'cnit-landing' | 'marketing-sales-landing' | 'logistics-supply-chain-landing' | 'design-creative-landing' | 'economics-finance-landing' | 'languages-tourism-landing' | 'b2b-landing'
+  // Admin pages
+  | 'numerology-admin' | 'admin-traffic';

@@ -133,6 +133,8 @@ import { Footer } from './components/Footer';
 import RIASECTest from './components/RIASECTest';
 import NumerologyTest from './components/NumerologyTest';
 import NumerologyAdmin from './pages/NumerologyAdmin';
+import AdminTrafficDashboard from './pages/AdminTrafficDashboard';
+import { trackPageView } from './lib/analytics';
 
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FAQSection } from './components/FAQSection';
@@ -359,9 +361,10 @@ export default function App() {
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
-  // Scroll to top when tab changes
+  // Scroll to top when tab changes + track page view
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+    trackPageView(activeTab);
   }, [activeTab]);
 
   // History management for browser back/forward buttons
@@ -1451,6 +1454,7 @@ export default function App() {
         {activeTab === 'riasec' && <RIASECTest />}
         {activeTab === 'numerology' && <NumerologyTest />}
         {activeTab === 'numerology-admin' && <NumerologyAdmin />}
+        {activeTab === 'admin-traffic' && <AdminTrafficDashboard />}
         {activeTab === 'fpt-landing' && <FPTLandingPage />}
         {activeTab === 'vnu-landing' && <VNULandingPage />}
         {activeTab === 'rmit-landing' && <RMITLandingPage />}
