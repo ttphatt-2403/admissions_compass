@@ -6,7 +6,7 @@ import {
 import {
   Eye, Users, Clock, TrendingUp, RefreshCw, Monitor, Smartphone, Tablet,
 } from 'lucide-react';
-import { collection, doc, getDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
 
@@ -94,8 +94,9 @@ export default function AdminTrafficDashboard() {
         days.push(d.toISOString().slice(0, 10));
       }
 
+      // siteStatsDays/{date} — top-level collection, 2 segments ✓
       const dailySnaps = await Promise.all(
-        days.map(d => getDoc(doc(db, 'siteStats', 'daily', d)))
+        days.map(d => getDoc(doc(db, 'siteStatsDays', d)))
       );
 
       const daily: typeof dailyData = [];
@@ -133,8 +134,8 @@ export default function AdminTrafficDashboard() {
       setHourData(Array.from({ length: 24 }, (_, h) => ({ hour: `${h}h`, views: hourAgg[h] ?? 0 })));
       setWeekdayData(WEEKDAYS.map((day, i) => ({ day, views: weekdayAgg[i] ?? 0 })));
 
-      // Merge with per-page totals from pages collection
-      const pagesSnap = await getDocs(collection(db, 'siteStats', 'pages'));
+      // siteStatsPages/{pageKey} — top-level collection, 2 segments ✓
+      const pagesSnap = await getDocs(collection(db, 'siteStatsPages'));
       pagesSnap.forEach(snap => {
         const pd = snap.data() as Partial<PageDoc>;
         const k = snap.id;

@@ -105,13 +105,13 @@ export default async function handler(req, res) {
     const newSessionCount = isNewSession ? 1 : 0;
 
     const writes = [
-      // overview totals
+      // overview totals — siteStats/overview (2 segments ✓)
       increment(docPath('siteStats', 'overview'), {
         totalViews: 1,
         totalSessions: newSessionCount,
       }),
-      // daily
-      increment(docPath('siteStats', 'daily', dateStr), {
+      // daily — siteStatsDays/{date} (2 segments ✓)
+      increment(docPath('siteStatsDays', dateStr), {
         views: 1,
         sessions: newSessionCount,
         [`hours.h${hour}`]: 1,
@@ -119,8 +119,8 @@ export default async function handler(req, res) {
         [`pages.${pageKey}`]: 1,
         [`devices.${deviceKey}`]: 1,
       }),
-      // per-page totals
-      increment(docPath('siteStats', 'pages', pageKey), {
+      // per-page totals — siteStatsPages/{pageKey} (2 segments ✓)
+      increment(docPath('siteStatsPages', pageKey), {
         views: 1,
         sessions: newSessionCount,
       }),
