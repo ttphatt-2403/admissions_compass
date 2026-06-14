@@ -76,6 +76,15 @@ export default async function handler(req, res) {
   try {
     const token = await getAccessToken();
 
+    // Quick test — fetch metadata to confirm property access
+    const metaRes = await fetch(`${GA4_BASE}/metadata`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!metaRes.ok) {
+      const err = await metaRes.json();
+      return res.status(403).json({ ok: false, error: `GA4 access denied: ${JSON.stringify(err?.error?.message ?? err)}` });
+    }
+
     // Run all reports in parallel
     const [overviewRes, dailyRes, pagesRes, deviceRes, hourRes, weekdayRes] = await Promise.all([
       // KPI overview
