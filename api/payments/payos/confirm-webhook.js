@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const webhookUrl = `${process.env.APP_URL}/api/payments/payos/webhook`;
+  const webhookUrl = `${process.env.APP_URL}/api/payos-webhook`;
 
   const r = await fetch('https://api-merchant.payos.vn/confirm-webhook', {
     method: 'POST',
