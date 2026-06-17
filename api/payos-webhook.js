@@ -60,6 +60,7 @@ async function fsPatch(token, path, fields, updateMask) {
 function fInt(n)   { return { integerValue: String(n) }; }
 function fStr(s)   { return { stringValue: s }; }
 function fTime()   { return { timestampValue: new Date().toISOString() }; }
+function fBool(b)  { return { booleanValue: b }; }
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -82,8 +83,10 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'signature mismatch' });
     }
 
-    if (data.status !== 'PAID') {
-      return res.status(200).json({ message: `status is ${data.status}, not PAID` });
+    // PayOS không gửi field `status` trong data — chỉ có `code` ("00" = thành công)
+    if (code !== '00' || data.code !== '00') {
+      console.warn('Webhook not successful:', { code, dataCode: data.code, desc, dataDesc: data.desc });
+      return res.status(200).json({ message: `not successful payment (code=${code}, data.code=${data.code})` });
     }
 
     const token    = await getAnonToken();
@@ -96,18 +99,22 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'order not found' });
     }
 
-    const { uid, credits, status } = {
-      uid:     orderDoc.fields.uid?.stringValue,
-      credits: parseInt(orderDoc.fields.credits?.integerValue || '0'),
-      status:  orderDoc.fields.status?.stringValue,
+    const { uid, credits, status, credited } = {
+      uid:      orderDoc.fields.uid?.stringValue,
+      credits:  parseInt(orderDoc.fields.credits?.integerValue || '0'),
+      status:   orderDoc.fields.status?.stringValue,
+      credited: orderDoc.fields.credited?.booleanValue === true,
     };
 
-    if (status === 'PAID') return res.status(200).json({ message: 'already processed' });
+    // Idempotency guard — đã xử lý rồi (kể cả khi PayOS gửi webhook lại nhiều lần)
+    if (status === 'PAID' || credited === true) {
+      return res.status(200).json({ message: 'already processed' });
+    }
 
-    // 3. Mark order PAID
+    // 3. Mark order PAID + credited (atomic flag để frontend không tự cộng credits lại)
     await fsPatch(token, `payment_orders/${orderKey}`,
-      { status: fStr('PAID'), paidAt: fTime() },
-      ['status', 'paidAt']
+      { status: fStr('PAID'), paidAt: fTime(), credited: fBool(true) },
+      ['status', 'paidAt', 'credited']
     );
 
     // 4. Add credits to user
