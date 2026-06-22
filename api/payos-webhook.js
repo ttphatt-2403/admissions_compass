@@ -1,152 +1,137 @@
 import crypto from "node:crypto";
+import { admin, getAdminDb } from "./_lib/firebaseAdmin.js";
 
-const CHECKSUM_KEY  = process.env.PAYOS_CHECKSUM_KEY;
-const FIREBASE_KEY  = process.env.VITE_FIREBASE_API_KEY;
-const PROJECT_ID    = process.env.VITE_FIREBASE_PROJECT_ID || 'exe-labantuyensinh';
-const FS_BASE       = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
-const SIGN_IN_URL   = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_KEY}`;
-
-/**
- * PayOS signature: sort data object keys alphabetically, join as key=value&...
- * https://payos.vn/docs/tich-hop-webhook/kiem-tra-du-lieu-voi-signature
- */
-function buildSigStr(dataObj) {
-  return Object.entries(dataObj)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([k, v]) => `${k}=${v ?? ''}`)
-    .join('&');
+function buildSignatureData(data) {
+  return Object.entries(data || {})
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, value]) => `${key}=${value ?? ""}`)
+    .join("&");
 }
 
-function verifySig(dataObj, sig) {
-  const sigStr   = buildSigStr(dataObj);
-  const expected = crypto.createHmac('sha256', CHECKSUM_KEY).update(sigStr).digest('hex');
+function verifySignature(data, signature) {
+  if (!process.env.PAYOS_CHECKSUM_KEY || !signature) return false;
+  const expected = crypto
+    .createHmac("sha256", process.env.PAYOS_CHECKSUM_KEY)
+    .update(buildSignatureData(data))
+    .digest("hex");
   try {
-    return crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(sig, 'hex'));
+    return crypto.timingSafeEqual(
+      Buffer.from(expected, "hex"),
+      Buffer.from(signature, "hex"),
+    );
   } catch {
     return false;
   }
 }
 
-/** Get anonymous Firebase ID token (for Firestore REST auth) */
-async function getAnonToken() {
-  const r = await fetch(SIGN_IN_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ returnSecureToken: true }),
-  });
-  const j = await r.json();
-  return j.idToken;
-}
-
-/** Firestore REST GET */
-async function fsGet(token, path) {
-  const r = await fetch(`${FS_BASE}/${path}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return r.json();
-}
-
-/** Firestore REST PATCH (update specific fields) */
-async function fsPatch(token, path, fields, updateMask) {
-  const mask = updateMask.map(f => `updateMask.fieldPaths=${encodeURIComponent(f)}`).join('&');
-  const r = await fetch(`${FS_BASE}/${path}?${mask}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ fields }),
-  });
-  return r.json();
-}
-
-function fInt(n)   { return { integerValue: String(n) }; }
-function fStr(s)   { return { stringValue: s }; }
-function fTime()   { return { timestampValue: new Date().toISOString() }; }
-function fBool(b)  { return { booleanValue: b }; }
-
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  // PayOS sends GET to verify URL
-  if (req.method === 'GET')  return res.status(200).json({ ok: true });
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method === "GET") return res.status(200).json({ ok: true });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const { code, success, data, signature } = req.body || {};
+  if (!data?.orderCode) {
+    return res.status(400).json({ error: "Missing payment data" });
+  }
+  if (!verifySignature(data, signature)) {
+    console.warn("[payos-webhook] invalid signature", data.orderCode);
+    return res.status(400).json({ error: "Invalid signature" });
+  }
+
+  const orderCode = String(data.orderCode);
+  const db = getAdminDb();
+  const orderRef = db.collection("payment_orders").doc(orderCode);
+
+  if (code !== "00" || data.code !== "00" || success === false) {
+    await orderRef.set(
+      {
+        status: "CANCELLED",
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        rawWebhookLast: data,
+      },
+      { merge: true },
+    );
+    return res.status(200).json({ message: "payment not successful" });
+  }
 
   try {
-    const { code, desc, data, signature } = req.body || {};
-    if (!data) return res.status(200).json({ message: 'no data' });
+    let alreadyProcessed = false;
+    await db.runTransaction(async (transaction) => {
+      const orderSnapshot = await transaction.get(orderRef);
+      if (!orderSnapshot.exists) {
+        throw new Error(`ORDER_NOT_FOUND:${orderCode}`);
+      }
 
-    // 1. Verify PayOS signature (sign from data object, sort alphabetically)
-    if (!verifySig(data, signature)) {
-      console.warn('Bad signature, orderCode:', data.orderCode);
-      console.warn('Sig string was:', buildSigStr(data));
-      return res.status(200).json({ message: 'signature mismatch' });
-    }
+      const order = orderSnapshot.data();
+      if (order.credited === true || order.status === "PAID") {
+        alreadyProcessed = true;
+        return;
+      }
+      if (!order.uid || !Number.isFinite(Number(order.credits))) {
+        throw new Error(`INVALID_ORDER:${orderCode}`);
+      }
+      if (Number(data.amount) !== Number(order.amount)) {
+        throw new Error(
+          `AMOUNT_MISMATCH:expected=${order.amount},actual=${data.amount}`,
+        );
+      }
 
-    // PayOS không gửi field `status` trong data — chỉ có `code` ("00" = thành công)
-    if (code !== '00' || data.code !== '00') {
-      console.warn('Webhook not successful:', { code, dataCode: data.code, desc, dataDesc: data.desc });
-      return res.status(200).json({ message: `not successful payment (code=${code}, data.code=${data.code})` });
-    }
+      const userRef = db.collection("users").doc(order.uid);
+      const transactionRef = userRef
+        .collection("transactions")
+        .doc(`payos_${orderCode}`);
 
-    const token    = await getAnonToken();
-    const orderKey = String(data.orderCode);
-
-    // 2. Read order
-    const orderDoc = await fsGet(token, `payment_orders/${orderKey}`);
-    if (!orderDoc.fields) {
-      console.warn('Order not found:', orderKey);
-      return res.status(200).json({ message: 'order not found' });
-    }
-
-    const { uid, credits, status, credited } = {
-      uid:      orderDoc.fields.uid?.stringValue,
-      credits:  parseInt(orderDoc.fields.credits?.integerValue || '0'),
-      status:   orderDoc.fields.status?.stringValue,
-      credited: orderDoc.fields.credited?.booleanValue === true,
-    };
-
-    // Idempotency guard — đã xử lý rồi (kể cả khi PayOS gửi webhook lại nhiều lần)
-    if (status === 'PAID' || credited === true) {
-      return res.status(200).json({ message: 'already processed' });
-    }
-
-    // 3. Mark order PAID + credited (atomic flag để frontend không tự cộng credits lại)
-    await fsPatch(token, `payment_orders/${orderKey}`,
-      { status: fStr('PAID'), paidAt: fTime(), credited: fBool(true) },
-      ['status', 'paidAt', 'credited']
-    );
-
-    // 4. Add credits to user
-    const userDoc = await fsGet(token, `users/${uid}`);
-    const cur      = parseInt(userDoc.fields?.credits?.integerValue || '0');
-    const tot      = parseInt(userDoc.fields?.totalPurchased?.integerValue || '0');
-
-    await fsPatch(token, `users/${uid}`,
-      { credits: fInt(cur + credits), totalPurchased: fInt(tot + credits) },
-      ['credits', 'totalPurchased']
-    );
-
-    // 5. Log transaction
-    await fetch(`${FS_BASE}/users/${uid}/transactions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({
-        fields: {
-          credits:   fInt(credits),
-          method:    fStr('payos'),
-          priceVnd:  fInt(orderDoc.fields.amount?.integerValue || 0),
-          orderCode: fStr(orderKey),
-          createdAt: fTime(),
+      transaction.set(
+        userRef,
+        {
+          credits: admin.firestore.FieldValue.increment(order.credits),
+          totalPurchased: admin.firestore.FieldValue.increment(order.credits),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         },
-      }),
+        { merge: true },
+      );
+      transaction.set(transactionRef, {
+        type: "credit_purchase",
+        method: "payos",
+        orderCode,
+        paymentLinkId: data.paymentLinkId || order.paymentLinkId || null,
+        payosReference: data.reference || null,
+        credits: order.credits,
+        priceVnd: order.amount,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      transaction.set(
+        orderRef,
+        {
+          status: "PAID",
+          credited: true,
+          paidAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          payosReference: data.reference || null,
+          paymentLinkId: data.paymentLinkId || order.paymentLinkId || null,
+          rawWebhookLast: data,
+        },
+        { merge: true },
+      );
     });
 
-    console.log(`Payment OK: uid=${uid} credits=${credits} order=${orderKey}`);
-    return res.status(200).json({ message: 'success' });
-
-  } catch (err) {
-    console.error('webhook error:', err.message);
-    return res.status(200).json({ message: 'handled' });
+    console.log(
+      `[payos-webhook] ${alreadyProcessed ? "already processed" : "credited"} order=${orderCode}`,
+    );
+    return res.status(200).json({
+      message: alreadyProcessed ? "already processed" : "success",
+    });
+  } catch (error) {
+    console.error("[payos-webhook] processing failed", {
+      orderCode,
+      error: error.message,
+    });
+    return res.status(500).json({ error: error.message });
   }
 }
