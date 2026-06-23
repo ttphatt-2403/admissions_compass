@@ -30,8 +30,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") return res.status(200).end();
-  if (req.method === "GET") return res.status(200).json({ ok: true, v: "diag-2026-06-23-1" });
-  console.log("[payos-webhook] DIAG-2026-06-23-1 invoked", req.method);
+  if (req.method === "GET") return res.status(200).json({ ok: true });
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
