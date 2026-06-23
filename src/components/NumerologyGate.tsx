@@ -7,10 +7,10 @@
  */
 import { useState, useEffect, useRef } from 'react';
 import { Sparkles, X, Eye, EyeOff, Star, Zap, CheckCircle2, Loader2, LogIn, ExternalLink, RefreshCw } from 'lucide-react';
-import { doc, onSnapshot, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
-import { getCredits, consumeCredit, addCredits, CREDIT_PACKAGES } from '../lib/numerologyCredits';
+import { getCredits, consumeCredit } from '../lib/numerologyCredits';
 
 /* ── CSS injected once ── */
 const GATE_STYLES = `
@@ -154,7 +154,7 @@ function AuthModal({ onClose }: { onClose?: () => void }) {
 /* ══════════════ QR PAYMENT MODAL ══════════════ */
 interface QRData { orderCode: number; qrCode: string; checkoutUrl: string; amount: number; credits: number }
 
-function QRModal({ qrData, uid, onSuccess, onBack }: { qrData: QRData; uid: string; onSuccess: () => void; onBack: () => void }) {
+function QRModal({ qrData, onSuccess, onBack }: { qrData: QRData; onSuccess: () => void; onBack: () => void }) {
   const [status, setStatus] = useState<'waiting' | 'paid' | 'expired'>('waiting');
   const [seconds, setSeconds] = useState(300);
   const [checking, setChecking] = useState(false);
@@ -162,17 +162,8 @@ function QRModal({ qrData, uid, onSuccess, onBack }: { qrData: QRData; uid: stri
   const statusRef = useRef(status);
   statusRef.current = status;
 
-  const handlePaid = async (snapData: Record<string, unknown>) => {
+  const handlePaid = () => {
     if (statusRef.current === 'paid') return;
-    try {
-      const ref = doc(db, 'payment_orders', String(qrData.orderCode));
-      if (!snapData.credited) {
-        await addCredits(uid, (snapData.credits as number) ?? qrData.credits, 'vnpay', (snapData.amount as number) ?? qrData.amount);
-        await updateDoc(ref, { credited: true });
-      }
-    } catch (e) {
-      console.error('addCredits error:', e);
-    }
     setStatus('paid');
     setTimeout(onSuccess, 1500);
   };
@@ -181,7 +172,7 @@ function QRModal({ qrData, uid, onSuccess, onBack }: { qrData: QRData; uid: stri
     const ref = doc(db, 'payment_orders', String(qrData.orderCode));
     unsubRef.current = onSnapshot(ref, async snap => {
       const data = snap.data();
-      if (snap.exists() && data?.status === 'PAID') handlePaid(data as Record<string, unknown>);
+      if (snap.exists() && data?.status === 'PAID' && data?.credited === true) handlePaid();
     });
 
     // Khi tab được focus lại (user từ tab PayOS quay về), check thủ công
@@ -190,7 +181,7 @@ function QRModal({ qrData, uid, onSuccess, onBack }: { qrData: QRData; uid: stri
       const { getDoc } = await import('firebase/firestore');
       const snap = await getDoc(ref);
       const data = snap.data();
-      if (snap.exists() && data?.status === 'PAID') handlePaid(data as Record<string, unknown>);
+      if (snap.exists() && data?.status === 'PAID' && data?.credited === true) handlePaid();
     };
     document.addEventListener('visibilitychange', onVisible);
 
@@ -207,8 +198,8 @@ function QRModal({ qrData, uid, onSuccess, onBack }: { qrData: QRData; uid: stri
       const ref = doc(db, 'payment_orders', String(qrData.orderCode));
       const snap = await getDoc(ref);
       const data = snap.data();
-      if (snap.exists() && data?.status === 'PAID') {
-        await handlePaid(data as Record<string, unknown>);
+      if (snap.exists() && data?.status === 'PAID' && data?.credited === true) {
+        handlePaid();
       }
     } catch (e) {
       console.error('manual check error:', e);
@@ -375,15 +366,6 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
       const data = await res.json();
       if (!res.ok || data.error) throw new Error(data.error || 'Lỗi tạo thanh toán');
 
-      await setDoc(doc(db, 'payment_orders', String(data.orderCode)), {
-        uid: user.uid,
-        packageId: 'starter',
-        credits: data.credits,
-        amount: data.amount,
-        status: 'PENDING',
-        createdAt: serverTimestamp(),
-      });
-
       saveQR(data);
     } catch (e: unknown) {
       setError((e as Error).message || 'Có lỗi xảy ra, vui lòng thử lại');
@@ -398,7 +380,7 @@ function PaywallModal({ credits, onUnlock, onClose }: { credits: number; onUnloc
   };
 
   if (qrData) {
-    return <QRModal qrData={qrData} uid={user!.uid} onSuccess={handleQRSuccess} onBack={clearQR} />;
+    return <QRModal qrData={qrData} onSuccess={handleQRSuccess} onBack={clearQR} />;
   }
 
   return (

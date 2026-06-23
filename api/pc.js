@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { admin, getAdminDb } from "./_lib/firebaseAdmin.js";
 
 const PACKAGES = {
   starter: { credits: 3,  price: 15000 },
@@ -32,6 +33,21 @@ export default async function handler(req, res) {
       .update(signData)
       .digest('hex');
 
+    const db = getAdminDb();
+    const orderRef = db.collection('payment_orders').doc(String(orderCode));
+    await orderRef.set({
+      orderCode,
+      uid,
+      packageId,
+      credits: pkg.credits,
+      amount,
+      description,
+      status: 'PENDING',
+      credited: false,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
     const payosRes = await fetch('https://api-merchant.payos.vn/v2/payment-requests', {
       method: 'POST',
       headers: {
@@ -45,8 +61,20 @@ export default async function handler(req, res) {
     const result = await payosRes.json();
     if (result.code !== '00') {
       console.error('PayOS error:', result);
+      await orderRef.set({
+        status: 'FAILED_CREATE',
+        payosCreateError: result,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
       return res.status(500).json({ error: result.desc || 'PayOS error' });
     }
+
+    await orderRef.set({
+      checkoutUrl: result.data.checkoutUrl,
+      qrCode: result.data.qrCode,
+      paymentLinkId: result.data.paymentLinkId || null,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
 
     return res.status(200).json({
       orderCode,
